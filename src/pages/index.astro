@@ -1,0 +1,23 @@
+---
+import Header from '../Components/Header.astro';
+//import Aboutme from '../Components/Aboutme.astro';
+//import Proyects from '../Components/Proyects.astro';
+//import Footer from '../Components/Footer.astro';
+import Layout from '../Layouts/Layout.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+
+	<Layout>
+		<body class="font-sans bg-#0d0d0d dark:text-white ">
+			<Header />
+		</body>
+	</Layout>
+</html>
