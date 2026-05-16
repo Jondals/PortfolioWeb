@@ -10,7 +10,20 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.15.8",
+    "astro": "^6.3.3",
     "tailwindcss": "^4.1.17"
-  }
+  },
+  "description": "```sh\r npm create astro@latest -- --template minimal\r ```",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jondals/PortfolioWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jondals/PortfolioWeb/issues"
+  },
+  "homepage": "https://github.com/Jondals/PortfolioWeb#readme"
 }
