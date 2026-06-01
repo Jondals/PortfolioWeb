@@ -1,7 +1,37 @@
 @import "tailwindcss";
 
-body
-{
-    background-color: #0d0d0d;
-    color: #e4e4e4;
+:root {
+  /* Backgrounds */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #161616;
+  --bg-card: #1f1f1f;
+  --bg-hover: #2a2a2a;
+
+  /* Text */
+  --text-primary: #e4e4e4;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  /* Accent */
+  --accent: #00d4ff;
+  --accent-hover: #38bdf8;
+  --accent-soft: #0ea5e9;
+
+  /* Borders */
+  --border: #2f2f2f;
+  --border-light: #3f3f46;
+
+  /* Status */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }

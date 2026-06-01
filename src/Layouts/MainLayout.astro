@@ -1,0 +1,24 @@
+---
+import Header from '../Components/Header.astro';
+import Aboutme from '../Components/Aboutme.astro';
+import Proyects from '../Components/Proyects.astro';
+import Footer from '../Components/Footer.astro';
+import '../styles/global.css';
+---
+ 
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Jonathan Dorado Quintero Dev</title>
+	</head>
+
+    <body>
+        <Header></Header>
+        <Aboutme></Aboutme>
+        <Proyects></Proyects>
+        <Footer></Footer>
+    </body>
+</html>
