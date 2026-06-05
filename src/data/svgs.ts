@@ -1,0 +1,15 @@
+export const svgs: Record<string, string> = {
+  PHP: "/icons/php.svg",
+  JavaScript: "/icons/javascript.svg",
+  WebRTC: "/icons/webrtc.svg",
+  Astro: "/icons/astro-icon-light.svg",
+  TailwindCSS: "/icons/tailwindcss.svg",
+  TypeScript: "/icons/typescript.svg",
+  React: "/icons/react.svg",
+  "Node.js": "/icons/nodejs.svg",
+  Python: "/icons/python.svg",
+  SQLite: "/icons/sqlite.svg",
+  MySQL: "/icons/mysql-wordmark-light.svg",
+  Moon: "/icons/moon.svg",
+  Sun: "/icons/sun.svg",
+};

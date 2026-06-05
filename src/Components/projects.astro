@@ -1,0 +1,115 @@
+---
+import { svgs } from "../data/svgs.ts";
+
+const projects = [
+  {
+    title: "Chatterly",
+    status: "In Production",
+    description:
+      "Real-time messaging and voice communication platform inspired by Discord, focused on low latency and peer-to-peer communication.",
+    contribution:
+      "Built real-time chat system, authentication flow, and WebRTC-based voice communication features.",
+    tech: ["PHP", "MySQL", "JavaScript", "WebRTC"],
+    image: "/projects/chatterly.png",
+    link: "#",
+  },
+  {
+    title: "FlavourBalance",
+    status: "Beta",
+    description:
+      "Nutrition and meal balancing platform designed to help users track macros and build healthier eating habits.",
+    contribution:
+      "Designed nutrition tracking UI, food database structure and calorie/macro calculation logic.",
+    tech: ["Astro", "TailwindCSS", "TypeScript", "UI/UX"],
+    image: "/projects/flavourbalance.png",
+    link: "#",
+  },
+  {
+    title: "QuizMania",
+    status: "In Development",
+    description:
+      "Interactive quiz platform with dynamic questions, scoring system and gamified learning experience.",
+    contribution:
+      "Developed quiz engine, scoring logic and dynamic question rendering system.",
+    tech: ["React", "Node.js", "MongoDB", "Express"],
+    image: "/projects/quizmania.png",
+    link: "#",
+  },
+];
+---
+
+<section id="projects" class="min-h-screen px-6 py-20">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mt-4">
+        Full stack projects
+      </h2>
+
+      <p class="text-(--text-secondary) mt-4 max-w-2xl mx-auto">
+        Real-world applications focused on performance, scalability and modern UX design.
+      </p>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+
+      {projects.map((project) => (
+        <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <!-- IMAGE -->
+          <div class="h-48 overflow-hidden relative">
+            <img
+              src={project.image}
+              alt={project.title}
+              class="w-full h-full object-cover
+                     group-hover:scale-110 transition duration-500"
+            />
+
+            <!-- overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+            <!-- status -->
+            <span class="absolute top-3 right-3 text-[10px] px-3 py-1 rounded-full
+                         bg-black/40 border border-white/20 text-white backdrop-blur">
+              {project.status}
+            </span>
+          </div>
+
+          <!-- CONTENT -->
+          <div class="p-5 flex flex-col gap-3">
+
+            <h3 class="text-lg font-bold text-white group-hover:text-(--accent) transition">
+              {project.title}
+            </h3>
+
+            <p class="text-sm text-(--text-secondary) leading-relaxed">
+              {project.description}
+            </p>
+
+            <p class="text-xs text-(--text-secondary)">
+              <span class="text-white font-semibold">Role:</span>{" "}
+              {project.contribution}
+            </p>
+
+            <!-- TECH WITH ICONS -->
+            <div class="flex flex-wrap gap-2 mt-3">
+              {project.tech.map((t) => (
+                <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
+                  {svgs[t] && (<img src={svgs[t]} alt={t} class="w-3.5 h-3.5"/>)}
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <!-- LINK -->
+            <a href={project.link} class="mt-3 text-sm font-medium text-(--accent) hover:opacity-80 transition">
+              View project →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

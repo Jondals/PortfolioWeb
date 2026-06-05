@@ -1,37 +1,66 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-Medium.woff2") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/fonts/Lexend-Bold.woff2") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@theme {
+  --font-sans: "Lexend", sans-serif;
+}
+
 :root {
-  /* Backgrounds */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --bg-card: #e4e4e7;
+  --bg-hover: #d4d4d8;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  --accent: #00d4ff;
+  --accent-hover: #38bdf8;
+  --accent-soft: #0ea5e9;
+
+  --border: #e4e4e7;
+  --border-light: #d4d4d8;
+}
+
+html.dark {
   --bg-primary: #0d0d0d;
   --bg-secondary: #161616;
   --bg-card: #1f1f1f;
   --bg-hover: #2a2a2a;
 
-  /* Text */
   --text-primary: #e4e4e4;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
 
-  /* Accent */
   --accent: #00d4ff;
   --accent-hover: #38bdf8;
   --accent-soft: #0ea5e9;
 
-  /* Borders */
   --border: #2f2f2f;
   --border-light: #3f3f46;
-
-  /* Status */
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --danger: #ef4444;
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-sans);
 }
 
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }

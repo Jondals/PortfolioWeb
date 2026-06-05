@@ -1,31 +1,57 @@
 ---
 const navItems = [
-  { name: "About Me", href: "#about" },
-  { name: "Projects", href: "#projects" },
+  { name: "Home", href: "#hero" },
+  { name: "About", href: "#about" },
+  { name: "Full Stack Projects", href: "#projects" },
+  { name: "Game Dev", href: "#game-development" },
   { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
 ];
 ---
 
-<header
-  class="fixed top-0 left-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10"
->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-center justify-between h-16">
+    <div class="relative flex items-center h-16">
 
-      <!-- Logo -->
-      <a href="#" class="text-xl font-bold text-white hover:text-cyan-400 transition-colors "></a>
+      <!-- LOGO -->
+      <a href="#hero" class="flex items-center">
+        <div class="w-10 h-10 rounded-full overflow-hidden border border-white/20 shadow-md">
+          <img src="/images/logo.webp" class="w-full h-full object-cover" />
+        </div>
+      </a>
 
-      <!-- Navigation -->
-      <nav>
+      <!-- NAV -->
+      <nav class="absolute left-1/2 -translate-x-1/2">
         <ul class="flex items-center gap-8">
           {navItems.map((item) => (
             <li>
-              <a href={item.href} class="text-gray-300 hover:text-cyan-400 transition-colors duration-200 font-medium"> {item.name}</a>
+              <a href={item.href} class="text-gray-300 hover:text-cyan-400 transition-colors">
+                {item.name}
+              </a>
             </li>
           ))}
         </ul>
       </nav>
 
+      <!-- CONTROLS -->
+      <div class="ml-auto flex items-center gap-3">
+
+        <!-- THEME BUTTON -->
+        <button
+          id="theme-toggle"
+          class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition-colors"
+          aria-label="Toggle theme"
+        >
+          <img id="theme-icon" src="/icons/moon.svg" class="w-5 h-5" />
+        </button>
+
+        <!-- LANGUAGE -->
+        <select class="bg-slate-800 text-gray-200 border border-slate-700 rounded-lg px-3 py-1.5 text-sm">
+          <option value="es">🇪🇸 ES</option>
+          <option value="en">🇬🇧 EN</option>
+        </select>
+<script type="module" src="/src/scripts/themeToggle.ts"></script>
+      </div>
     </div>
   </div>
 </header>

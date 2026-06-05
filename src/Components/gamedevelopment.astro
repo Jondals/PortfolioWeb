@@ -1,0 +1,100 @@
+---
+import { svgs } from "../data/svgs.ts";
+
+const games = [
+  {
+    title: "Synthwave Parkour",
+    status: "Prototype",
+    description:
+      "Fast-paced first-person movement prototype inspired by classic parkour games, set in a neon synthwave environment.",
+    contribution:
+      "Developed movement mechanics including wall-running, sliding, air control and momentum-based traversal.",
+    tech: ["Unity", "C#"],
+    image: "/games/synthwave-parkour.webp",
+    link: "#",
+  },
+  {
+    title: "Backrooms Online",
+    status: "Prototype",
+    description:
+      "Multiplayer horror experience based on the Backrooms universe with cooperative exploration and proximity interaction.",
+    contribution:
+      "Implemented multiplayer architecture, player synchronization and networked gameplay using Netcode for GameObjects.",
+    tech: ["Unity", "C#", "Netcode"],
+    image: "/games/backrooms.webp",
+    link: "#",
+  },
+];
+---
+
+<section id="game-development" class="px-6 py-20">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mt-4">
+        Game Development
+      </h2>
+
+      <p class="text-(--text-secondary) mt-4 max-w-2xl mx-auto">
+        Summer prototypes focused on gameplay programming, multiplayer systems
+        and interactive experiences built with Unity.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      {games.map((game) => (
+        <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <div class="h-64 overflow-hidden relative">
+
+            <img src={game.image} alt={game.title} class="w-full h-full object-cover group-hover:scale-105 transition duration-700"/>
+
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+            <span class="absolute top-4 right-4 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/40 border border-white/20 backdrop-blur">
+              {game.status}
+            </span>
+
+          </div>
+
+          <div class="p-6 flex flex-col gap-4">
+
+            <h3 class="text-2xl font-bold group-hover:text-(--accent) transition">
+              {game.title}
+            </h3>
+
+            <p class="text-(--text-secondary)">
+              {game.description}
+            </p>
+
+            <p class="text-sm text-(--text-secondary)">
+              <span class="font-semibold text-white">
+                Main Focus:
+              </span>{" "}
+              {game.contribution}
+            </p>
+
+            <div class="flex flex-wrap gap-2 mt-3">
+
+              {game.tech.map((t) => (
+                <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
+                  {svgs[t] && (
+                    <img src={svgs[t]} alt={t} class="w-3.5 h-3.5"/>
+                  )}
+                  {t}
+                </span>
+              ))}
+
+            </div>
+
+            <a href={game.link} class="mt-2 text-sm font-medium text-(--accent) hover:opacity-80 transition">
+              View Prototype →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
