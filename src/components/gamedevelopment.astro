@@ -1,0 +1,143 @@
+---
+import { svgs } from "../data/svgs.ts";
+
+const games = [
+  {
+    title: "Parkour Beans",
+    status: {
+      en: "Prototype",
+      es: "Prototipo",
+    },
+    description: {
+      en: "First-person parkour prototype focused on fast movement and fluid traversal in platforming environments.",
+      es: "Prototipo de parkour en primera persona centrado en movimiento rápido y desplazamiento fluido en entornos de plataformas.",
+    },
+    contribution: {
+      en: "Designed and implemented a modular player controller featuring wall-running, sliding, jumping, air control, swinging hook mechanic, and moving/jump platforms.",
+      es: "Diseñé e implementé un controlador de jugador modular con wall-running, deslizamiento, salto, control aéreo, gancho de agarre y plataformas móviles/de salto.",
+    },
+    tech: ["Unity", "C#"],
+    image: "/games/parkour-beans.webp",
+    link: "#",
+  },
+
+  {
+    title: "NextbotScape Beans",
+    status: {
+      en: "Prototype",
+      es: "Prototipo",
+    },
+    description: {
+      en: "Multiplayer Backrooms-style horror experience built around cooperative exploration and real-time interaction.",
+      es: "Experiencia de terror multijugador estilo Backrooms basada en exploración cooperativa e interacción en tiempo real.",
+    },
+    contribution: {
+      en: "Developed multiplayer architecture using Netcode for GameObjects, including lobby system with join codes, player synchronization, animated character syncing, flashlight mechanics, and interactive doors. Also explored basic AI behavior using navigation and pathfinding systems.",
+      es: "Desarrollé la arquitectura multijugador usando Netcode for GameObjects, incluyendo sistema de lobby con códigos de acceso, sincronización de jugadores, animaciones, mecánica de linterna y puertas interactivas. También exploré IA básica con navegación y pathfinding.",
+    },
+    tech: ["Unity", "C#", "Netcode for GameObjects"],
+    image: "/games/nextbotscape-beans.webp",
+    link: "#",
+  },
+];
+---
+
+<section id="game-development" class="px-6 py-20">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="text-center mb-16">
+      <h2
+        class="text-4xl md:text-5xl font-bold mt-4"
+        data-en="Game Development"
+        data-es="Desarrollo de videojuegos"
+      >
+        Game Development
+      </h2>
+
+      <p
+        class="text-(--text-secondary) mt-4 max-w-2xl mx-auto"
+        data-en="Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity."
+        data-es="Prototipos de videojuegos enfocados en programación de gameplay, sistemas multijugador y mecánicas interactivas con Unity."
+      >
+        Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      {games.map((game) => (
+        <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <div class="h-64 overflow-hidden relative">
+
+            <img
+              src={game.image}
+              alt={game.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+            />
+
+            <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
+
+            <span
+              class="absolute top-4 right-4 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/40 border border-white/20 backdrop-blur"
+              data-en={game.status.en}
+              data-es={game.status.es}
+            >
+              {game.status.en}
+            </span>
+
+          </div>
+
+          <div class="p-6 flex flex-col gap-4">
+
+            <h3 class="text-2xl font-bold group-hover:text-(--accent) transition">
+              {game.title}
+            </h3>
+
+            <p
+              class="text-(--text-secondary)"
+              data-en={game.description.en}
+              data-es={game.description.es}
+            >
+              {game.description.en}
+            </p>
+
+            <p class="text-sm text-(--text-secondary)">
+              <span class="font-semibold text-white" data-en="Focus:" data-es="Enfoque:">
+                Focus:
+              </span>{" "}
+              <span
+                data-en={game.contribution.en}
+                data-es={game.contribution.es}
+              >
+                {game.contribution.en}
+              </span>
+            </p>
+
+            <div class="flex flex-wrap gap-2 mt-3">
+              {game.tech.map((t) => (
+                <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
+                  {svgs[t] && (
+                    <img src={svgs[t]} alt={t} class="w-3.5 h-3.5" />
+                  )}
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href={game.link}
+              class="mt-2 text-sm font-medium text-(--accent) hover:opacity-80 transition"
+              data-en="View Prototype →"
+              data-es="Ver prototipo →"
+            >
+              View Prototype →
+            </a>
+
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
