@@ -14,11 +14,8 @@
   font-style: normal;
 }
 
-@theme {
-  --font-sans: "Lexend", sans-serif;
-}
-
 :root {
+  --font-sans: "Lexend", sans-serif;
   --bg-primary: #ffffff;
   --bg-secondary: #f4f4f5;
   --bg-card: #e4e4e7;

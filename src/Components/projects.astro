@@ -4,35 +4,153 @@ import { svgs } from "../data/svgs.ts";
 const projects = [
   {
     title: "Chatterly",
-    status: "In Production",
-    description:
-      "Real-time messaging and voice communication platform inspired by Discord, focused on low latency and peer-to-peer communication.",
-    contribution:
-      "Built real-time chat system, authentication flow, and WebRTC-based voice communication features.",
-    tech: ["PHP", "MySQL", "JavaScript", "WebRTC"],
+    status: {
+      en: "Completed",
+      es: "Acabado",
+    },
+    description: {
+      en: "Web-based social platform inspired by Discord where users can add friends, customize profiles, and communicate via real-time chat and voice calls. Supports file and GIF sharing rendered directly in chat.",
+      es: "Red social web inspirada en Discord donde los usuarios pueden añadir amigos, personalizar su perfil y comunicarse mediante chat y llamadas en tiempo real. Permite enviar archivos y GIFs renderizados en el chat.",
+    },
+    contribution: {
+      en: "Developed real-time messaging system, authentication flow, and WebRTC-based voice calls.",
+      es: "Desarrollé el sistema de mensajería en tiempo real, autenticación y llamadas de voz basadas en WebRTC.",
+    },
+    tech: ["JavaScript", "PHP", "MySQL", "jQuery", "WebRTC", "HTML", "CSS"],
     image: "/projects/chatterly.png",
     link: "#",
   },
+
   {
-    title: "FlavourBalance",
-    status: "Beta",
-    description:
-      "Nutrition and meal balancing platform designed to help users track macros and build healthier eating habits.",
-    contribution:
-      "Designed nutrition tracking UI, food database structure and calorie/macro calculation logic.",
-    tech: ["Astro", "TailwindCSS", "TypeScript", "UI/UX"],
+    title: "Damas Donde Sea",
+    status: {
+      en: "Completed",
+      es: "Acabado",
+    },
+    description: {
+      en: "Classic checkers game developed in Java with a focus on game logic, turn system, and board interaction.",
+      es: "Juego de damas clásico desarrollado en Java, centrado en la lógica del juego, sistema de turnos e interacción con el tablero.",
+    },
+    contribution: {
+      en: "Implemented game rules, movement system, and win condition logic.",
+      es: "Implementé las reglas del juego, sistema de movimientos y condiciones de victoria.",
+    },
+    tech: ["Java"],
+    image: "/projects/damas.png",
+    link: "#",
+  },
+
+  {
+    title: "QuizMania",
+    status: {
+      en: "Completed",
+      es: "Acabado",
+    },
+    description: {
+      en: "Interactive trivia game with a spinning wheel that selects question categories, creating a gamified learning experience.",
+      es: "Juego de trivia interactivo con una ruleta que selecciona categorías de preguntas, creando una experiencia gamificada.",
+    },
+    contribution: {
+      en: "Built game logic, spinning wheel system, and dynamic question loading using AJAX.",
+      es: "Desarrollé la lógica del juego, la ruleta giratoria y la carga dinámica de preguntas mediante AJAX.",
+    },
+    tech: ["HTML", "CSS", "JavaScript", "AJAX", "Bootstrap"],
+    image: "/projects/quizmania.png",
+    link: "#",
+  },
+
+  {
+    title: "FlavorBalance",
+    status: {
+      en: "Completed",
+      es: "Acabado",
+    },
+    description: {
+      en: "Android mobile application for managing recipes with full CRUD functionality and database integration.",
+      es: "Aplicación móvil Android para gestionar recetas con funcionalidades CRUD completas e integración de base de datos.",
+    },
+    contribution: {
+      en: "Developed recipe management system (create, edit, delete) and learned Android database architecture.",
+      es: "Desarrollé el sistema de gestión de recetas (crear, editar, eliminar) y aprendí arquitectura de bases de datos en Android.",
+    },
+    tech: ["Kotlin", "Android Studio"],
     image: "/projects/flavourbalance.png",
     link: "#",
   },
+
   {
-    title: "QuizMania",
-    status: "In Development",
-    description:
-      "Interactive quiz platform with dynamic questions, scoring system and gamified learning experience.",
-    contribution:
-      "Developed quiz engine, scoring logic and dynamic question rendering system.",
-    tech: ["React", "Node.js", "MongoDB", "Express"],
-    image: "/projects/quizmania.png",
+    title: "DevStarter",
+    status: {
+      en: "In Development",
+      es: "En desarrollo",
+    },
+    description: {
+      en: "VS Code extension that helps developers quickly set up popular frameworks and project templates.",
+      es: "Extensión de VS Code que ayuda a los desarrolladores a configurar rápidamente frameworks y plantillas de proyectos.",
+    },
+    contribution: {
+      en: "Building extension architecture and framework installation system using TypeScript.",
+      es: "Desarrollando la arquitectura de la extensión y el sistema de instalación de frameworks en TypeScript.",
+    },
+    tech: ["TypeScript", "VS Code API"],
+    image: "/projects/devstarter.png",
+    link: "#",
+  },
+
+  {
+    title: "MyMusic",
+    status: {
+      en: "In Development",
+      es: "En desarrollo",
+    },
+    description: {
+      en: "Cross-platform Flutter app that migrates Spotify playlists and allows users to create and manage their own music collections.",
+      es: "Aplicación Flutter multiplataforma que migra playlists de Spotify y permite crear y gestionar colecciones musicales propias.",
+    },
+    contribution: {
+      en: "Developing playlist migration system and music management features.",
+      es: "Desarrollando el sistema de migración de playlists y gestión musical.",
+    },
+    tech: ["Flutter", "Dart"],
+    image: "/projects/mymusic.png",
+    link: "#",
+  },
+
+  {
+    title: "MyConversor",
+    status: {
+      en: "In Development",
+      es: "En desarrollo",
+    },
+    description: {
+      en: "Media conversion tool that downloads and converts videos from platforms like YouTube and Twitch into different formats.",
+      es: "Herramienta de conversión multimedia que descarga y convierte vídeos de plataformas como YouTube y Twitch a diferentes formatos.",
+    },
+    contribution: {
+      en: "Implemented download and conversion pipeline using yt-dlp and ffmpeg.",
+      es: "Implementé el sistema de descarga y conversión usando yt-dlp y ffmpeg.",
+    },
+    tech: ["Python", "FFmpeg", "yt-dlp"],
+    image: "/projects/myconversor.png",
+    link: "#",
+  },
+
+  {
+    title: "Chatterly Renewed",
+    status: {
+      en: "In Development",
+      es: "En desarrollo",
+    },
+    description: {
+      en: "Modern rewrite of Chatterly using Angular and TypeScript with improved architecture and local database support.",
+      es: "Reescritura moderna de Chatterly usando Angular y TypeScript con mejor arquitectura y soporte de base de datos local.",
+    },
+    contribution: {
+      en: "Redesigning full application architecture using Angular and SQLite.",
+      es: "Rediseñando toda la arquitectura de la aplicación con Angular y SQLite.",
+    },
+    tech: ["Angular", "TypeScript", "SQLite"],
+    image: "/projects/chatterlyrenewed.png",
     link: "#",
   },
 ];
@@ -41,19 +159,25 @@ const projects = [
 <section id="projects" class="min-h-screen px-6 py-20">
   <div class="max-w-7xl mx-auto">
 
-    <!-- HEADER -->
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mt-4">
-        Full stack projects
+      <h2
+        class="text-4xl md:text-5xl font-bold mt-4"
+        data-en="Projects"
+        data-es="Proyectos"
+      >
+        Projects
       </h2>
 
-      <p class="text-(--text-secondary) mt-4 max-w-2xl mx-auto">
-        Real-world applications focused on performance, scalability and modern UX design.
+      <p
+        class="text-(--text-secondary) mt-4 max-w-2xl mx-auto"
+        data-en="A collection of real-world applications built with different technologies, focused on learning, scalability and user experience."
+        data-es="Una colección de aplicaciones reales desarrolladas con distintas tecnologías, enfocadas en aprendizaje, escalabilidad y experiencia de usuario."
+      >
+        A collection of real-world applications built with different technologies, focused on learning, scalability and user experience.
       </p>
     </div>
 
-    <!-- GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
       {projects.map((project) => (
         <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
@@ -63,37 +187,46 @@ const projects = [
             <img
               src={project.image}
               alt={project.title}
-              class="w-full h-full object-cover
-                     group-hover:scale-110 transition duration-500"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
             />
 
-            <!-- overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
-            <!-- status -->
-            <span class="absolute top-3 right-3 text-[10px] px-3 py-1 rounded-full
-                         bg-black/40 border border-white/20 text-white backdrop-blur">
-              {project.status}
+            <span
+              class="absolute top-3 right-3 text-[10px] px-3 py-1 rounded-full bg-black/40 border border-white/20 text-white backdrop-blur"
+              data-en={project.status.en}
+              data-es={project.status.es}
+            >
+              {project.status.en}
             </span>
           </div>
 
-          <!-- CONTENT -->
           <div class="p-5 flex flex-col gap-3">
 
             <h3 class="text-lg font-bold text-white group-hover:text-(--accent) transition">
               {project.title}
             </h3>
 
-            <p class="text-sm text-(--text-secondary) leading-relaxed">
-              {project.description}
+            <p
+              class="text-sm text-(--text-secondary) leading-relaxed"
+              data-en={project.description.en}
+              data-es={project.description.es}
+            >
+              {project.description.en}
             </p>
 
             <p class="text-xs text-(--text-secondary)">
-              <span class="text-white font-semibold">Role:</span>{" "}
-              {project.contribution}
+              <span class="text-white font-semibold" data-en="Role:" data-es="Rol:">
+                Role:
+              </span>{" "}
+              <span
+                data-en={project.contribution.en}
+                data-es={project.contribution.es}
+              >
+                {project.contribution.en}
+              </span>
             </p>
 
-            <!-- TECH WITH ICONS -->
             <div class="flex flex-wrap gap-2 mt-3">
               {project.tech.map((t) => (
                 <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
@@ -103,10 +236,15 @@ const projects = [
               ))}
             </div>
 
-            <!-- LINK -->
-            <a href={project.link} class="mt-3 text-sm font-medium text-(--accent) hover:opacity-80 transition">
+            <a
+              href={project.link}
+              class="mt-3 text-sm font-medium text-(--accent) hover:opacity-80 transition"
+              data-en="View project →"
+              data-es="Ver proyecto →"
+            >
               View project →
             </a>
+
           </div>
         </article>
       ))}
