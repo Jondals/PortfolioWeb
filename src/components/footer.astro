@@ -1,0 +1,129 @@
+---
+import { svgs } from "../data/svgs.ts";
+---
+
+<footer class="relative mt-24 px-6 py-20 border-t border-white/10 overflow-hidden">
+
+  <!-- Glow -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -bottom-62.5 left-1/2 -translate-x-1/2 w-175 h-175 bg-indigo-500/10 blur-[140px] rounded-full"></div>
+  </div>
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center">
+
+    <!-- Heading -->
+    <h2 class="text-3xl md:text-4xl font-semibold tracking-tight text-white">
+      <span
+        data-en="Let's build something great"
+        data-es="Construyamos algo increíble"
+      >
+        Let's build something great
+      </span>
+      <span class="text-(--accent)">.</span>
+    </h2>
+
+    <p
+      class="mt-5 text-sm md:text-base text-(--text-secondary) max-w-xl mx-auto leading-relaxed"
+      data-en="Full Stack Developer focused on performance, clean UI systems and scalable web applications."
+      data-es="Desarrollador Full Stack enfocado en rendimiento, sistemas UI limpios y aplicaciones web escalables."
+    >
+      Full Stack Developer focused on performance, clean UI systems and scalable web applications.
+    </p>
+
+    <!-- Socials -->
+    <div class="mt-10 flex justify-center gap-5">
+
+      <!-- GitHub -->
+      <a
+        href="https://github.com/tuusuario"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        class="group relative p-3 rounded-xl
+               bg-white/5 border border-white/10
+               backdrop-blur-xl
+               hover:bg-white/10 hover:-translate-y-1
+               transition-all duration-300"
+      >
+        <img
+          src={svgs.GitHub}
+          alt="GitHub"
+          class="w-5 h-5 opacity-70 group-hover:opacity-100 transition"
+        />
+
+        <span
+          class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-indigo-500/20 blur-xl transition"
+        ></span>
+      </a>
+
+      <!-- LinkedIn -->
+      <a
+        href="https://linkedin.com/in/tuusuario"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        class="group relative p-3 rounded-xl
+               bg-white/5 border border-white/10
+               backdrop-blur-xl
+               hover:bg-white/10 hover:-translate-y-1
+               transition-all duration-300"
+      >
+        <img
+          src={svgs.LinkedIn}
+          alt="LinkedIn"
+          class="w-5 h-5 opacity-70 group-hover:opacity-100 transition"
+        />
+
+        <span
+          class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-sky-500/20 blur-xl transition"
+        ></span>
+      </a>
+
+      <!-- Email -->
+      <a
+        href="mailto:tuemail@correo.com"
+        aria-label="Email"
+        class="group relative p-3 rounded-xl
+               bg-white/5 border border-white/10
+               backdrop-blur-xl
+               hover:bg-white/10 hover:-translate-y-1
+               transition-all duration-300"
+      >
+        <img
+          src={svgs.Email}
+          alt="Email"
+          class="w-5 h-5 opacity-70 group-hover:opacity-100 transition"
+        />
+
+        <span
+          class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 bg-pink-500/20 blur-xl transition"
+        ></span>
+      </a>
+
+    </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-14 text-center space-y-2">
+
+      <p
+        class="text-xs text-(--text-secondary)"
+        data-en="© All rights reserved."
+        data-es="© Todos los derechos reservados."
+      >
+        © {new Date().getFullYear()} All rights reserved.
+      </p>
+
+      <p
+        class="text-xs text-(--text-secondary)"
+        data-en="Developed with Astro + Tailwind"
+        data-es="Desarrollado con Astro + Tailwind"
+      >
+        Developed with Astro + Tailwind
+      </p>
+
+    </div>
+
+  </div>
+</footer>

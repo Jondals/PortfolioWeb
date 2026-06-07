@@ -1,0 +1,84 @@
+---
+const skillGroups = [
+  {
+    title: {
+      en: "Frontend",
+      es: "Frontend",
+    },
+    skills: ["Angular", "Astro", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
+  },
+  {
+    title: {
+      en: "Backend",
+      es: "Backend",
+    },
+    skills: ["Django", "Python", "REST APIs", "Node.js"],
+  },
+  {
+    title: {
+      en: "Database",
+      es: "Base de datos",
+    },
+    skills: ["PostgreSQL", "MySQL", "SQLite"],
+  },
+  {
+    title: {
+      en: "Tools",
+      es: "Herramientas",
+    },
+    skills: ["Git", "GitHub", "Docker", "Linux", "VS Code"],
+  },
+];
+---
+
+<section id="skills" class="min-h-screen flex items-center px-6 py-20">
+  <div class="max-w-7xl mx-auto w-full">
+
+    <div class="mb-20">
+      <p
+        class="text-(--accent) font-medium mb-4"
+        data-en="Skills"
+        data-es="Habilidades"
+      >
+        Skills
+      </p>
+
+      <h2 class="text-5xl md:text-6xl font-bold max-w-4xl">
+        <span data-en="Technologies I use to build" data-es="Tecnologías que uso para construir">
+          Technologies I use to build
+        </span>
+        {" "}
+        <span class="text-(--accent)">
+          <span data-en="modern applications" data-es="aplicaciones modernas">
+            modern applications
+          </span>
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      {skillGroups.map((group) => (
+        <div class="group rounded-3xl border border-(--border) bg-white/2 p-8 transition-all duration-300 hover:border-(--accent)/40">
+
+          <h3
+            class="text-2xl font-semibold mb-8"
+            data-en={group.title.en}
+            data-es={group.title.es}
+          >
+            {group.title.en}
+          </h3>
+
+          <div class="flex flex-wrap gap-3">
+            {group.skills.map((skill) => (
+              <span class="px-4 py-2 rounded-xl bg-white/3 border border-(--border) text-(--text-secondary) transition-all duration-300 hover:border-(--accent)/30 hover:text-white">
+                {skill}
+              </span>
+            ))}
+          </div>
+
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
