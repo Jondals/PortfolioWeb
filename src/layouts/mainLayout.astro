@@ -1,0 +1,36 @@
+---
+import Hero from '../components/hero.astro';
+import Header from '../components/header.astro';
+import Aboutme from '../components/aboutme.astro';
+import Projects from '../components/projects.astro';
+import Gamedevelopment from '../components/gamedevelopment.astro';
+import Experience from '../components/experience.astro';
+import Skills from '../components/skills.astro';
+import Footer from '../components/footer.astro';
+import ThemeInit from "../components/themeInit.astro";
+import LanguageInit from "../components/languageInit.astro";
+import "../styles/global.css";
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Jonathan Dorado | Portfolio</title>
+    <ThemeInit/>
+    <LanguageInit/>
+	</head>
+
+    <body>
+		<Hero></Hero>
+        <Header></Header>
+        <Aboutme></Aboutme>
+        <Projects></Projects>
+		<Gamedevelopment></Gamedevelopment>
+		<Experience></Experience>
+		<Skills></Skills>
+        <Footer></Footer>
+    </body>
+</html>
