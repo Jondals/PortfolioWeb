@@ -17,7 +17,11 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Jonathan Dorado | Portfolio</title>
-		<script type="module" src="../src/scripts/main.ts"></script>
+
+		<script type="module">
+			import "../scripts/main";
+		</script>
+
 		<script is:inline>
 			const savedTheme = localStorage.getItem("theme");
 			const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -31,14 +35,14 @@ import "../styles/global.css";
 		</script>
 	</head>
 
-    <body>
-		<Hero></Hero>
-        <Header></Header>
-        <Aboutme></Aboutme>
-        <Projects></Projects>
-		<Gamedevelopment></Gamedevelopment>
-		<Experience></Experience>
-		<Skills></Skills>
-        <Footer></Footer>
-    </body>
+	<body>
+		<Hero />
+		<Header />
+		<Aboutme />
+		<Projects />
+		<Gamedevelopment />
+		<Experience />
+		<Skills />
+		<Footer />
+	</body>
 </html>
