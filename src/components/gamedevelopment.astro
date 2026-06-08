@@ -14,11 +14,11 @@ const games = [
     },
     contribution: {
       en: "Designed and implemented a modular player controller featuring wall-running, sliding, jumping, air control, swinging hook mechanic, and moving/jump platforms.",
-      es: "Diseñé e implementé un controlador de jugador modular con wall-running, deslizamiento, salto, control aéreo, gancho de agarre y plataformas móviles/de salto.",
+      es: "Diseñé e implementé un controlador de jugador modular con wall-running, deslizamiento, salto, control aéreo, gancho y plataformas móviles/de salto.",
     },
     tech: ["Unity", "C#"],
-    image: "/games/parkour-beans.webp",
-    link: "#",
+    image: "/images/parkourbeans.webp",
+    github: "https://github.com/Jondals/Parkour-Bean",
   },
 
   {
@@ -36,23 +36,21 @@ const games = [
       es: "Desarrollé la arquitectura multijugador usando Netcode for GameObjects, incluyendo sistema de lobby con códigos de acceso, sincronización de jugadores, animaciones, mecánica de linterna y puertas interactivas. También exploré IA básica con navegación y pathfinding.",
     },
     tech: ["Unity", "C#", "Netcode for GameObjects"],
-    image: "/games/nextbotscape-beans.webp",
-    link: "#",
+    image: "/images/nextbotscapebeans.webp",
+    github: "https://github.com/Jondals/NextBotEscapeBeans",
   },
 ];
 ---
 
-<section id="game-development" class="px-6 py-20">
+<section id="game-development" class="px-6 py-20 scroll-mt-15">
   <div class="max-w-7xl mx-auto">
 
-    <!-- HEADER -->
     <div class="text-center mb-16">
       <h2
         class="text-4xl md:text-5xl font-bold mt-4"
         data-en="Game Development"
         data-es="Desarrollo de videojuegos"
       >
-        Game Development
       </h2>
 
       <p
@@ -60,7 +58,6 @@ const games = [
         data-en="Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity."
         data-es="Prototipos de videojuegos enfocados en programación de gameplay, sistemas multijugador y mecánicas interactivas con Unity."
       >
-        Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity.
       </p>
     </div>
 
@@ -127,14 +124,13 @@ const games = [
             </div>
 
             <a
-              href={game.link}
-              class="mt-2 text-sm font-medium text-(--accent) hover:opacity-80 transition"
-              data-en="View Prototype →"
-              data-es="Ver prototipo →"
+              href={game.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent) hover:bg-(--accent)/20 transition w-fit"
             >
-              View Prototype →
+              Github
             </a>
-
           </div>
         </article>
       ))}

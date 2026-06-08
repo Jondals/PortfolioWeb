@@ -22,6 +22,7 @@ export const svgs: Record<string, string> = {
   MySQL: "/icons/mysql-wordmark-light.svg",
   GitHub: "/icons/github.svg",
   LinkedIn: "/icons/linkedin.svg",
+  InfoJobs: "/icons/infojobs.svg",
   Email: "/icons/email.svg",
   Moon: "/icons/moon.svg",
   Sun: "/icons/sun.svg",

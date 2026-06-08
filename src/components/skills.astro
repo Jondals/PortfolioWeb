@@ -5,59 +5,105 @@ const skillGroups = [
       en: "Frontend",
       es: "Frontend",
     },
-    skills: ["Angular", "Astro", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
+    skills: [
+      "Angular",
+      "Astro",
+      "TypeScript",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "Vite",
+      "Responsive Design",
+      "UI/UX Principles",
+    ],
   },
   {
     title: {
       en: "Backend",
       es: "Backend",
     },
-    skills: ["Django", "Python", "REST APIs", "Node.js"],
+    skills: [
+      "Django",
+      "Python",
+      "Node.js",
+      "REST APIs",
+      "WebSockets",
+      "Authentication & Authorization",
+      "Real-time systems",
+    ],
   },
   {
     title: {
       en: "Database",
       es: "Base de datos",
     },
-    skills: ["PostgreSQL", "MySQL", "SQLite"],
+    skills: [
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "Database Design",
+      "Data Modeling",
+    ],
   },
   {
     title: {
-      en: "Tools",
-      es: "Herramientas",
+      en: "DevOps & Tools",
+      es: "DevOps y Herramientas",
     },
-    skills: ["Git", "GitHub", "Docker", "Linux", "VS Code"],
+    skills: [
+      "Git",
+      "GitHub",
+      "GitHub Actions",
+      "Docker",
+      "Linux",
+      "Vercel",
+      "PNPM",
+      "VS Code",
+      "CI/CD basics",
+    ],
+  },
+  {
+    title: {
+      en: "Game Development",
+      es: "Desarrollo de videojuegos",
+    },
+    skills: [
+      "Unity",
+      "C#",
+      "Gameplay Systems",
+      "Input Systems",
+      "Prototyping",
+      "Game Feel",
+    ],
+  },
+  {
+    title: {
+      en: "Networking & Real-time",
+      es: "Redes y tiempo real",
+    },
+    skills: [
+      "WebSockets",
+      "WebRTC",
+      "Multiplayer Architecture",
+      "Client-Server Sync",
+    ],
   },
 ];
 ---
 
-<section id="skills" class="min-h-screen flex items-center px-6 py-20">
+<section id="skills" class="min-h-screen flex items-center px-6 py-20 scroll-mt-24">
   <div class="max-w-7xl mx-auto w-full">
 
     <div class="mb-20">
-      <p
-        class="text-(--accent) font-medium mb-4"
-        data-en="Skills"
-        data-es="Habilidades"
-      >
-        Skills
-      </p>
-
       <h2 class="text-5xl md:text-6xl font-bold max-w-4xl">
-        <span data-en="Technologies I use to build" data-es="Tecnologías que uso para construir">
-          Technologies I use to build
-        </span>
-        {" "}
-        <span class="text-(--accent)">
-          <span data-en="modern applications" data-es="aplicaciones modernas">
-            modern applications
-          </span>
-        </span>
+        <span data-en="Skills" data-es="Habilidades">
+          Habilidades
+        </span>{" "}
       </h2>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8">
-
       {skillGroups.map((group) => (
         <div class="group rounded-3xl border border-(--border) bg-white/2 p-8 transition-all duration-300 hover:border-(--accent)/40">
 
@@ -76,7 +122,6 @@ const skillGroups = [
               </span>
             ))}
           </div>
-
         </div>
       ))}
     </div>

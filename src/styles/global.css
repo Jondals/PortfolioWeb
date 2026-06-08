@@ -16,24 +16,26 @@
 
 :root {
   --font-sans: "Lexend", sans-serif;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f4f4f5;
-  --bg-card: #e4e4e7;
-  --bg-hover: #d4d4d8;
+  
+  --bg-primary: #fff9f2;
+  --bg-secondary: #fff0e0;
+  --bg-card: #ffe6cc;
+  --bg-hover: #ffdcb8;
 
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  --text-primary: #2b1a08;
+  --text-secondary: #543d2b;
+  --text-muted: #8c6d53;
 
-  --accent: #00d4ff;
-  --accent-hover: #38bdf8;
-  --accent-soft: #0ea5e9;
+  --accent: #ff8fab;
+  --accent-hover: #fb6f92;
+  --accent-soft: #ffccd5;
 
-  --border: #e4e4e7;
-  --border-light: #d4d4d8;
+  --border: #ffe6cc;
+  --border-light: #ffdcb8;
 }
 
 html.dark {
+  --font-sans: "Lexend", sans-serif;
   --bg-primary: #0d0d0d;
   --bg-secondary: #161616;
   --bg-card: #1f1f1f;

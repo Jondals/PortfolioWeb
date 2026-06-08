@@ -1,6 +1,8 @@
 ---
 const particles = Array.from({ length: 24 });
 const stars = Array.from({ length: 40 });
+
+import { svgs } from "../data/svgs.ts";
 ---
 
 <section id="hero" class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
@@ -16,7 +18,8 @@ const stars = Array.from({ length: 40 });
     "
   />
 
-  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 rounded-full border border-white/4 opacity-60" style="animation:ringPulse 8s ease-in-out infinite;"/>
+  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 rounded-full border border-white/4 opacity-60"
+    style="animation:ringPulse 8s ease-in-out infinite;" />
 
   <div class="absolute inset-0 pointer-events-none">
     {
@@ -55,6 +58,7 @@ const stars = Array.from({ length: 40 });
 
   <div class="relative z-10 w-full flex justify-center">
     <div class="max-w-3xl w-full text-left">
+
       <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
         <span class="text-xs tracking-[0.2em] uppercase text-white/60"
@@ -70,56 +74,65 @@ const stars = Array.from({ length: 40 });
         Hello, I'm
       </p>
 
-      <h1 class="mt-4 leading-none tracking-tight">
-        <span class="block text-5xl md:text-7xl font-bold bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
-          Jonathan
-        </span>
-
-        <span class="block mt-1 text-5xl md:text-7xl font-bold text-white">
-          Dorado Quintero
+      <h1 class="mt-4 leading-none tracking-tight flex flex-wrap items-baseline gap-x-3">
+        <span class="text-5xl md:text-7xl font-bold bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+          Jonathan Dorado
         </span>
       </h1>
 
       <h2 class="mt-8 text-xl md:text-2xl font-semibold text-white"
         data-en="Full Stack Developer & Game Developer"
         data-es="Desarrollador Full Stack y Desarrollador de Videojuegos">
-        Full Stack Developer & Game Developer
       </h2>
 
       <p class="mt-8 text-lg md:text-xl text-(--text-secondary) leading-relaxed"
-        data-en="I build real-time web platforms, multiplayer experiences and developer tools from Discord-like chat systems with WebRTC to game prototypes, automation tools and VS Code extensions."
-        data-es="Creo plataformas web en tiempo real, experiencias multijugador y herramientas para desarrolladores desde sistemas tipo Discord con WebRTC hasta prototipos de juegos, automatización y extensiones para VS Code.">
-        I build real-time web platforms, multiplayer experiences and developer tools — from Discord-like chat systems with WebRTC to game prototypes, automation tools and VS Code extensions.
+        data-en="I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools."
+        data-es="Diseño y desarrollo aplicaciones web, móviles, centradas en rendimiento, escalabilidad y experiencia de usuario. Desde plataformas full stack y sistemas colaborativos hasta aplicaciones móviles, experiencias multijugador y herramientas para desarrolladores. ">
+
       </p>
 
       <p class="mt-5 text-base md:text-lg text-(--text-secondary)"
-        data-en="Focused on scalable architecture, clean UI systems and interactive experiences using Angular, Astro, Django, Unity and modern web technologies."
-        data-es="Enfocado en arquitectura escalable, sistemas de UI limpios y experiencias interactivas usando Angular, Astro, Django, Unity y tecnologías modernas.">
-
-        Focused on scalable architecture, clean UI systems and interactive experiences using
-        <span class="text-white font-medium">Angular</span>,
-        <span class="text-white font-medium">Astro</span>,
-        <span class="text-white font-medium">Django</span>,
-        <span class="text-white font-medium">Unity</span>
-        and modern web technologies.
-
+        data-en="I work with Astro, Angular, Flutter, Android Studio, Django, Unity, and modern cloud technologies to create fast, scalable products built for real users."
+        data-es="Trabajo con Astro, Angular, Flutter, Android Studio, Unity y tecnologías cloud modernas para crear productos rápidos, escalables y pensados para usuarios reales.">
       </p>
 
-      <div class="mt-10 flex flex-wrap gap-4">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
 
         <a href="#projects"
           class="px-7 py-3 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.04] transition shadow-lg shadow-cyan-500/20"
           data-en="View Work"
           data-es="Ver Trabajo">
-          View Work
         </a>
 
         <a href="#about"
           class="px-7 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xl text-white hover:bg-white/10 transition"
           data-en="About me"
           data-es="Sobre mi">
-          About me
         </a>
+
+        <a href="https://github.com/Jondals" target="_blank"
+          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+          aria-label="GitHub">
+          <img src={svgs.GitHub} class="w-5 h-5" alt="GitHub" />
+        </a>
+
+        <a href="https://www.linkedin.com/in/jonathandoradoquintero/" target="_blank"
+          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+          aria-label="LinkedIn">
+          <img src={svgs.LinkedIn} class="w-5 h-5" alt="LinkedIn" />
+        </a>
+
+        <a href="mailto:jondals@proton.me"
+          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+          aria-label="Email">
+          <img src={svgs.Email} class="w-5 h-5" alt="Email" />
+        </a>
+        
+        <!--<a href="https://www.infojobs.net/tuusuario" target="_blank"
+          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
+          aria-label="InfoJobs">
+          <img src={svgs.InfoJobs} class="w-5 h-5" alt="InfoJobs" />
+        </a>-->
       </div>
     </div>
   </div>
@@ -127,56 +140,25 @@ const stars = Array.from({ length: 40 });
 
 <style>
   @keyframes aurora {
-    0%,100% {
-      transform: translateX(0) translateY(0) rotate(0deg);
-    }
-
-    50% {
-      transform: translateX(40px) translateY(-20px) rotate(4deg);
-    }
+    0%,100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    50% { transform: translateX(40px) translateY(-20px) rotate(4deg); }
   }
 
   @keyframes ringPulse {
-    0%,100% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: .25;
-    }
-
-    50% {
-      transform: translate(-50%, -50%) scale(1.08);
-      opacity: .5;
-    }
+    0%,100% { transform: translate(-50%, -50%) scale(1); opacity: .25; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: .5; }
   }
 
   @keyframes drift {
-    from {
-      transform: translate(0,0);
-    }
-
-    25% {
-      transform: translate(40px,-30px);
-    }
-
-    50% {
-      transform: translate(-20px,-80px);
-    }
-
-    75% {
-      transform: translate(-50px,-20px);
-    }
-
-    to {
-      transform: translate(0,0);
-    }
+    0% { transform: translate(0,0); }
+    25% { transform: translate(40px,-30px); }
+    50% { transform: translate(-20px,-80px); }
+    75% { transform: translate(-50px,-20px); }
+    100% { transform: translate(0,0); }
   }
 
   @keyframes twinkle {
-    0%,100% {
-      opacity: .2;
-    }
-
-    50% {
-      opacity: 1;
-    }
+    0%,100% { opacity: .2; }
+    50% { opacity: 1; }
   }
 </style>

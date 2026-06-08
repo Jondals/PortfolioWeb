@@ -1,25 +1,18 @@
-const select = document.querySelector("select") as HTMLSelectElement | null;
-const browserLang = navigator.language.toLowerCase();
-const detectedLang = browserLang.startsWith("es") ? "es" : "en";
-const savedLang = localStorage.getItem("language");
-const currentLang = savedLang || detectedLang;
+const STORAGE_KEY = "language";
 
-document.documentElement.lang = currentLang;
+const selects = document.querySelectorAll<HTMLSelectElement>(
+  "#language-select, #mobile-language-select"
+);
 
-if (select) {
-  select.value = currentLang;
+function getInitialLanguage(): string {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) return saved;
 
-  select.addEventListener("change", (e) => {
-    const lang = (e.target as HTMLSelectElement).value;
-
-    localStorage.setItem("language", lang);
-    document.documentElement.lang = lang;
-
-    applyLanguage(lang);
-  });
+  const browserLang = navigator.language.toLowerCase();
+  return browserLang.startsWith("es") ? "es" : "en";
 }
 
-function applyLanguage(lang: string) {
+function applyLanguage(lang: string): void {
   document.documentElement.lang = lang;
 
   document.querySelectorAll<HTMLElement>("[data-en]").forEach((el) => {
@@ -32,6 +25,25 @@ function applyLanguage(lang: string) {
       el.textContent = text;
     }
   });
+
+  selects.forEach((s) => {
+    s.value = lang;
+  });
 }
 
+function setLanguage(lang: string): void {
+  localStorage.setItem(STORAGE_KEY, lang);
+  applyLanguage(lang);
+}
+
+const currentLang = getInitialLanguage();
 applyLanguage(currentLang);
+
+selects.forEach((select) => {
+  select.addEventListener("change", (e: Event) => {
+    const target = e.target as HTMLSelectElement | null;
+    if (!target) return;
+
+    setLanguage(target.value);
+  });
+});
