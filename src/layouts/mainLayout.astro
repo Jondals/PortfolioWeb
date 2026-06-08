@@ -7,8 +7,6 @@ import Gamedevelopment from '../components/gamedevelopment.astro';
 import Experience from '../components/experience.astro';
 import Skills from '../components/skills.astro';
 import Footer from '../components/footer.astro';
-import ThemeInit from "../components/themeInit.astro";
-import LanguageInit from "../components/languageInit.astro";
 import "../styles/global.css";
 ---
 
@@ -19,8 +17,18 @@ import "../styles/global.css";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Jonathan Dorado | Portfolio</title>
-    <ThemeInit/>
-    <LanguageInit/>
+
+		<script is:inline>
+			const savedTheme = localStorage.getItem("theme");
+			const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			const theme = savedTheme ?? (systemDark ? "dark" : "light");
+			document.documentElement.classList.toggle("dark", theme === "dark");
+
+			const savedLang = localStorage.getItem("language");
+			const browserLang = navigator.language.toLowerCase();
+			const lang = savedLang ?? (browserLang.startsWith("es") ? "es" : "en");
+			document.documentElement.setAttribute("data-lang", lang);
+		</script>
 	</head>
 
     <body>
