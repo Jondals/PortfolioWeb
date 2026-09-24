@@ -1,153 +1,23 @@
 ---
-import { svgs } from "../data/svgs.ts";
+import { Image } from "astro:assets";
+import Icon from "./icon.astro";
+import Techlist from "./techlist.astro";
+import Projectcard from "./projectcard.astro";
+import { projects } from "../data/projects.ts";
 
-const images = [
-  {
-    title: "Chatterly",
-    status: { en: "COMPLETED", es: "ACABADO" },
-    description: {
-      en: "Web-based social platform inspired by Discord where users can add friends, customize profiles, and communicate via real-time chat and voice calls. Supports file and GIF sharing rendered directly in chat.",
-      es: "Red social web inspirada en Discord donde los usuarios pueden añadir amigos, personalizar su perfil y comunicarse mediante chat y llamadas en tiempo real. Permite enviar archivos y GIFs renderizados en el chat.",
-    },
-    contribution: {
-      en: "Developed real-time messaging system, authentication flow, and WebRTC-based voice calls.",
-      es: "Desarrollé el sistema de mensajería en tiempo real, autenticación y llamadas de voz basadas en WebRTC.",
-    },
-    tech: ["JavaScript", "PHP", "MySQL", "jQuery", "WebRTC", "HTML", "CSS"],
-    image: "/images/chatterly.webp",
-    github: "https://github.com/Jondals/Chatterly",
-    demo: null,
-  },
-
-  {
-    title: "Damas Donde Sea",
-    status: { en: "COMPLETED", es: "ACABADO" },
-    description: {
-      en: "Classic checkers game developed in Java with a focus on game logic, turn system, and board interaction.",
-      es: "Juego de damas clásico desarrollado en Java, centrado en la lógica del juego, sistema de turnos e interacción con el tablero.",
-    },
-    contribution: {
-      en: "Implemented game rules, movement system, and win condition logic.",
-      es: "Implementé las reglas del juego, sistema de movimientos y condiciones de victoria.",
-    },
-    tech: ["Java"],
-    image: "/images/damasdondesea.webp",
-    github: "https://github.com/Jondals/DamasDondeSea",
-    demo: null,
-  },
-
-  {
-    title: "QuizMania",
-    status: { en: "COMPLETED", es: "ACABADO" },
-    description: {
-      en: "Interactive trivia game with a spinning wheel that selects question categories, creating a gamified learning experience.",
-      es: "Juego de trivia interactivo con una ruleta que selecciona categorías de preguntas, creando una experiencia gamificada.",
-    },
-    contribution: {
-      en: "Built game logic, spinning wheel system, and dynamic question loading using AJAX.",
-      es: "Desarrollé la lógica del juego, la ruleta giratoria y la carga dinámica de preguntas mediante AJAX.",
-    },
-    tech: ["HTML", "CSS", "JavaScript", "AJAX", "Bootstrap"],
-    image: "/images/quizmania.webp",
-    github: "https://github.com/Jondals/QuizMania",
-    demo: "https://quiz-mania-plum.vercel.app/",
-  },
-
-  {
-    title: "FlavorBalance",
-    status: { en: "COMPLETED", es: "ACABADO" },
-    description: {
-      en: "Android mobile application for managing recipes with full CRUD functionality and database integration.",
-      es: "Aplicación móvil Android para gestionar recetas con funcionalidades CRUD completas e integración de base de datos.",
-    },
-    contribution: {
-      en: "Developed recipe management system (create, edit, delete) and learned Android database architecture.",
-      es: "Desarrollé el sistema de gestión de recetas (crear, editar, eliminar) y aprendí arquitectura de bases de datos en Android.",
-    },
-    tech: ["Kotlin", "Android Studio"],
-    image: "/images/flavorbalance.webp",
-    github: "https://github.com/Jondals/FlavorBalance",
-    demo: null,
-  },
-
-  {
-    title: "DevStarter",
-    status: { en: "IN DEVELOPMENT", es: "EN DESARROLLO" },
-    description: {
-      en: "VS Code extension that helps developers quickly set up popular frameworks and project templates.",
-      es: "Extensión de VS Code que ayuda a los desarrolladores a configurar rápidamente frameworks y plantillas de proyectos.",
-    },
-    contribution: {
-      en: "Building extension architecture and framework installation system using TypeScript.",
-      es: "Desarrollando la arquitectura de la extensión y el sistema de instalación de frameworks en TypeScript.",
-    },
-    tech: ["TypeScript", "VS Code API"],
-    image: "/images/devstarter.webp",
-    github: "https://github.com/Jondals/DevStarter",
-    demo: null,
-  },
-
-  {
-    title: "MyMusic",
-    status: { en: "IN DEVELOPMENT", es: "EN DESARROLLO" },
-    description: {
-      en: "Cross-platform Flutter app that migrates Spotify playlists and allows users to create and manage their own music collections.",
-      es: "Aplicación Flutter multiplataforma que migra playlists de Spotify y permite crear y gestionar colecciones musicales propias.",
-    },
-    contribution: {
-      en: "Developing playlist migration system and music management features.",
-      es: "Desarrollando el sistema de migración de playlists y gestión musical.",
-    },
-    tech: ["Flutter", "Dart"],
-    image: "/images/mymusic.webp",
-    github: "https://github.com/Jondals/MyMusic",
-    demo: null,
-  },
-
-  {
-    title: "MyConversor",
-    status: { en: "IN DEVELOPMENT", es: "EN DESARROLLO" },
-    description: {
-      en: "Media conversion tool that downloads and converts videos from platforms like YouTube and Twitch into different formats.",
-      es: "Herramienta de conversión multimedia que descarga y convierte vídeos de plataformas como YouTube y Twitch a diferentes formatos.",
-    },
-    contribution: {
-      en: "Implemented download and conversion pipeline using yt-dlp and ffmpeg.",
-      es: "Implementé el sistema de descarga y conversión usando yt-dlp y ffmpeg.",
-    },
-    tech: ["Python", "FFmpeg", "yt-dlp"],
-    image: "/images/myconversor.webp",
-    github: "https://github.com/Jondals/MyConversor",
-    demo: null,
-  },
-
-  {
-    title: "Chatterly Renewed",
-    status: { en: "IN DEVELOPMENT", es: "EN DESARROLLO" },
-    description: {
-      en: "Modern rewrite of Chatterly using Angular and TypeScript with improved architecture and local database support.",
-      es: "Reescritura moderna de Chatterly usando Angular y TypeScript con mejor arquitectura y soporte de base de datos local.",
-    },
-    contribution: {
-      en: "Redesigning full application architecture using Angular and SQLite.",
-      es: "Rediseñando toda la arquitectura de la aplicación con Angular y SQLite.",
-    },
-    tech: ["Angular", "TypeScript", "SQLite"],
-    image: "/images/chatterlyrenewed.webp",
-    github: "https://github.com/Jondals/ChatterlyRenewed",
-    demo: null,
-  },
-];
+const featured = projects.filter((project) => project.featured);
+const others = projects.filter((project) => !project.featured);
 ---
 
-<section id="projects" class="min-h-screen px-6 py-20 scroll-mt-15">
+<section id="projects" class="px-6 py-24 scroll-mt-20">
   <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-16">
+    <div class="text-center mb-14">
       <h2
-        class="text-4xl md:text-5xl font-bold mt-4"
+        class="text-4xl md:text-5xl font-bold"
         data-en="Projects"
         data-es="Proyectos"
       >
+        Projects
       </h2>
 
       <p
@@ -155,94 +25,165 @@ const images = [
         data-en="A collection of real-world applications built with different technologies, focused on learning, scalability and user experience."
         data-es="Una colección de aplicaciones reales desarrolladas con distintas tecnologías, enfocadas en aprendizaje, escalabilidad y experiencia de usuario."
       >
+        A collection of real-world applications built with different technologies, focused on learning, scalability and user experience.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      {images.map((project) => (
-        <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-
-          <div class="h-48 overflow-hidden relative">
-            <img
-              src={project.image}
-              alt={project.title}
-              class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-            />
-
-            <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
-
-            <span
-              class="absolute top-3 right-3 text-[10px] px-3 py-1 rounded-full bg-black/40 border border-white/20 text-white backdrop-blur"
-              data-en={project.status.en}
-              data-es={project.status.es}
-            >
-              {project.status.en}
-            </span>
-          </div>
-
-          <div class="p-5 flex flex-col gap-3">
-
-            <h3 class="text-lg font-bold text-white group-hover:text-(--accent) transition">
-              {project.title}
-            </h3>
-
-            <p
-              class="text-sm text-(--text-secondary) leading-relaxed"
-              data-en={project.description.en}
-              data-es={project.description.es}
-            >
-              {project.description.en}
-            </p>
-
-            <p class="text-xs text-(--text-secondary)">
-              <span class="text-white font-semibold" data-en="Role:" data-es="Rol:">
-                Role:
-              </span>{" "}
-              <span
-                data-en={project.contribution.en}
-                data-es={project.contribution.es}
-              >
-                {project.contribution.en}
-              </span>
-            </p>
-
-            <div class="flex flex-wrap gap-2 mt-3">
-              {project.tech.map((t) => (
-                <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
-                  {svgs[t] && (<img src={svgs[t]} class="w-3.5 h-3.5" />)}
-                  {t}
-                </span>
-              ))}
+    <div
+      class="carousel relative"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Featured projects"
+    >
+      <div class="carousel-track no-scrollbar flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-3xl" tabindex="0">
+        {featured.map((project, index) => (
+          <article
+            class="carousel-slide group w-full shrink-0 snap-center grid lg:grid-cols-[1.3fr_1fr] rounded-3xl overflow-hidden bg-(--text-primary)/3 border border-(--text-primary)/10"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} / ${featured.length}`}
+          >
+            <div class="relative aspect-video lg:aspect-auto lg:h-full lg:min-h-105 overflow-hidden">
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 1280px) 720px, (min-width: 1024px) 56vw, 100vw"
+                loading={index === 0 ? "eager" : "lazy"}
+                class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition duration-700 ease-out"
+              />
+              <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
             </div>
 
-            <div class="flex items-center gap-3 mt-4">
+            <div class="p-6 sm:p-10 flex flex-col gap-4">
+              <div class="flex flex-wrap items-center gap-3">
+                <span
+                  class="text-[10px] uppercase tracking-widest px-3 py-1 rounded-full border border-(--accent)/40 text-(--accent-text)"
+                  data-en="Featured"
+                  data-es="Destacado"
+                >
+                  Featured
+                </span>
+                <span
+                  class="text-[10px] uppercase tracking-widest px-3 py-1 rounded-full border border-(--text-primary)/15 text-(--text-secondary)"
+                  data-en={project.status.en}
+                  data-es={project.status.es}
+                >
+                  {project.status.en}
+                </span>
+              </div>
 
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent) hover:bg-(--accent)/20 transition"
+              <h3 class="text-3xl md:text-4xl font-bold text-(--text-primary)">
+                {project.title}
+              </h3>
+
+              <p
+                class="text-(--text-secondary) leading-relaxed"
+                data-en={project.description.en}
+                data-es={project.description.es}
               >
-                GitHub
-              </a>
+                {project.description.en}
+              </p>
 
-              {project.demo && (
+              <p class="text-sm text-(--text-secondary)">
+                <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">
+                  Role:
+                </span>{" "}
+                <span
+                  data-en={project.contribution.en}
+                  data-es={project.contribution.es}
+                >
+                  {project.contribution.en}
+                </span>
+              </p>
+
+              <Techlist tech={project.tech} />
+
+              <div class="flex flex-wrap items-center gap-3 mt-auto pt-4">
                 <a
-                  href={project.demo}
+                  href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
-                  aria-label="Live Demo"
+                  class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent-text) hover:bg-(--accent)/20"
+                  aria-label={`${project.title} GitHub`}
                 >
-                  👁
+                  <Icon name="GitHub" class="w-4 h-4" />
+                  GitHub
                 </a>
-              )}
 
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.03] shadow-lg shadow-(--accent)/20"
+                  >
+                    <Icon name="external" class="w-4 h-4" />
+                    <span data-en="Live demo" data-es="Ver demo">Live demo</span>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          class="carousel-prev w-11 h-11 rounded-full flex items-center justify-center border border-(--text-primary)/15 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-x-0.5"
+          aria-label="Previous project"
+        >
+          <Icon name="arrow-left" class="w-5 h-5" />
+        </button>
+
+        <div class="flex items-center gap-2">
+          {featured.map((project, index) => (
+            <button
+              type="button"
+              class="carousel-dot group/dot w-6 h-6 flex items-center justify-center"
+              aria-label={`Go to ${project.title}`}
+              aria-current={index === 0 ? "true" : "false"}
+              data-index={index}
+            >
+              <span class="block h-2 w-2 rounded-full bg-(--text-primary)/25 transition-all duration-300 group-hover/dot:bg-(--text-primary)/50 group-aria-[current=true]/dot:w-6 group-aria-[current=true]/dot:bg-(--accent)"></span>
+            </button>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          class="carousel-next w-11 h-11 rounded-full flex items-center justify-center border border-(--text-primary)/15 text-(--text-primary) hover:bg-(--text-primary)/10 hover:translate-x-0.5"
+          aria-label="Next project"
+        >
+          <Icon name="arrow-right" class="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-24">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-10">
+        <h3
+          class="text-2xl md:text-3xl font-bold"
+          data-en="More projects"
+          data-es="Más proyectos"
+        >
+          More projects
+        </h3>
+        <p
+          class="text-sm text-(--text-secondary)"
+          data-en="Side projects, experiments and work in progress."
+          data-es="Proyectos personales, experimentos y trabajo en curso."
+        >
+          Side projects, experiments and work in progress.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {others.map((project) => (
+          <Projectcard {...project} />
+        ))}
+      </div>
     </div>
   </div>
 </section>

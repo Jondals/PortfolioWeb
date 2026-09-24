@@ -1,96 +1,156 @@
 ---
-import { svgs } from "../data/svgs.ts";
+import Icon from "./icon.astro";
+
+const year = new Date().getFullYear();
+
+const links = [
+  { href: "#about", en: "About", es: "Sobre mí" },
+  { href: "#projects", en: "Projects", es: "Proyectos" },
+  { href: "#game-development", en: "Games", es: "Juegos" },
+  { href: "#experience", en: "Experience", es: "Experiencia" },
+  { href: "#skills", en: "Skills", es: "Habilidades" },
+];
+
+const socials = [
+  { href: "https://github.com/Jondals", icon: "GitHub", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/jonathandoradoquintero/", icon: "LinkedIn", label: "LinkedIn" },
+  { href: "mailto:jondals@proton.me", icon: "Email", label: "Email" },
+];
 ---
 
-<footer
-  class="relative mt-24 px-6 py-16 border-t border-white/5 overflow-hidden"
-  style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 100%);"
->
+<footer id="contact" class="relative mt-12 px-6 pt-24 pb-10 overflow-hidden scroll-mt-20">
 
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-indigo-500/[0.08] to-transparent"></div>
+    <div class="absolute inset-x-0 bottom-0 h-96 bg-linear-to-t from-indigo-500/8 to-transparent"></div>
   </div>
 
-  <div class="relative z-10 max-w-6xl mx-auto">
+  <div class="relative z-10 max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+    <div class="relative overflow-hidden rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/3 px-8 py-14 md:px-16 text-center">
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-150 h-60 bg-linear-to-r from-cyan-500/15 via-purple-500/15 to-blue-500/15 blur-3xl rounded-full pointer-events-none"></div>
 
-      <div class="space-y-4 text-center md:text-left">
+      <p
+        class="relative text-sm uppercase tracking-[0.3em] text-(--accent-text) font-medium"
+        data-en="Contact"
+        data-es="Contacto"
+      >
+        Contact
+      </p>
 
-        <h3 class="text-lg font-semibold text-white">
+      <h2
+        class="relative mt-4 text-4xl md:text-5xl font-bold"
+        data-en="Let's build something together"
+        data-es="¿Construimos algo juntos?"
+      >
+        Let's build something together
+      </h2>
+
+      <p
+        class="relative mt-5 max-w-xl mx-auto text-(--text-secondary) leading-relaxed"
+        data-en="I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon."
+        data-es="Estoy abierto a ofertas a jornada completa, prácticas y proyectos freelance. Escríbeme y te responderé lo antes posible."
+      >
+        I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon.
+      </p>
+
+      <div class="relative mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="mailto:jondals@proton.me"
+          class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.04] hover:shadow-xl shadow-lg shadow-(--accent)/20"
+        >
+          <Icon name="send" class="w-4 h-4" />
+          <span data-en="Send an email" data-es="Enviar un email">Send an email</span>
+        </a>
+
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-0.5"
+        >
+          <Icon name="download" class="w-4 h-4" />
+          <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+
+      <div class="space-y-3">
+        <p class="text-lg font-semibold text-(--text-primary)">
           Jonathan Dorado
-        </h3>
-
-        <p class="text-sm text-white/60 leading-relaxed max-w-sm">
-          <span
-            data-en="Full Stack Developer focused on building scalable systems, and interactive experiences."
-            data-es="Desarrollador Full Stack enfocado en construir sistemas escalables y experiencias interactivas."
-          ></span>
         </p>
-
-        <div class="flex flex-wrap justify-center md:justify-start gap-3 text-xs text-white/50">
-          <a href="#projects" class="hover:text-white transition">
-            <span data-en="Projects" data-es="Proyectos"></span>
-          </a>
-          <a href="#about" class="hover:text-white transition">
-            <span data-en="About me" data-es="Sobre mí"></span>
-          </a>
-          <a href="mailto:jondals@proton.me" class="hover:text-white transition">
-            <span data-en="Contact" data-es="Contacto"></span>
-          </a>
-        </div>
-
+        <p
+          class="text-sm text-(--text-secondary) leading-relaxed max-w-xs mx-auto md:mx-0"
+          data-en="Full Stack Developer focused on building scalable systems, and interactive experiences."
+          data-es="Desarrollador Full Stack enfocado en construir sistemas escalables y experiencias interactivas."
+        >
+          Full Stack Developer focused on building scalable systems, and interactive experiences.
+        </p>
       </div>
 
-      <div class="flex justify-center items-center">
-        <div class="relative"></div>
-      </div>
+      <nav aria-label="Footer">
+        <p class="text-sm font-semibold text-(--text-primary) mb-4" data-en="Navigation" data-es="Navegación">
+          Navigation
+        </p>
+        <ul class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm max-w-xs mx-auto md:mx-0">
+          {links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="inline-block text-(--text-secondary) hover:text-(--accent-text) hover:translate-x-0.5"
+                data-en={link.en}
+                data-es={link.es}
+              >
+                {link.en}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <div class="flex justify-center md:justify-end">
-
-        <div class="flex md:flex-col gap-3">
-
-          <a href="https://github.com/Jondals/PortfolioWeb"
-            target="_blank"
-            class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition hover:-translate-y-1"
-            aria-label="GitHub">
-            <img src={svgs.GitHub} class="w-5 h-5 opacity-70 hover:opacity-100 transition" />
-          </a>
-
-          <a href="https://linkedin.com/in/jonathandoradoquintero/"
-            target="_blank"
-            class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition hover:-translate-y-1"
-            aria-label="LinkedIn">
-            <img src={svgs.LinkedIn} class="w-5 h-5 opacity-70 hover:opacity-100 transition" />
-          </a>
-
-          <a href="mailto:jondals@proton.me"
-            class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition hover:-translate-y-1"
-            aria-label="Email">
-            <img src={svgs.Email} class="w-5 h-5 opacity-70 hover:opacity-100 transition" />
-          </a>
-
-          <!--<a href=""
-            target="_blank"
-            class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition hover:-translate-y-1"
-            aria-label="LinkedIn">
-            <img src={svgs.InfoJobs} class="w-5 h-5 opacity-70 hover:opacity-100 transition" />
-          </a>-->
-
+      <div>
+        <p class="text-sm font-semibold text-(--text-primary) mb-4" data-en="Find me on" data-es="Encuéntrame en">
+          Find me on
+        </p>
+        <div class="flex justify-center md:justify-start gap-3">
+          {socials.map((social) => (
+            <a
+              href={social.href}
+              target={social.href.startsWith("http") ? "_blank" : undefined}
+              rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              class="p-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-1"
+              aria-label={social.label}
+            >
+              <Icon name={social.icon} class="w-5 h-5" />
+            </a>
+          ))}
         </div>
       </div>
     </div>
 
-    <div class="mt-14 border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+    <div class="mt-14 border-t border-(--text-primary)/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
 
-      <p class="text-xs text-white/40">
-        <span data-en="© 2026 All rights reserved." data-es="© 2026 Todos los derechos reservados."></span>
+      <p class="text-xs text-(--text-secondary)">
+        © {year} Jonathan Dorado ·{" "}
+        <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
       </p>
 
-      <p class="text-xs text-white/40">
-        <span data-en="Built with Astro and Tailwind CSS" data-es="Construido con Astro y Tailwind CSS"></span>
+      <p class="text-xs text-(--text-secondary) flex items-center gap-2">
+        <span data-en="Built with" data-es="Hecho con">Built with</span>
+        <Icon name="Astro" class="w-3.5 h-3.5" /> Astro &
+        <Icon name="Tailwind CSS" class="w-3.5 h-3.5" /> Tailwind CSS
       </p>
 
+      <a
+        href="#about"
+        class="inline-flex items-center gap-2 text-xs text-(--text-secondary) hover:text-(--accent-text) group"
+      >
+        <span data-en="Back to top" data-es="Volver arriba">Back to top</span>
+        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-(--text-primary)/10 group-hover:-translate-y-1 group-hover:border-(--accent)/40 transition duration-300">
+          <Icon name="arrow-up" class="w-4 h-4" />
+        </span>
+      </a>
     </div>
   </div>
 </footer>

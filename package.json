@@ -6,11 +6,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node --test tests/portfolio.test.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^6.3.3",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.1.17"
   },
   "description": "```sh\r pnpm create astro@latest -- --template minimal\r ```",
@@ -25,5 +27,9 @@
   "bugs": {
     "url": "https://github.com/Jondals/PortfolioWeb/issues"
   },
-  "homepage": "https://github.com/Jondals/PortfolioWeb#readme"
+  "homepage": "https://github.com/Jondals/PortfolioWeb#readme",
+  "devDependencies": {
+    "lighthouse": "^13.5.0",
+    "puppeteer": "^25.12.0"
+  }
 }

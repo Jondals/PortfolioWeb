@@ -1,0 +1,18 @@
+---
+import Icon from "./icon.astro";
+
+interface Props {
+  tech: string[];
+}
+
+const { tech } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-2">
+  {tech.map((t) => (
+    <li class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-secondary) hover:bg-(--text-primary)/10 hover:scale-105 transition duration-300">
+      <Icon name={t} class="w-3.5 h-3.5" />
+      {t}
+    </li>
+  ))}
+</ul>

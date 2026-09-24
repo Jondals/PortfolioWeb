@@ -1,19 +1,27 @@
 ---
+import Icon from "./icon.astro";
+import { icons } from "../data/icons.ts";
+
 const skillGroups = [
   {
     title: {
-      en: "Frontend",
-      es: "Frontend",
+      en: "Frontend & Mobile",
+      es: "Frontend y Móvil",
     },
     skills: [
       "Angular",
       "Astro",
+      "React",
       "TypeScript",
       "JavaScript",
       "HTML",
       "CSS",
       "Tailwind CSS",
       "Vite",
+      "Flutter",
+      "Dart",
+      "Kotlin",
+      "Android Studio",
       "Responsive Design",
       "UI/UX Principles",
     ],
@@ -27,8 +35,10 @@ const skillGroups = [
       "Django",
       "Python",
       "Node.js",
+      "PHP",
+      "Java",
+      "Supabase",
       "REST APIs",
-      "WebSockets",
       "Authentication & Authorization",
       "Real-time systems",
     ],
@@ -83,47 +93,137 @@ const skillGroups = [
       es: "Redes y tiempo real",
     },
     skills: [
-      "WebSockets",
       "WebRTC",
+      "WebSockets",
       "Multiplayer Architecture",
       "Client-Server Sync",
     ],
   },
 ];
+
+const softSkills = [
+  { icon: "users", en: "Teamwork", es: "Trabajo en equipo" },
+  { icon: "message", en: "Communication", es: "Comunicación" },
+  { icon: "puzzle", en: "Problem solving", es: "Resolución de problemas" },
+  { icon: "book", en: "Self-learning", es: "Aprendizaje autónomo" },
+  { icon: "refresh", en: "Adaptability", es: "Adaptabilidad" },
+  { icon: "clock", en: "Time management", es: "Gestión del tiempo" },
+  { icon: "lightbulb", en: "Critical thinking", es: "Pensamiento crítico" },
+  { icon: "target", en: "Attention to detail", es: "Atención al detalle" },
+];
+
+const languages = [
+  { en: "Spanish", es: "Español", level: { en: "Native", es: "Nativo" }, value: 100 },
+  { en: "English", es: "Inglés", level: { en: "B1 · Intermediate", es: "B1 · Intermedio" }, value: 55 },
+];
 ---
 
-<section id="skills" class="min-h-screen flex items-center px-6 py-20 scroll-mt-24">
+<section id="skills" class="px-6 py-24 scroll-mt-20">
   <div class="max-w-7xl mx-auto w-full">
 
-    <div class="mb-20">
-      <h2 class="text-5xl md:text-6xl font-bold max-w-4xl">
-        <span data-en="Skills" data-es="Habilidades">
-          Habilidades
-        </span>{" "}
+    <div class="mb-14">
+      <h2 class="text-5xl md:text-6xl font-bold max-w-4xl"
+        data-en="Skills"
+        data-es="Habilidades">
+        Skills
       </h2>
+      <p
+        class="text-(--text-secondary) mt-4 max-w-2xl"
+        data-en="Technologies I use to build products, and the way I work with people."
+        data-es="Las tecnologías con las que construyo productos y cómo trabajo con las personas."
+      >
+        Technologies I use to build products, and the way I work with people.
+      </p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8">
-      {skillGroups.map((group) => (
-        <div class="group rounded-3xl border border-(--border) bg-white/2 p-8 transition-all duration-300 hover:border-(--accent)/40">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {skillGroups.map((group) => {
+        const tools = group.skills.filter((skill) => icons[skill]);
+        const concepts = group.skills.filter((skill) => !icons[skill]);
 
-          <h3
-            class="text-2xl font-semibold mb-8"
-            data-en={group.title.en}
-            data-es={group.title.es}
-          >
-            {group.title.en}
-          </h3>
+        return (
+          <div class="group rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-5 sm:p-7 hover:border-(--accent)/40 hover:-translate-y-1 hover:shadow-xl transition duration-500 ease-out">
 
-          <div class="flex flex-wrap gap-3">
-            {group.skills.map((skill) => (
-              <span class="px-4 py-2 rounded-xl bg-white/3 border border-(--border) text-(--text-secondary) transition-all duration-300 hover:border-(--accent)/30 hover:text-white">
-                {skill}
-              </span>
-            ))}
+            <h3
+              class="text-xl font-semibold mb-6"
+              data-en={group.title.en}
+              data-es={group.title.es}
+            >
+              {group.title.en}
+            </h3>
+
+            <ul class="grid grid-cols-2 gap-2.5">
+              {tools.map((skill) => (
+                <li class="flex items-center gap-2.5 px-2.5 sm:px-3 py-2.5 rounded-xl bg-(--text-primary)/3 border border-(--text-primary)/10 text-xs sm:text-sm leading-tight text-(--text-primary) hover:border-(--accent)/40 hover:bg-(--text-primary)/6 transition duration-300">
+                  <Icon name={skill} class="w-5 h-5" />
+                  <span class="min-w-0 break-words">{skill}</span>
+                </li>
+              ))}
+            </ul>
+
+            {concepts.length > 0 && (
+              <ul class="flex flex-wrap gap-2 mt-4">
+                {concepts.map((concept) => (
+                  <li class="px-3 py-1 rounded-full border border-(--text-primary)/10 text-xs text-(--text-secondary)">
+                    {concept}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6 mt-6">
+
+      <div class="lg:col-span-2 rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-7">
+        <h3
+          class="text-xl font-semibold mb-6"
+          data-en="Soft skills"
+          data-es="Habilidades blandas"
+        >
+          Soft skills
+        </h3>
+
+        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {softSkills.map((skill) => (
+            <li class="flex flex-col items-center text-center gap-3 p-4 rounded-2xl bg-(--text-primary)/3 border border-(--text-primary)/10 hover:border-(--accent)/40 hover:-translate-y-1 transition duration-300">
+              <span class="w-11 h-11 flex items-center justify-center rounded-xl bg-(--accent)/10 text-(--accent-text)">
+                <Icon name={skill.icon} class="w-5 h-5" />
+              </span>
+              <span class="text-sm text-(--text-primary)" data-en={skill.en} data-es={skill.es}>
+                {skill.en}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-7">
+        <h3 class="flex items-center gap-3 text-xl font-semibold mb-6">
+          <Icon name="globe" class="w-5 h-5 text-(--accent-text)" />
+          <span data-en="Languages" data-es="Idiomas">Languages</span>
+        </h3>
+
+        <ul class="space-y-6">
+          {languages.map((language) => (
+            <li>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-(--text-primary)" data-en={language.en} data-es={language.es}>
+                  {language.en}
+                </span>
+                <span class="text-sm text-(--text-secondary)" data-en={language.level.en} data-es={language.level.es}>
+                  {language.level.en}
+                </span>
+              </div>
+              <div class="h-2 rounded-full bg-(--text-primary)/10 overflow-hidden">
+                <div class="h-full rounded-full bg-(--accent)" style={`width:${language.value}%`}></div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </div>
 </section>

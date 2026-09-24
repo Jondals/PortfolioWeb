@@ -1,0 +1,12 @@
+---
+import { icons, iconId } from "../data/icons.ts";
+---
+
+<!-- Sprite con todos los iconos: se pinta una vez y cada <Icon> lo referencia con <use> -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden">
+  {Object.entries(icons).map(([name, icon]) => (
+    <symbol id={iconId(name)} viewBox={icon.viewBox}>
+      <Fragment set:html={icon.body} />
+    </symbol>
+  ))}
+</svg>

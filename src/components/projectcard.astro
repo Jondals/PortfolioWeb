@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Icon from "./icon.astro";
+import Techlist from "./techlist.astro";
+import type { Translation } from "../data/projects.ts";
+
+interface Props {
+  title: string;
+  status: Translation;
+  description: Translation;
+  contribution: Translation;
+  contributionLabel?: Translation;
+  tech: string[];
+  image: ImageMetadata;
+  github: string;
+  demo?: string | null;
+  imageClass?: string;
+}
+
+const {
+  title,
+  status,
+  description,
+  contribution,
+  contributionLabel = { en: "Role:", es: "Rol:" },
+  tech,
+  image,
+  github,
+  demo,
+  imageClass = "h-48",
+} = Astro.props;
+---
+
+<article class="group relative flex flex-col rounded-2xl overflow-hidden bg-(--text-primary)/3 border border-(--text-primary)/10 shadow-lg hover:shadow-2xl hover:-translate-y-1.5 hover:border-(--accent)/40 transition duration-500 ease-out">
+
+  <div class={`${imageClass} overflow-hidden relative`}>
+    <Image
+      src={image}
+      alt={`${title} screenshot`}
+      widths={[400, 800]}
+      sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+      loading="lazy"
+      class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out"
+    />
+
+    <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
+
+    <span
+      class="absolute top-3 right-3 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/70 border border-white/20 text-white backdrop-blur"
+      data-en={status.en}
+      data-es={status.es}
+    >
+      {status.en}
+    </span>
+  </div>
+
+  <div class="p-5 flex flex-col gap-3 flex-1">
+
+    <h3 class="text-lg font-bold text-(--text-primary) group-hover:text-(--accent-text) transition duration-300">
+      {title}
+    </h3>
+
+    <p
+      class="text-sm text-(--text-secondary) leading-relaxed"
+      data-en={description.en}
+      data-es={description.es}
+    >
+      {description.en}
+    </p>
+
+    <p class="text-xs text-(--text-secondary)">
+      <span class="text-(--text-primary) font-semibold" data-en={contributionLabel.en} data-es={contributionLabel.es}>
+        {contributionLabel.en}
+      </span>{" "}
+      <span
+        data-en={contribution.en}
+        data-es={contribution.es}
+      >
+        {contribution.en}
+      </span>
+    </p>
+
+    <div class="mt-2">
+      <Techlist tech={tech} />
+    </div>
+
+    <div class="flex items-center gap-3 mt-auto pt-4">
+      <a
+        href={github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent-text) text-sm hover:bg-(--accent)/20"
+        aria-label={`${title} GitHub`}
+      >
+        <Icon name="GitHub" class="w-4 h-4" />
+        GitHub
+      </a>
+
+      {demo && (
+        <a
+          href={demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-(--text-primary)/10 bg-(--text-primary)/5 text-(--text-primary) text-sm hover:bg-(--text-primary)/10"
+        >
+          <Icon name="external" class="w-4 h-4" />
+          Demo
+        </a>
+      )}
+    </div>
+  </div>
+</article>

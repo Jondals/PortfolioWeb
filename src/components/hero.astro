@@ -1,14 +1,22 @@
 ---
-const particles = Array.from({ length: 24 });
-const stars = Array.from({ length: 40 });
+import { Image } from "astro:assets";
+import Icon from "./icon.astro";
+import profile from "../assets/images/profile.webp";
 
-import { svgs } from "../data/svgs.ts";
+const particles = Array.from({ length: 14 });
+const stars = Array.from({ length: 30 });
+
+const socials = [
+  { href: "https://github.com/Jondals", icon: "GitHub", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/jonathandoradoquintero/", icon: "LinkedIn", label: "LinkedIn" },
+  { href: "mailto:jondals@proton.me", icon: "Email", label: "Email" },
+];
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+<section id="about" class="relative px-6 pt-32 pb-24 overflow-hidden scroll-mt-20">
 
   <div
-    class="absolute top-0 left-1/2 -translate-x-1/2 w-300 h-175 opacity-40 blur-3xl"
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-300 h-175 opacity-40 blur-3xl pointer-events-none"
     style="
       background:
       radial-gradient(circle at 30% 50%, rgba(99,102,241,.25), transparent 30%),
@@ -18,10 +26,10 @@ import { svgs } from "../data/svgs.ts";
     "
   />
 
-  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 rounded-full border border-white/4 opacity-60"
+  <div class="absolute left-1/2 top-[40%] w-175 h-175 rounded-full border border-white/4 opacity-60 pointer-events-none"
     style="animation:ringPulse 8s ease-in-out infinite;" />
 
-  <div class="absolute inset-0 pointer-events-none">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     {
       stars.map(() => (
         <span
@@ -39,7 +47,7 @@ import { svgs } from "../data/svgs.ts";
     }
   </div>
 
-  <div class="absolute inset-0 pointer-events-none">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     {
       particles.map(() => (
         <span
@@ -56,74 +64,132 @@ import { svgs } from "../data/svgs.ts";
     }
   </div>
 
-  <div class="relative z-10 w-full flex justify-center">
-    <div class="max-w-3xl w-full text-left">
+  <div class="relative z-10 max-w-7xl mx-auto">
 
-      <p class="mt-10 text-cyan-400 font-medium tracking-[0.3em] uppercase text-sm"
-        data-en="Hello, I'm"
-        data-es="Hola, soy">
-        Hello, I'm
-      </p>
+    <div class="min-h-[calc(100svh-14rem)] grid lg:grid-cols-[1.4fr_1fr] gap-14 items-center">
 
-      <h1 class="mt-4 leading-none tracking-tight flex flex-wrap items-baseline gap-x-3">
-        <span class="text-5xl md:text-7xl font-bold bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
-          Jonathan Dorado
-        </span>
-      </h1>
+      <div class="order-2 lg:order-1">
 
-      <h2 class="mt-8 text-xl md:text-2xl font-semibold text-white"
-        data-en="Full Stack Developer & Game Developer"
-        data-es="Desarrollador Full Stack y Desarrollador de Videojuegos">
-      </h2>
+        <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-(--text-primary)/10 bg-(--text-primary)/5 text-sm text-(--text-primary)">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+          </span>
+          <span data-en="Open to work" data-es="Abierto a trabajar">Open to work</span>
+        </p>
 
-      <p class="mt-8 text-lg md:text-xl text-(--text-secondary) leading-relaxed"
-        data-en="I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools."
-        data-es="Diseño y desarrollo aplicaciones web, móviles, centradas en rendimiento, escalabilidad y experiencia de usuario. Desde plataformas full stack y sistemas colaborativos hasta aplicaciones móviles, experiencias multijugador y herramientas para desarrolladores. ">
+        <h1 class="mt-6 leading-none tracking-tight">
+          <span class="text-5xl md:text-7xl font-bold bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Jonathan Dorado
+          </span>
+        </h1>
 
-      </p>
+        <p class="mt-6 text-xl md:text-2xl font-semibold text-(--text-primary)"
+          data-en="Full Stack Developer & Game Developer"
+          data-es="Desarrollador Full Stack y Desarrollador de Videojuegos">
+          Full Stack Developer & Game Developer
+        </p>
 
-      <p class="mt-5 text-base md:text-lg text-(--text-secondary)"
-        data-en="I work with Astro, Angular, Flutter, Android Studio, Django, Unity, and modern cloud technologies to create fast, scalable products built for real users."
-        data-es="Trabajo con Astro, Angular, Flutter, Android Studio, Unity y tecnologías cloud modernas para crear productos rápidos, escalables y pensados para usuarios reales.">
-      </p>
+        <p class="mt-6 text-lg md:text-xl text-(--text-secondary) leading-relaxed max-w-2xl"
+          data-en="I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools."
+          data-es="Diseño y desarrollo aplicaciones web, móviles, centradas en rendimiento, escalabilidad y experiencia de usuario. Desde plataformas full stack y sistemas colaborativos hasta aplicaciones móviles, experiencias multijugador y herramientas para desarrolladores.">
+          I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools.
+        </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <div class="mt-10 flex flex-wrap items-center gap-4">
 
-        <a href="#projects"
-          class="px-7 py-3 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.04] transition shadow-lg shadow-cyan-500/20"
-          data-en="View Work"
-          data-es="Ver Trabajo">
-        </a>
+          <a href="#projects"
+            class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.04] hover:shadow-xl shadow-lg shadow-(--accent)/20">
+            <span data-en="View Work" data-es="Ver Trabajo">View Work</span>
+            <Icon name="arrow-right" class="w-4 h-4" />
+          </a>
 
-        <a href="#about"
-          class="px-7 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xl text-white hover:bg-white/10 transition"
+          <a href="/cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 backdrop-blur-xl text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-0.5">
+            <Icon name="download" class="w-4 h-4" />
+            <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
+          </a>
+
+          <div class="flex items-center gap-3">
+            {socials.map((social) => (
+              <a href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                class="p-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-0.5"
+                aria-label={social.label}>
+                <Icon name={social.icon} class="w-5 h-5" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+        <div class="relative">
+          <div class="absolute inset-0 bg-linear-to-tr from-cyan-500/20 via-purple-500/20 to-blue-500/20 blur-3xl rounded-full"></div>
+
+          <div class="w-56 h-56 md:w-80 md:h-80 rounded-full overflow-hidden border border-white/10 shadow-2xl relative">
+            <Image
+              src={profile}
+              alt="Jonathan Dorado"
+              widths={[224, 320, 448, 640]}
+              sizes="(min-width: 768px) 320px, 224px"
+              loading="eager"
+              fetchpriority="high"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-24 grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/3 p-6 md:p-12">
+      <div>
+        <p
+          class="text-sm uppercase tracking-[0.3em] text-(--accent-text) font-medium"
           data-en="About me"
-          data-es="Sobre mi">
-        </a>
+          data-es="Sobre mí"
+        >
+          About me
+        </p>
+        <h2
+          class="mt-4 text-3xl md:text-4xl font-bold leading-tight"
+          data-en="From studying to building real products"
+          data-es="De estudiar a construir productos reales"
+        >
+          From studying to building real products
+        </h2>
+      </div>
 
-        <a href="https://github.com/Jondals" target="_blank"
-          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
-          aria-label="GitHub">
-          <img src={svgs.GitHub} class="w-5 h-5" alt="GitHub" />
-        </a>
+      <div class="space-y-5 text-(--text-secondary) text-lg leading-relaxed">
+        <p
+          data-en="I started programming about 3 years ago while studying a Multi-Platform Application Development degree. I began with Java and the fundamentals of software development, learning how to structure applications and understand how systems work under the hood."
+          data-es="Empecé a programar hace unos 3 años mientras estudiaba el Grado Superior de Desarrollo de Aplicaciones Multiplataforma. Empecé con Java y los fundamentos del desarrollo de software, aprendiendo a estructurar aplicaciones y entender cómo funcionan los sistemas por dentro."
+        >
+          I started programming about 3 years ago while studying a Multi-Platform Application Development degree. I began with Java and the fundamentals of software development, learning how to structure applications and understand how systems work under the hood.
+        </p>
 
-        <a href="https://www.linkedin.com/in/jonathandoradoquintero/" target="_blank"
-          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
-          aria-label="LinkedIn">
-          <img src={svgs.LinkedIn} class="w-5 h-5" alt="LinkedIn" />
-        </a>
+        <p
+          data-en="From there, I kept learning on my own, moving into more modern technologies and full stack development. I explored real-time systems, web applications and interactive experiences, always building small projects to apply what I learned."
+          data-es="A partir de ahí seguí aprendiendo por mi cuenta, pasando a tecnologías más modernas y desarrollo full stack. Exploré sistemas en tiempo real, aplicaciones web y experiencias interactivas, siempre construyendo pequeños proyectos para aplicar lo aprendido."
+        >
+          From there, I kept learning on my own, moving into more modern technologies and full stack development. I explored real-time systems, web applications and interactive experiences, always building small projects to apply what I learned.
+        </p>
 
-        <a href="mailto:jondals@proton.me"
-          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
-          aria-label="Email">
-          <img src={svgs.Email} class="w-5 h-5" alt="Email" />
-        </a>
-        
-        <!--<a href="https://www.infojobs.net/tuusuario" target="_blank"
-          class="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition"
-          aria-label="InfoJobs">
-          <img src={svgs.InfoJobs} class="w-5 h-5" alt="InfoJobs" />
-        </a>-->
+        <p
+          data-en="Today I focus on building scalable web platforms, multiplayer systems and developer tools, combining clean architecture with performance and user experience."
+          data-es="Hoy me centro en construir plataformas escalables, sistemas multijugador y herramientas de desarrollo, combinando arquitectura limpia con rendimiento y experiencia de usuario."
+        >
+          Today I focus on building scalable web platforms, multiplayer systems and developer tools, combining clean architecture with performance and user experience.
+        </p>
+
+        <p class="text-base"
+          data-en="I work with Astro, Angular, Flutter, Android Studio, Django, Unity, and modern cloud technologies to create fast, scalable products built for real users."
+          data-es="Trabajo con Astro, Angular, Flutter, Android Studio, Unity y tecnologías cloud modernas para crear productos rápidos, escalables y pensados para usuarios reales.">
+          I work with Astro, Angular, Flutter, Android Studio, Django, Unity, and modern cloud technologies to create fast, scalable products built for real users.
+        </p>
       </div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 ---
-import { svgs } from "../data/svgs.ts";
+import Projectcard from "./projectcard.astro";
+import parkourBeans from "../assets/images/parkourbeans.webp";
+import nextbotScapeBeans from "../assets/images/nextbotscapebeans.webp";
 
 const games = [
   {
@@ -17,7 +19,7 @@ const games = [
       es: "Diseñé e implementé un controlador de jugador modular con wall-running, deslizamiento, salto, control aéreo, gancho y plataformas móviles/de salto.",
     },
     tech: ["Unity", "C#"],
-    image: "/images/parkourbeans.webp",
+    image: parkourBeans,
     github: "https://github.com/Jondals/Parkour-Bean",
   },
 
@@ -36,21 +38,22 @@ const games = [
       es: "Desarrollé la arquitectura multijugador usando Netcode for GameObjects, incluyendo sistema de lobby con códigos de acceso, sincronización de jugadores, animaciones, mecánica de linterna y puertas interactivas. También exploré IA básica con navegación y pathfinding.",
     },
     tech: ["Unity", "C#", "Netcode for GameObjects"],
-    image: "/images/nextbotscapebeans.webp",
+    image: nextbotScapeBeans,
     github: "https://github.com/Jondals/NextBotEscapeBeans",
   },
 ];
 ---
 
-<section id="game-development" class="px-6 py-20 scroll-mt-15">
+<section id="game-development" class="px-6 py-24 scroll-mt-20">
   <div class="max-w-7xl mx-auto">
 
-    <div class="text-center mb-16">
+    <div class="text-center mb-14">
       <h2
-        class="text-4xl md:text-5xl font-bold mt-4"
+        class="text-4xl md:text-5xl font-bold"
         data-en="Game Development"
         data-es="Desarrollo de videojuegos"
       >
+        Game Development
       </h2>
 
       <p
@@ -58,81 +61,17 @@ const games = [
         data-en="Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity."
         data-es="Prototipos de videojuegos enfocados en programación de gameplay, sistemas multijugador y mecánicas interactivas con Unity."
       >
+        Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity.
       </p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
       {games.map((game) => (
-        <article class="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-
-          <div class="h-64 overflow-hidden relative">
-
-            <img
-              src={game.image}
-              alt={game.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-            />
-
-            <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
-
-            <span
-              class="absolute top-4 right-4 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/40 border border-white/20 backdrop-blur"
-              data-en={game.status.en}
-              data-es={game.status.es}
-            >
-              {game.status.en}
-            </span>
-
-          </div>
-
-          <div class="p-6 flex flex-col gap-4">
-
-            <h3 class="text-2xl font-bold group-hover:text-(--accent) transition">
-              {game.title}
-            </h3>
-
-            <p
-              class="text-(--text-secondary)"
-              data-en={game.description.en}
-              data-es={game.description.es}
-            >
-              {game.description.en}
-            </p>
-
-            <p class="text-sm text-(--text-secondary)">
-              <span class="font-semibold text-white" data-en="Focus:" data-es="Enfoque:">
-                Focus:
-              </span>{" "}
-              <span
-                data-en={game.contribution.en}
-                data-es={game.contribution.es}
-              >
-                {game.contribution.en}
-              </span>
-            </p>
-
-            <div class="flex flex-wrap gap-2 mt-3">
-              {game.tech.map((t) => (
-                <span class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:scale-105 transition">
-                  {svgs[t] && (
-                    <img src={svgs[t]} alt={t} class="w-3.5 h-3.5" />
-                  )}
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <a
-              href={game.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent) hover:bg-(--accent)/20 transition w-fit"
-            >
-              Github
-            </a>
-          </div>
-        </article>
+        <Projectcard
+          {...game}
+          contributionLabel={{ en: "Focus:", es: "Enfoque:" }}
+          imageClass="h-64"
+        />
       ))}
     </div>
   </div>

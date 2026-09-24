@@ -53,8 +53,10 @@ src/
 ├── pages/           Application pages and routes
 ├── scripts/         Client-side JavaScript/TypeScript
 ├── styles/          Global styles
-├── data/            Static content and project data
-└── assets/          Images and other assets
+├── data/            Static content: projects and icons (icons.ts holds every SVG)
+└── assets/          Images optimized at build time by astro:assets
+tests/
+└── portfolio.test.mjs   Build + smoke test + Google Lighthouse
 ```
 
 ---
@@ -96,6 +98,24 @@ Preview the production build locally:
 ```bash
 pnpm run preview
 ```
+
+Run the tests:
+
+```bash
+pnpm test
+```
+
+On Windows you can also double-click `test.bat`.
+
+---
+
+## Testing
+
+`tests/portfolio.test.mjs` is a single end-to-end test that:
+
+- Builds the site with Astro and serves `dist/` with compression (like Vercel).
+- Opens the page with Puppeteer and checks there are no console errors, every section exists, the language toggle works (desktop and mobile menu), the carousel works and there is no horizontal scroll on mobile.
+- Runs Google Lighthouse on mobile and desktop and requires **100** in Performance, Accessibility, Best Practices and SEO.
 
 ---
 

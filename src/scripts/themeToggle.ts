@@ -1,8 +1,4 @@
 const toggleButton = document.getElementById("theme-toggle") as HTMLButtonElement | null;
-const icon = document.getElementById("theme-icon") as HTMLImageElement | null;
-
-const darkIcon = "/icons/moon.svg";
-const lightIcon = "/icons/sun.svg";
 
 type Theme = "dark" | "light";
 
@@ -13,10 +9,6 @@ function applyTheme(theme: Theme) {
   root.classList.toggle("dark", isDark);
 
   localStorage.setItem("theme", theme);
-
-  if (icon) {
-    icon.src = isDark ? darkIcon : lightIcon;
-  }
 }
 
 function getInitialTheme(): Theme {
@@ -26,11 +18,9 @@ function getInitialTheme(): Theme {
   return saved ?? (systemDark ? "dark" : "light");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  applyTheme(getInitialTheme());
+applyTheme(getInitialTheme());
 
-  toggleButton?.addEventListener("click", () => {
-    const isDark = document.documentElement.classList.contains("dark");
-    applyTheme(isDark ? "light" : "dark");
-  });
+toggleButton?.addEventListener("click", () => {
+  const isDark = document.documentElement.classList.contains("dark");
+  applyTheme(isDark ? "light" : "dark");
 });
