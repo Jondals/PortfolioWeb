@@ -9,80 +9,68 @@ const navItems = [
   { href: "#skills", en: "Skills", es: "Habilidades" },
   { href: "#contact", en: "Contact", es: "Contacto" },
 ];
+
+// Botones del header: siguen el tema, con fundido suave al pasar el ratón y un pequeño hundimiento al pulsar
+const control =
+  "group/ctl relative h-9 inline-flex items-center justify-center rounded-[8px] border border-(--text-primary)/10 bg-(--text-primary)/4 text-(--text-secondary) " +
+  "hover:text-(--text-primary) hover:border-(--accent)/45 hover:bg-(--accent)/10 hover:shadow-[0_0_18px_-4px] hover:shadow-(--accent)/40 active:scale-95 " +
+  "transition-[color,background-color,border-color,box-shadow,scale] duration-500 ease-out";
 ---
 
-<header class="fixed top-0 left-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-center h-16 w-full gap-6">
-      <a href="#about" class="flex items-center gap-3 group" aria-label="Jonathan Dorado, home">
-        <div class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-[#253252] group-hover:scale-105 transition duration-300">
-          <Icon name="Logo" class="w-7 h-7" />
-        </div>
-      </a>
+<header class="site-header fixed top-0 inset-x-0 z-50 px-5 sm:px-6">
+  <div class="max-w-7xl mx-auto h-16 grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+    <a href="#about" class="justify-self-start group" aria-label="Jonathan Dorado, home">
+      <Icon name="Logo" class="w-9 h-9 text-(--text-primary) group-hover:-rotate-6 group-hover:scale-105 transition duration-500 ease-out" />
+    </a>
 
-      <nav class="hidden lg:flex flex-1 justify-center" aria-label="Main">
-        <ul class="flex items-center gap-7">
-          {navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="nav-link relative py-2 text-gray-300 hover:text-cyan-400 aria-[current=true]:text-cyan-400 whitespace-nowrap
-                after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-full after:rounded-full after:bg-cyan-400
-                after:origin-left after:scale-x-0 after:transition-transform after:duration-300 hover:after:scale-x-100 aria-[current=true]:after:scale-x-100"
-                data-en={item.en}
-                data-es={item.es}
-                >
-                {item.en}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <nav class="hidden lg:block" aria-label="Main">
+      <ul class="flex items-center gap-1">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="nav-link relative block px-3.5 py-2 rounded-[8px] text-sm text-(--text-secondary) whitespace-nowrap
+              hover:text-(--text-primary) hover:bg-(--text-primary)/5 aria-[current=true]:text-(--text-primary)
+              transition-[color,background-color] duration-500 ease-out
+              after:absolute after:left-3.5 after:right-3.5 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-linear-to-r after:from-cyan-400 after:to-purple-400
+              after:origin-center after:scale-x-0 after:opacity-0 after:transition-[scale,opacity] after:duration-500 after:ease-out
+              hover:after:scale-x-50 hover:after:opacity-60 aria-[current=true]:after:scale-x-100 aria-[current=true]:after:opacity-100"
+              data-en={item.en}
+              data-es={item.es}
+              >
+              {item.en}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-      <div class="flex items-center gap-3 ml-auto">
+    <div class="col-start-3 justify-self-end flex items-center gap-2">
+      <button id="theme-toggle" type="button" class={`${control} w-9`} aria-label="Toggle theme">
+        <Icon name="sun" class="w-4 h-4 dark:hidden group-hover/ctl:rotate-45 transition-transform duration-700 ease-out" />
+        <Icon name="moon" class="w-4 h-4 hidden dark:block group-hover/ctl:-rotate-12 transition-transform duration-700 ease-out" />
+      </button>
 
-        <a
-          href="/cv.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden xl:inline-flex items-center gap-2 h-10 px-4 rounded-lg bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-sm hover:bg-cyan-400/20"
-        >
-          <Icon name="download" class="w-4 h-4" />
-          <span data-en="CV" data-es="CV">CV</span>
-        </a>
+      <button
+        type="button"
+        class={`lang-toggle hidden sm:inline-flex px-3 text-xs font-semibold ${control}`}
+        data-en="🇬🇧 EN"
+        data-es="🇪🇸 ES"
+        aria-label="Cambiar a español"
+      >
+        🇬🇧 EN
+      </button>
 
-        <button
-          id="theme-toggle"
-          type="button"
-          class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-slate-700 text-gray-200 flex items-center justify-center"
-          aria-label="Toggle theme"
-          >
-          <Icon name="sun" class="w-5 h-5 dark:hidden" />
-          <Icon name="moon" class="w-5 h-5 hidden dark:block" />
-        </button>
-
-        <button
-          type="button"
-          class="lang-toggle hidden sm:inline-flex items-center h-10 bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 rounded-lg px-3 text-sm"
-          data-en="🇬🇧 EN"
-          data-es="🇪🇸 ES"
-          aria-label="Cambiar a español"
-          >
-          🇬🇧 EN
-        </button>
-
-        <button
-          id="menu-btn"
-          type="button"
-          class="lg:hidden w-10 h-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-lg text-white"
-          aria-label="Open menu"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-          >
-          <Icon name="menu" class="w-5 h-5" />
-        </button>
-
-      </div>
+      <button
+        id="menu-btn"
+        type="button"
+        class={`lg:hidden w-9 ${control}`}
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <Icon name="menu" class="w-[18px] h-[18px]" />
+      </button>
     </div>
   </div>
 </header>
@@ -94,7 +82,7 @@ const navItems = [
 
 <aside
   id="mobile-menu"
-  class="fixed top-0 right-0 h-dvh w-80 max-w-[85vw] bg-[#0f172a]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl
+  class="fixed top-0 right-0 h-dvh w-80 max-w-[85vw] bg-(--bg-secondary)/95 backdrop-blur-xl border-l border-(--text-primary)/10 shadow-2xl
   transform translate-x-full transition-transform duration-300 ease-out z-70"
   aria-label="Mobile menu"
   inert
@@ -102,11 +90,11 @@ const navItems = [
   <div class="h-full flex flex-col p-6">
 
     <div class="flex justify-between items-center mb-10">
-      <span class="text-gray-200 font-semibold" data-en="Menu" data-es="Menú">Menu</span>
+      <span class="text-(--text-primary) font-semibold" data-en="Menu" data-es="Menú">Menu</span>
       <button
         id="close-menu"
         type="button"
-        class="w-10 h-10 flex items-center justify-center rounded-lg text-white hover:bg-white/10"
+        class="w-10 h-10 flex items-center justify-center rounded-[10px] text-(--text-primary) hover:bg-(--text-primary)/8 hover:rotate-90 transition duration-500"
         aria-label="Close menu"
       >
         <Icon name="close" class="w-5 h-5" />
@@ -119,7 +107,7 @@ const navItems = [
           <li>
             <a
               href={item.href}
-              class="nav-link block px-3 py-2.5 rounded-lg text-gray-300 text-lg hover:text-cyan-400 hover:bg-white/5 hover:translate-x-1 aria-[current=true]:text-cyan-400"
+              class="nav-link block px-3 py-2.5 rounded-[8px] text-(--text-secondary) text-lg hover:text-(--text-primary) hover:bg-(--text-primary)/5 hover:translate-x-1 aria-[current=true]:text-(--accent-text)"
               data-en={item.en}
               data-es={item.es}
             >
@@ -130,12 +118,12 @@ const navItems = [
       </ul>
     </nav>
 
-    <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
+    <div class="flex flex-col gap-3">
       <a
         href="/cv.pdf"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-sm hover:bg-cyan-400/20"
+        class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-[10px] bg-(--accent) text-black text-sm font-semibold hover:opacity-90"
       >
         <Icon name="download" class="w-4 h-4" />
         <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
@@ -143,7 +131,7 @@ const navItems = [
 
       <button
         type="button"
-        class="lang-toggle w-full bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 rounded-lg px-3 py-2.5 text-sm"
+        class="lang-toggle w-full rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) hover:bg-(--bg-hover) px-3 py-2.5 text-sm"
         data-en="🇬🇧 EN"
         data-es="🇪🇸 ES"
         aria-label="Cambiar a español"

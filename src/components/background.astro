@@ -1,0 +1,104 @@
+---
+// Ondas del fondo: cada una es un seno periódico dibujado sobre el doble del ancho,
+// así al desplazarla un 50% el bucle no tiene cortes.
+const WIDTH = 2880;
+const HEIGHT = 200;
+
+function wavePath(amplitude: number, periods: number, phase: number, filled: boolean): string {
+  const points: string[] = [];
+
+  for (let x = 0; x <= WIDTH; x += 16) {
+    const y = HEIGHT / 2 + amplitude * Math.sin((x / WIDTH) * periods * 2 * Math.PI * 2 + phase);
+    points.push(`${x} ${y.toFixed(1)}`);
+  }
+
+  const line = `M${points.join("L")}`;
+  return filled ? `${line}L${WIDTH} ${HEIGHT}L0 ${HEIGHT}Z` : line;
+}
+
+const waves = [
+  { top: "10%", height: 180, amplitude: 38, periods: 1, phase: 0, speed: "48s", reverse: false, opacity: 0.4, width: 1.2, filled: false },
+  { top: "36%", height: 220, amplitude: 52, periods: 1, phase: 1.4, speed: "62s", reverse: true, opacity: 0.28, width: 1, filled: false },
+  { top: "64%", height: 200, amplitude: 30, periods: 2, phase: 2.2, speed: "40s", reverse: false, opacity: 0.22, width: 1, filled: false },
+  { top: "80%", height: 340, amplitude: 44, periods: 1, phase: 0.6, speed: "70s", reverse: true, opacity: 0.1, width: 0, filled: true },
+];
+
+// Estrellas: cada capa es un mosaico periódico de puntos, así se puede desplazar sin fin
+const TILE = 600;
+
+function starTile(count: number, minSize: number, maxSize: number, seed: number): string {
+  let value = seed;
+  const random = () => {
+    value = (value * 16807) % 2147483647;
+    return value / 2147483647;
+  };
+
+  const circles = Array.from({ length: count }, () => {
+    const r = ((minSize + random() * (maxSize - minSize)) / 2).toFixed(2);
+    const x = Math.round(random() * TILE);
+    const y = Math.round(random() * TILE);
+    const alpha = (0.35 + random() * 0.65).toFixed(2);
+    return `<circle cx='${x}' cy='${y}' r='${r}' fill-opacity='${alpha}'/>`;
+  }).join("");
+
+  // Mosaico SVG que se usa como máscara: el color lo pone el fondo (cambia con la escena y el tema)
+  return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${TILE}' height='${TILE}'>${circles}</svg>`)}")`;
+}
+
+const starLayers = [
+  { speed: 0.04, stars: starTile(26, 1, 1.8, 7), twinkle: false },
+  { speed: 0.1, stars: starTile(16, 1.6, 2.6, 42), twinkle: true },
+  { speed: 0.2, stars: starTile(8, 2.6, 4, 1337), twinkle: false },
+];
+---
+
+<div class="page-bg" aria-hidden="true">
+  <div class="page-aurora"></div>
+
+  {starLayers.map((layer) => (
+    <div
+      class={`page-stars${layer.twinkle ? " twinkle" : ""}`}
+      data-speed={layer.speed}
+      style={`--tile:${TILE}px;mask-image:${layer.stars};-webkit-mask-image:${layer.stars}`}
+    ></div>
+  ))}
+
+  <svg class="absolute w-0 h-0">
+    <defs>
+      <linearGradient id="wave-stroke" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" class="stop-a" />
+        <stop offset="0.25" class="stop-b" />
+        <stop offset="0.5" class="stop-a" />
+        <stop offset="0.75" class="stop-b" />
+        <stop offset="1" class="stop-a" />
+      </linearGradient>
+      <linearGradient id="wave-fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" class="stop-b" />
+        <stop offset="1" class="stop-b" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  {waves.map((wave, index) => (
+    <div
+      class="page-wave-row"
+      data-wave={index}
+      style={`top:${wave.top};height:${wave.height}px;opacity:${wave.opacity}`}
+    >
+      <svg
+        class={`page-wave${wave.reverse ? " reverse" : ""}`}
+        style={`--wave-speed:${wave.speed}`}
+        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        preserveAspectRatio="none"
+      >
+        <path
+          d={wavePath(wave.amplitude, wave.periods, wave.phase, wave.filled)}
+          fill={wave.filled ? "url(#wave-fill)" : "none"}
+          stroke={wave.filled ? "none" : "url(#wave-stroke)"}
+          stroke-width={wave.width}
+          vector-effect="non-scaling-stroke"
+        />
+      </svg>
+    </div>
+  ))}
+</div>

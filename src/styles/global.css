@@ -62,6 +62,8 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
+  /* En móvil todo un poco más compacto (Tailwind usa rem, así que escala todo) */
+  font-size: 15px;
   scroll-padding-top: 5rem;
   font-family: var(--font-sans);
 }
@@ -72,11 +74,22 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* Hovers suaves en todos los elementos interactivos */
+@media (min-width: 640px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html.i18n-pending body {
+  visibility: hidden;
+}
+
+/* Hovers suaves en todos los elementos interactivos (entrada y salida con fundido).
+   Tailwind v4 usa las propiedades translate/scale/rotate por separado, así que se incluyen aquí */
 a,
 button {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
-  transition-duration: 300ms;
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform, translate, scale, rotate;
+  transition-duration: 450ms;
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -84,6 +97,216 @@ button {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 0.5rem;
+}
+
+/* ---------- Fondo continuo: partículas + ondas que cambian según la sección ---------- */
+/* Colores de escena animables (se interpolan al cambiar de sección) */
+@property --scene-a {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #22d3ee;
+}
+
+@property --scene-b {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a855f7;
+}
+
+/* Solo la capa del fondo lleva los colores: así la transición no recalcula el estilo de toda la página */
+.page-bg {
+  --scene-a: #22d3ee;
+  --scene-b: #a855f7;
+  transition: --scene-a 1.6s ease, --scene-b 1.6s ease;
+}
+
+html[data-scene="projects"] .page-bg { --scene-a: #6366f1; --scene-b: #22d3ee; }
+html[data-scene="game-development"] .page-bg { --scene-a: #d946ef; --scene-b: #8b5cf6; }
+html[data-scene="experience"] .page-bg { --scene-a: #2dd4bf; --scene-b: #3b82f6; }
+html[data-scene="skills"] .page-bg { --scene-a: #34d399; --scene-b: #22d3ee; }
+html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Halo de color de la escena, arriba a la derecha */
+.page-aurora {
+  position: absolute;
+  inset: -20% -10% auto auto;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 9999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--scene-a) 16%, transparent), color-mix(in srgb, var(--scene-b) 8%, transparent) 40%, transparent 70%);
+  opacity: 0.8;
+  will-change: transform;
+}
+
+/* Capas de estrellas: una cuadrícula de puntos que se repite en vertical */
+.page-stars {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(100% + var(--tile));
+  will-change: transform;
+}
+
+.page-stars {
+  --star-color: #ffffff;
+  /* Degradado en vez de color sólido: los analizadores de contraste no lo toman como fondo del texto */
+  background-image: linear-gradient(var(--star-color), var(--star-color));
+  mask-size: var(--tile) var(--tile);
+  mask-repeat: repeat;
+}
+
+html:not(.dark) .page-stars {
+  --star-color: var(--scene-b);
+}
+
+.page-stars.twinkle {
+  animation: stars-twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes stars-twinkle {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+
+.page-wave-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+.page-wave {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 200%;
+  height: 100%;
+  animation: wave-flow var(--wave-speed, 40s) linear infinite;
+  will-change: transform;
+}
+
+.page-wave.reverse {
+  animation-direction: reverse;
+}
+
+.page-bg .stop-a { stop-color: var(--scene-a); }
+.page-bg .stop-b { stop-color: var(--scene-b); }
+
+@keyframes wave-flow {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ---------- Cursor propio: orbe de luz + estela ---------- */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+}
+
+.cursor-orb {
+  --orb: #22d3ee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 151;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* El círculo va en un pseudo-elemento para poder animar su tamaño sin mover el centro */
+.cursor-orb::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1.5px solid var(--orb);
+  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--orb) 70%, transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+html.cursor-visible .cursor-orb {
+  opacity: 1;
+}
+
+/* Encima de enlaces y botones se abre en un anillo */
+html.cursor-hover .cursor-orb::before {
+  width: 34px;
+  height: 34px;
+  background: color-mix(in srgb, var(--orb) 14%, transparent);
+  box-shadow: 0 0 18px 0 color-mix(in srgb, var(--orb) 40%, transparent);
+}
+
+html.cursor-down .cursor-orb::before {
+  width: 7px;
+  height: 7px;
+}
+
+html.cursor-hover.cursor-down .cursor-orb::before {
+  width: 26px;
+  height: 26px;
+}
+
+/* ---------- Header: siempre visible, camuflado con el fondo arriba y con desenfoque al bajar ---------- */
+/* Usa el color de fondo de la propia web (oscuro o crema según el tema) */
+.site-header {
+  background-color: color-mix(in srgb, var(--bg-primary) 0%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 0%, transparent);
+  transition: background-color 0.6s ease, border-color 0.6s ease, backdrop-filter 0.6s ease;
+}
+
+.site-header.is-scrolled {
+  background-color: color-mix(in srgb, var(--bg-primary) 86%, transparent);
+  border-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+/* ---------- Entrada al hacer scroll ---------- */
+/* Solo se ocultan si hay JavaScript (clase .js en <html>); con "reducir movimiento" se ven siempre */
+html.js [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+[data-reveal].is-revealed {
+  animation: reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal]:not(.is-revealed) {
+    opacity: 1;
+  }
+
+  [data-reveal].is-revealed {
+    animation: none;
+  }
 }
 
 .no-scrollbar {

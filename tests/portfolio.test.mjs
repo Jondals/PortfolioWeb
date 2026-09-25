@@ -86,10 +86,31 @@ async function runLighthouse(name, config) {
       const audit = lhr.audits[ref.id];
       if (ref.weight > 0 && audit.score !== null && audit.score < 1) {
         failing.push(`  [${id}] ${audit.id}: ${audit.title} (${audit.displayValue ?? audit.score})`);
+        for (const item of (audit.details?.items ?? []).slice(0, 4)) {
+          if (item.node) failing.push(`      → ${item.node.selector} ${item.node.explanation?.split("\n")[1] ?? ""}`);
+        }
       }
     }
   }
   if (failing.length) console.log("Auditorías que no pasan:\n" + failing.join("\n"));
+
+  if (lhr.audits["largest-contentful-paint"].score < 1) {
+    const lcp = lhr.audits["lcp-breakdown-insight"]?.details?.items ?? [];
+    const node = lcp.find((item) => item.type === "node");
+    const table = lcp.find((item) => item.type === "table");
+    const phases = table?.items?.map((p) => `${p.label ?? p.subpart} ${Math.round(p.duration)}ms`).join(", ");
+    console.log(`  LCP: ${node?.selector ?? "?"} → ${node?.snippet?.slice(0, 80) ?? ""}\n  Fases: ${phases ?? "?"}`);
+  }
+
+  if (lhr.audits["total-blocking-time"].score < 1) {
+    const work = lhr.audits["mainthread-work-breakdown"]?.details?.items ?? [];
+    console.log("  Hilo principal: " + work.map((w) => `${w.groupLabel} ${Math.round(w.duration)}ms`).join(", "));
+    const bootup = lhr.audits["bootup-time"]?.details?.items ?? [];
+    console.log("  Scripts: " + bootup.map((b) => `${b.url.split("/").pop() || "(html)"} ${Math.round(b.scripting)}ms`).join(", "));
+  }
+
+  const shifts = lhr.audits["layout-shifts"]?.details?.items ?? [];
+  for (const shift of shifts) console.log(`  CLS ${shift.score?.toFixed(3)} → ${shift.node?.selector ?? "?"}`);
 
   for (const id of categories) {
     assert.equal(scores[id], 100, `${name} · ${id} = ${scores[id]} (se esperaba 100)`);
@@ -131,6 +152,8 @@ test("la página carga sin errores y todo funciona", async () => {
   await page.setViewport({ width: 1280, height: 800 });
   const response = await page.goto(url, { waitUntil: "networkidle0" });
   assert.equal(response.status(), 200);
+  // Los scripts secundarios se cargan cuando el navegador está libre: se espera a que terminen
+  await page.waitForFunction(() => document.documentElement.dataset.ready === "true");
 
   for (const selector of ["header", "#about", "#projects", "#game-development", "#experience", "#skills", "#contact"]) {
     assert.ok(await page.$(selector), `falta la sección ${selector}`);
@@ -142,8 +165,14 @@ test("la página carga sin errores y todo funciona", async () => {
   );
   assert.deepEqual(missingIcons, [], "iconos sin definir en el sprite");
 
+  // El header es transparente arriba del todo y al bajar aparece su fondo
+  const headerBackground = () => page.$eval(".site-header", (el) => getComputedStyle(el).backgroundColor);
+  assert.match(await headerBackground(), /(rgba\(.*, 0\)|transparent|srgb .* \/ 0\))/, "el header debería ser transparente arriba del todo");
+  await page.evaluate(() => window.scrollTo({ top: 400, behavior: "instant" }));
+  await page.waitForFunction(() => document.querySelector(".site-header").classList.contains("is-scrolled"));
+
   // Toggle de idioma (escritorio)
-  const title = () => page.$eval("#projects h2", (el) => el.textContent.trim());
+  const title = () => page.$eval("#projects h2 [data-en]", (el) => el.textContent.trim());
   assert.equal(await title(), "Projects");
   await page.click("header .lang-toggle");
   assert.equal(await title(), "Proyectos");
@@ -159,10 +188,45 @@ test("la página carga sin errores y todo funciona", async () => {
   await page.click(".carousel-prev");
   await page.waitForFunction(() => document.querySelector(".carousel-dot[aria-current='true']")?.dataset.index === "0");
 
+  // "Más proyectos" se despliega y se contrae
+  const panelOpen = () => page.$eval("#more-projects-list", (el) => !el.inert);
+  assert.equal(await panelOpen(), false);
+  await page.click(".collapse-toggle");
+  assert.equal(await panelOpen(), true);
+  await page.waitForFunction(() => document.querySelector("#more-projects-list").getBoundingClientRect().height > 300);
+  await page.click(".collapse-toggle");
+  assert.equal(await panelOpen(), false);
+
+  // Todas las etiquetas de tecnología tienen icono y enlace
+  const tagsWithoutIcon = await page.$$eval("#projects li a, #skills li a", (links) =>
+    links.filter((a) => a.getAttribute("href")?.startsWith("http") && !a.querySelector("svg use")).map((a) => a.textContent.trim())
+  );
+  assert.deepEqual(tagsWithoutIcon, [], "etiquetas sin icono");
+
+  // El clic derecho está desactivado
+  const contextMenuBlocked = await page.evaluate(() => {
+    const event = new MouseEvent("contextmenu", { bubbles: true, cancelable: true });
+    return !document.body.dispatchEvent(event);
+  });
+  assert.ok(contextMenuBlocked, "el menú del clic derecho no está bloqueado");
+
   // Menú móvil: se abre, el overlay cubre toda la pantalla y el idioma funciona
   await page.setViewport({ width: 375, height: 740, isMobile: true, hasTouch: true });
-  await page.click("#menu-btn");
-  await page.waitForFunction(() => !document.getElementById("mobile-menu").inert);
+  await page.waitForSelector("#menu-btn", { visible: true });
+  // Tras cambiar el tamaño la página se recoloca: si el primer toque se pierde, se repite
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await page.click("#menu-btn");
+    const opened = await page
+      .waitForFunction(() => !document.getElementById("mobile-menu").inert, { timeout: 2000 })
+      .then(() => true, () => false);
+    if (opened) break;
+  }
+  await page.waitForFunction(() => !document.getElementById("mobile-menu").inert, { timeout: 2000 });
+  // Espera a que el panel termine de entrar deslizándose
+  await page.waitForFunction(() => {
+    const rect = document.getElementById("mobile-menu").getBoundingClientRect();
+    return Math.round(rect.right) <= window.innerWidth;
+  });
   const overlay = await page.$eval("#overlay", (el) => el.getBoundingClientRect().height);
   assert.ok(overlay >= 740, `el overlay solo cubre ${overlay}px`);
 

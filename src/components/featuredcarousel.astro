@@ -1,0 +1,204 @@
+---
+import { Image } from "astro:assets";
+import Icon from "./icon.astro";
+import Techlist from "./techlist.astro";
+import Statusbadge from "./statusbadge.astro";
+import type { Project } from "../data/projects.ts";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
+const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+---
+
+<div
+  data-reveal
+  class="carousel relative rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary) shadow-2xl shadow-black/20 overflow-hidden"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Featured projects"
+>
+  <div class="flex items-stretch border-b border-(--text-primary)/10">
+    <div class="grid grid-cols-4 flex-1">
+      {projects.map((project, index) => (
+        <button
+          type="button"
+          class="carousel-dot group/tab relative flex flex-col items-start gap-0.5 px-3 sm:px-6 py-4 text-left border-r border-(--text-primary)/10 hover:bg-(--text-primary)/4"
+          aria-label={`Go to ${project.title}`}
+          aria-current={index === 0 ? "true" : "false"}
+          data-index={index}
+        >
+          <span class="text-xs font-medium text-(--text-secondary) group-aria-[current=true]/tab:text-(--accent-text) transition-colors duration-500">
+            {pad(index + 1)}
+          </span>
+          <span class="hidden sm:block text-sm font-semibold truncate max-w-full text-(--text-secondary) group-hover/tab:text-(--text-primary) group-aria-[current=true]/tab:text-(--text-primary) transition-colors duration-500">
+            {project.title}
+          </span>
+          <span class="absolute left-0 bottom-0 h-0.5 w-full bg-(--text-primary)/5">
+            <span class="carousel-progress block h-full w-full origin-left bg-linear-to-r from-cyan-400 to-purple-500"></span>
+          </span>
+        </button>
+      ))}
+    </div>
+
+    <div class="hidden md:flex items-center gap-2 px-4">
+      <button
+        type="button"
+        class="carousel-prev w-10 h-10 rounded-[10px] flex items-center justify-center border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/8 hover:border-(--accent)/40"
+        aria-label="Previous project"
+      >
+        <Icon name="arrow-left" class="w-[18px] h-[18px]" />
+      </button>
+      <button
+        type="button"
+        class="carousel-next w-10 h-10 rounded-[10px] flex items-center justify-center border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/8 hover:border-(--accent)/40"
+        aria-label="Next project"
+      >
+        <Icon name="arrow-right" class="w-[18px] h-[18px]" />
+      </button>
+    </div>
+  </div>
+
+  <div class="carousel-track no-scrollbar flex overflow-x-auto snap-x snap-mandatory scroll-smooth" tabindex="0">
+    {projects.map((project, index) => (
+      <article
+        class="carousel-slide group w-full shrink-0 snap-center grid lg:grid-cols-[1.25fr_1fr] items-center"
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`${index + 1} / ${projects.length}`}
+      >
+        <div class="relative h-full flex items-center p-4 sm:p-8 lg:p-10 bg-[radial-gradient(ellipse_at_30%_20%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_65%)]">
+          <div class="w-full rounded-[10px] overflow-hidden border border-(--text-primary)/10 bg-(--bg-card) shadow-2xl shadow-black/30 group-hover:-translate-y-1 transition duration-700 ease-out">
+            <div class="flex items-center gap-2 px-4 py-2.5 border-b border-(--text-primary)/10">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+              <span class="ml-3 flex-1 truncate text-[11px] text-(--text-secondary) px-3 py-1 rounded-md bg-(--text-primary)/5">
+                {host(project.demo ?? project.github)}
+              </span>
+            </div>
+            <div class="relative aspect-16/10 overflow-hidden">
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                widths={[480, 720, 1000]}
+                sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
+                loading={index === 0 ? "eager" : "lazy"}
+                class="absolute inset-0 w-full h-full object-cover object-top"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-10 lg:pl-4 flex flex-col gap-3 md:gap-4">
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-medium text-(--text-secondary)">
+              {pad(index + 1)} / {pad(projects.length)}
+            </span>
+            <Statusbadge status={project.status} />
+          </div>
+
+          <h3 class="text-2xl md:text-4xl font-bold tracking-tight text-(--text-primary)">
+            {project.title}
+          </h3>
+
+          <p
+            class="text-sm md:text-base text-(--text-secondary) leading-relaxed"
+            data-en={project.description.en}
+            data-es={project.description.es}
+          >
+            {project.description.en}
+          </p>
+
+          <p class="text-sm text-(--text-secondary) pl-4 border-l-2 border-(--accent)/50">
+            <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">
+              Role:
+            </span>{" "}
+            <span
+              data-en={project.contribution.en}
+              data-es={project.contribution.es}
+            >
+              {project.contribution.en}
+            </span>
+          </p>
+
+          <Techlist tech={project.tech} />
+
+          <div class="flex flex-wrap items-center gap-3 pt-3">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+              aria-label={`${project.title} GitHub`}
+            >
+              <Icon name="GitHub" class="w-4 h-4" />
+              GitHub
+            </a>
+
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] bg-(--accent) text-black font-semibold hover:-translate-y-0.5 hover:shadow-xl hover:shadow-(--accent)/30 shadow-lg shadow-(--accent)/20"
+              >
+                <Icon name="external" class="w-4 h-4" />
+                <span data-en="Live demo" data-es="Ver demo">Live demo</span>
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="md:hidden flex items-center justify-end gap-2 px-5 pb-5">
+    <button
+      type="button"
+      class="carousel-prev w-10 h-10 rounded-[10px] flex items-center justify-center border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/8"
+      aria-label="Previous project"
+    >
+      <Icon name="arrow-left" class="w-[18px] h-[18px]" />
+    </button>
+    <button
+      type="button"
+      class="carousel-next w-10 h-10 rounded-[10px] flex items-center justify-center border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/8"
+      aria-label="Next project"
+    >
+      <Icon name="arrow-right" class="w-[18px] h-[18px]" />
+    </button>
+  </div>
+</div>
+
+<style>
+  /* Barra de progreso del autoplay: se llena en la pestaña activa y al acabar pasa al siguiente */
+  .carousel-progress {
+    transform: scaleX(0);
+  }
+
+  .carousel-dot[aria-current="true"] .carousel-progress {
+    animation: carousel-progress 7s linear forwards;
+  }
+
+  .carousel:hover .carousel-progress,
+  .carousel:focus-within .carousel-progress {
+    animation-play-state: paused;
+  }
+
+  @keyframes carousel-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-dot[aria-current="true"] .carousel-progress {
+      animation: none;
+      transform: scaleX(1);
+    }
+  }
+</style>

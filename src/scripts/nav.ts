@@ -55,3 +55,14 @@ const observer = new IntersectionObserver(
 );
 
 sections.forEach((section) => observer.observe(section));
+
+
+// Header: arriba del todo es transparente; al bajar aparece su fondo con desenfoque
+const header = document.querySelector<HTMLElement>(".site-header");
+
+function updateHeader(): void {
+  header?.classList.toggle("is-scrolled", window.scrollY > 20);
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+updateHeader();

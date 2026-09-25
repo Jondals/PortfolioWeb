@@ -1,225 +1,97 @@
 ---
 import Icon from "./icon.astro";
-import { icons } from "../data/icons.ts";
+import Sectionheading from "./sectionheading.astro";
+import { techLinks } from "../data/tech.ts";
 
 const skillGroups = [
   {
-    title: {
-      en: "Frontend & Mobile",
-      es: "Frontend y Móvil",
-    },
-    skills: [
-      "Angular",
-      "Astro",
-      "React",
-      "TypeScript",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "Tailwind CSS",
-      "Vite",
-      "Flutter",
-      "Dart",
-      "Kotlin",
-      "Android Studio",
-      "Responsive Design",
-      "UI/UX Principles",
-    ],
+    title: { en: "Frontend & Mobile", es: "Frontend y Móvil" },
+    skills: ["Angular", "Astro", "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite", "Flutter", "Dart", "Kotlin", "Android Studio"],
   },
   {
-    title: {
-      en: "Backend",
-      es: "Backend",
-    },
-    skills: [
-      "Django",
-      "Python",
-      "Node.js",
-      "PHP",
-      "Java",
-      "Supabase",
-      "REST APIs",
-      "Authentication & Authorization",
-      "Real-time systems",
-    ],
+    title: { en: "Backend", es: "Backend" },
+    skills: ["Django", "Python", "Node.js", "PHP", "Java", "Supabase", "Odoo", "WebRTC"],
   },
   {
-    title: {
-      en: "Database",
-      es: "Base de datos",
-    },
-    skills: [
-      "PostgreSQL",
-      "MySQL",
-      "SQLite",
-      "Database Design",
-      "Data Modeling",
-    ],
+    title: { en: "Databases", es: "Bases de datos" },
+    skills: ["PostgreSQL", "MySQL", "SQL Server", "MongoDB", "SQLite"],
   },
   {
-    title: {
-      en: "DevOps & Tools",
-      es: "DevOps y Herramientas",
-    },
-    skills: [
-      "Git",
-      "GitHub",
-      "GitHub Actions",
-      "Docker",
-      "Linux",
-      "Vercel",
-      "PNPM",
-      "VS Code",
-      "CI/CD basics",
-    ],
+    title: { en: "DevOps & Tools", es: "DevOps y Herramientas" },
+    skills: ["Git", "GitHub", "GitHub Actions", "Docker", "Linux", "Vercel", "PNPM", "VS Code"],
   },
   {
-    title: {
-      en: "Game Development",
-      es: "Desarrollo de videojuegos",
-    },
-    skills: [
-      "Unity",
-      "C#",
-      "Gameplay Systems",
-      "Input Systems",
-      "Prototyping",
-      "Game Feel",
-    ],
-  },
-  {
-    title: {
-      en: "Networking & Real-time",
-      es: "Redes y tiempo real",
-    },
-    skills: [
-      "WebRTC",
-      "WebSockets",
-      "Multiplayer Architecture",
-      "Client-Server Sync",
-    ],
+    title: { en: "Game Development", es: "Videojuegos" },
+    skills: ["Unity", "Godot", "C#"],
   },
 ];
 
 const softSkills = [
-  { icon: "users", en: "Teamwork", es: "Trabajo en equipo" },
-  { icon: "message", en: "Communication", es: "Comunicación" },
-  { icon: "puzzle", en: "Problem solving", es: "Resolución de problemas" },
-  { icon: "book", en: "Self-learning", es: "Aprendizaje autónomo" },
-  { icon: "refresh", en: "Adaptability", es: "Adaptabilidad" },
-  { icon: "clock", en: "Time management", es: "Gestión del tiempo" },
-  { icon: "lightbulb", en: "Critical thinking", es: "Pensamiento crítico" },
-  { icon: "target", en: "Attention to detail", es: "Atención al detalle" },
+  { en: "Teamwork", es: "Trabajo en equipo" },
+  { en: "Communication", es: "Comunicación" },
+  { en: "Problem solving", es: "Resolución de problemas" },
+  { en: "Self-learning", es: "Aprendizaje autónomo" },
+  { en: "Adaptability", es: "Adaptabilidad" },
+  { en: "Time management", es: "Gestión del tiempo" },
+  { en: "Critical thinking", es: "Pensamiento crítico" },
+  { en: "Attention to detail", es: "Atención al detalle" },
 ];
 
 const languages = [
-  { en: "Spanish", es: "Español", level: { en: "Native", es: "Nativo" }, value: 100 },
-  { en: "English", es: "Inglés", level: { en: "B1 · Intermediate", es: "B1 · Intermedio" }, value: 55 },
+  { en: "Spanish · Native", es: "Español · Nativo" },
+  { en: "English · A2", es: "Inglés · A2" },
 ];
+
+const row = "grid md:grid-cols-[200px_1fr] gap-x-8 gap-y-3 py-3.5 md:py-4 first:pt-0 last:pb-0";
+const label = "text-sm font-semibold text-(--text-primary) md:pt-1.5";
+const chip = "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-(--bg-card) border border-(--text-primary)/8 text-xs md:text-[13px] font-medium text-(--text-primary)";
 ---
 
-<section id="skills" class="px-6 py-24 scroll-mt-20">
+<section id="skills" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
   <div class="max-w-7xl mx-auto w-full">
 
-    <div class="mb-14">
-      <h2 class="text-5xl md:text-6xl font-bold max-w-4xl"
-        data-en="Skills"
-        data-es="Habilidades">
-        Skills
-      </h2>
-      <p
-        class="text-(--text-secondary) mt-4 max-w-2xl"
-        data-en="Technologies I use to build products, and the way I work with people."
-        data-es="Las tecnologías con las que construyo productos y cómo trabajo con las personas."
-      >
-        Technologies I use to build products, and the way I work with people.
-      </p>
-    </div>
+    <Sectionheading title={{ en: "Skills", es: "Habilidades" }} />
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {skillGroups.map((group) => {
-        const tools = group.skills.filter((skill) => icons[skill]);
-        const concepts = group.skills.filter((skill) => !icons[skill]);
+    <!-- Una sola ficha: una fila por categoría -->
+    <div data-reveal class="rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary) p-5 md:p-8">
+      {skillGroups.map((group) => (
+        <div class={row}>
+          <h3 class={label} data-en={group.title.en} data-es={group.title.es}>{group.title.en}</h3>
+          <ul class="flex flex-wrap gap-1.5">
+            {group.skills.map((skill) => (
+              <li>
+                <a
+                  href={techLinks[skill]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`group/skill ${chip} hover:border-(--accent)/40 hover:-translate-y-0.5`}
+                >
+                  <Icon name={skill} class="w-4 h-4 group-hover/skill:scale-110 transition duration-300" />
+                  {skill}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
 
-        return (
-          <div class="group rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-5 sm:p-7 hover:border-(--accent)/40 hover:-translate-y-1 hover:shadow-xl transition duration-500 ease-out">
-
-            <h3
-              class="text-xl font-semibold mb-6"
-              data-en={group.title.en}
-              data-es={group.title.es}
-            >
-              {group.title.en}
-            </h3>
-
-            <ul class="grid grid-cols-2 gap-2.5">
-              {tools.map((skill) => (
-                <li class="flex items-center gap-2.5 px-2.5 sm:px-3 py-2.5 rounded-xl bg-(--text-primary)/3 border border-(--text-primary)/10 text-xs sm:text-sm leading-tight text-(--text-primary) hover:border-(--accent)/40 hover:bg-(--text-primary)/6 transition duration-300">
-                  <Icon name={skill} class="w-5 h-5" />
-                  <span class="min-w-0 break-words">{skill}</span>
-                </li>
-              ))}
-            </ul>
-
-            {concepts.length > 0 && (
-              <ul class="flex flex-wrap gap-2 mt-4">
-                {concepts.map((concept) => (
-                  <li class="px-3 py-1 rounded-full border border-(--text-primary)/10 text-xs text-(--text-secondary)">
-                    {concept}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        );
-      })}
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-6 mt-6">
-
-      <div class="lg:col-span-2 rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-7">
-        <h3
-          class="text-xl font-semibold mb-6"
-          data-en="Soft skills"
-          data-es="Habilidades blandas"
-        >
-          Soft skills
-        </h3>
-
-        <ul class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class={row}>
+        <h3 class={label} data-en="Soft skills" data-es="Habilidades blandas">Soft skills</h3>
+        <ul class="flex flex-wrap gap-1.5">
           {softSkills.map((skill) => (
-            <li class="flex flex-col items-center text-center gap-3 p-4 rounded-2xl bg-(--text-primary)/3 border border-(--text-primary)/10 hover:border-(--accent)/40 hover:-translate-y-1 transition duration-300">
-              <span class="w-11 h-11 flex items-center justify-center rounded-xl bg-(--accent)/10 text-(--accent-text)">
-                <Icon name={skill.icon} class="w-5 h-5" />
-              </span>
-              <span class="text-sm text-(--text-primary)" data-en={skill.en} data-es={skill.es}>
-                {skill.en}
-              </span>
+            <li class={chip}>
+              <span data-en={skill.en} data-es={skill.es}>{skill.en}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div class="rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/2 p-7">
-        <h3 class="flex items-center gap-3 text-xl font-semibold mb-6">
-          <Icon name="globe" class="w-5 h-5 text-(--accent-text)" />
-          <span data-en="Languages" data-es="Idiomas">Languages</span>
-        </h3>
-
-        <ul class="space-y-6">
+      <div class={row}>
+        <h3 class={label} data-en="Languages" data-es="Idiomas">Languages</h3>
+        <ul class="flex flex-wrap gap-1.5">
           {languages.map((language) => (
-            <li>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-(--text-primary)" data-en={language.en} data-es={language.es}>
-                  {language.en}
-                </span>
-                <span class="text-sm text-(--text-secondary)" data-en={language.level.en} data-es={language.level.es}>
-                  {language.level.en}
-                </span>
-              </div>
-              <div class="h-2 rounded-full bg-(--text-primary)/10 overflow-hidden">
-                <div class="h-full rounded-full bg-(--accent)" style={`width:${language.value}%`}></div>
-              </div>
+            <li class={chip}>
+              <span data-en={language.en} data-es={language.es}>{language.en}</span>
             </li>
           ))}
         </ul>

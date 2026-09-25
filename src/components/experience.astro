@@ -1,135 +1,125 @@
-<section id="experience" class="min-h-screen flex items-center px-6 py-20 scroll-mt-24">
-  <div class="max-w-7xl mx-auto w-full">
-    <div class="mb-20">  
-      <h2 class="text-5xl md:text-6xl font-bold max-w-3xl">
-        <span
-          data-en="Experience"
-          data-es="Experiencia"
-        >
-            Experience
-          </span>
-      </h2>
-    </div>
+---
+import Icon from "./icon.astro";
+import Sectionheading from "./sectionheading.astro";
 
-    <div class="relative border-l border-(--border) pl-10 space-y-16">
+// Mismo contenido que antes, ahora como datos para pintarlo en tarjetas
+const jobs = [
+  {
+    current: true,
+    year: { en: "Now", es: "Hoy" },
+    meta: { en: "Freelance · Currently", es: "Freelance · Actualidad" },
+    title: { en: "Freelance Full Stack Developer", es: "Desarrollador Full Stack Freelance" },
+    company: null,
+    description: {
+      en: "I currently work as a freelance developer building web applications, improving backend systems and developing complete digital products. I also build personal projects to explore new ideas and technologies. I am open to collaborating on new projects and opportunities, focusing on clean architecture, performance and user-focused software.",
+      es: "Actualmente trabajo como desarrollador freelance creando aplicaciones web, mejorando sistemas backend y desarrollando productos digitales completos. También desarrollo proyectos personales para explorar nuevas ideas y tecnologías. Estoy abierto a colaborar en nuevos proyectos y oportunidades, enfocado en arquitectura limpia, rendimiento y software centrado en el usuario.",
+    },
+  },
+  {
+    current: false,
+    year: { en: "2025", es: "2025" },
+    meta: { en: "Internship · 3 months", es: "Prácticas · 3 meses" },
+    title: { en: "Full Stack Developer Intern", es: "Desarrollador Full Stack en Prácticas" },
+    company: { name: "SoportTec", href: "https://soporttec.es" },
+    description: {
+      en: "Built a dynamic invoice template editor that allowed users to define templates using JSON or Python, render them in real time, visually edit the output and export results to PDF, JSON or Python code. This project provided hands-on experience with Django, Python backend systems and document rendering architectures.",
+      es: "Desarrollé un editor de plantillas de facturas dinámicas que permitía definir plantillas usando JSON o Python, renderizarlas en tiempo real, editarlas visualmente y exportar resultados a PDF, JSON o código Python. Este proyecto me dio experiencia práctica con Django, Python backend y arquitecturas de renderizado de documentos.",
+    },
+  },
+  {
+    current: false,
+    year: { en: "2022", es: "2022" },
+    meta: { en: "Internship · 4 months", es: "Prácticas · 4 meses" },
+    title: { en: "IT Support & Systems Intern", es: "Prácticas en Soporte Informático y Sistemas" },
+    company: { name: "Ayuntamiento de Huelva", href: "https://www.huelva.es/portal/" },
+    description: {
+      en: "During my internship at the Huelva City Council, I was responsible for supporting the installation, configuration, and maintenance of Linux servers, assisting in the monitoring and management of network infrastructure to ensure system stability and performance, and collaborating on internal administrative tasks, including data management and reporting using Microsoft Excel.",
+      es: "Durante mis prácticas en el Ayuntamiento de Huelva me encargué de dar soporte en la instalación, configuración y mantenimiento de servidores Linux, colaboré en la monitorización y gestión de la infraestructura de red para garantizar la estabilidad y el rendimiento de los sistemas, y participé en tareas administrativas internas, incluyendo la gestión de datos y la elaboración de informes mediante Microsoft Excel.",
+    },
+  },
+];
+---
 
-      <div class="relative mt-12">
-        <div class="absolute -left-[42px] top-2 w-4 h-4 rounded-full bg-green-400 shadow-lg animate-pulse"></div>
-        <div>
-          <div class="flex flex-wrap items-center gap-3 mb-4">
-            <span
-              class="px-4 py-2 rounded-full border border-(--accent)/40 text-sm text-(--accent-text)"
-              data-en="Currently · Freelancer"
-              data-es="Actualmente · Freelancer"
-            >
-            Currently · Freelancer
-          </span>
-            <span
-              class="px-4 py-2 rounded-full border border-green-400/30 text-sm text-green-700 dark:text-green-400"
-              data-en="Open to work"
-              data-es="Abierto a trabajar"
-            >
-            Open to work
-          </span>
-          </div>
-          <h3
-            class="text-3xl font-bold mb-2"
-            data-en="Freelance Full Stack Developer"
-            data-es="Desarrollador Full Stack Freelance"
-          >
-            Freelance Full Stack Developer
-          </h3>
-          <p class="text-(--accent-text) mb-6"></p>
+<section id="experience" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
+  <div class="max-w-7xl mx-auto">
+
+    <Sectionheading title={{ en: "Experience", es: "Experiencia" }} />
+
+    <ol class="relative">
+      {jobs.map((job, index) => (
+        <li data-reveal style={`--i:${index}`} class="group relative grid md:grid-cols-[180px_1fr] gap-x-12 gap-y-3 pl-6 md:pl-0 pb-12 last:pb-0">
+          <!-- Línea de tiempo: une los años -->
+          <span class="absolute left-0 md:left-[204px] top-2 bottom-0 w-px bg-linear-to-b from-(--text-primary)/20 to-transparent group-last:hidden" aria-hidden="true"></span>
+          <span
+            class={`absolute left-0 md:left-[204px] top-2 -translate-x-1/2 w-2.5 h-2.5 rounded-full ring-4 ring-(--bg-primary) ${
+              job.current ? "bg-(--accent)" : "bg-(--text-primary)/30"
+            }`}
+            aria-hidden="true"
+          ></span>
+
           <p
-            class="text-(--text-secondary) leading-relaxed max-w-3xl"
-            data-en="I currently work as a freelance developer building web applications, improving backend systems and developing complete digital products. I also build personal projects to explore new ideas and technologies. I am open to collaborating on new projects and opportunities, focusing on clean architecture, performance and user-focused software."
-            data-es="Actualmente trabajo como desarrollador freelance creando aplicaciones web, mejorando sistemas backend y desarrollando productos digitales completos. También desarrollo proyectos personales para explorar nuevas ideas y tecnologías. Estoy abierto a colaborar en nuevos proyectos y oportunidades, enfocado en arquitectura limpia, rendimiento y software centrado en el usuario."
+            class="experience-year text-4xl md:text-6xl font-bold tracking-tight leading-none md:text-right"
+            data-en={job.year.en}
+            data-es={job.year.es}
           >
-            I currently work as a freelance developer building web applications, improving backend systems and developing complete digital products. I also build personal projects to explore new ideas and technologies. I am open to collaborating on new projects and opportunities, focusing on clean architecture, performance and user-focused software.
+            {job.year.en}
           </p>
-        </div>
-      </div>
 
-      <div class="relative">
-        <div class="absolute -left-[42px] top-2 w-4 h-4 rounded-full bg-(--accent) shadow-lg"></div>
-        <div>
-          <div class="flex flex-wrap items-center gap-3 mb-4">
-            <span
-              class="px-4 py-2 rounded-full border border-(--border) text-sm text-(--text-secondary)"
-              data-en="Internship · SoportTec · 3 months · 2025"
-              data-es="Prácticas · SoportTec · 3 meses · 2025"
+          <div class="max-w-3xl">
+            <p class="text-xs uppercase tracking-[0.18em] text-(--text-secondary)" data-en={job.meta.en} data-es={job.meta.es}>
+              {job.meta.en}
+            </p>
+
+            <h3
+              class="mt-2 text-xl md:text-2xl font-bold tracking-tight text-(--text-primary)"
+              data-en={job.title.en}
+              data-es={job.title.es}
             >
-            Internship · SoportTec · 3 months · 2025
-          </span>
-            <span
-              class="px-4 py-2 rounded-full border border-(--accent)/40 text-sm text-(--accent-text)"
-              data-en="Completed"
-              data-es="Finalizado"
+              {job.title.en}
+            </h3>
+
+            {job.company && (
+              <a
+                href={job.company.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-1 inline-flex items-center gap-1.5 text-sm md:text-base font-medium text-(--accent-text) hover:gap-2.5"
+              >
+                {job.company.name}
+                <Icon name="external" class="w-3.5 h-3.5" />
+              </a>
+            )}
+
+            <p
+              class="mt-4 text-sm md:text-base text-(--text-secondary) leading-relaxed"
+              data-en={job.description.en}
+              data-es={job.description.es}
             >
-            Completed
-          </span>
+              {job.description.en}
+            </p>
           </div>
-          <h3
-            class="text-3xl font-bold mb-2"
-            data-en="Full Stack Developer Intern"
-            data-es="Desarrollador Full Stack en Prácticas"
-          >
-            Full Stack Developer Intern
-          </h3>
-          <p class="text-(--accent-text) mb-6">
-            <a href="https://soporttec.es" target="_blank" rel="noopener noreferrer">
-              SoportTec
-            </a>
-          </p>
-          <p
-            class="text-(--text-secondary) leading-relaxed max-w-3xl"
-            data-en="Built a dynamic invoice template editor that allowed users to define templates using JSON or Python, render them in real time, visually edit the output and export results to PDF, JSON or Python code. This project provided hands-on experience with Django, Python backend systems and document rendering architectures."
-            data-es="Desarrollé un editor de plantillas de facturas dinámicas que permitía definir plantillas usando JSON o Python, renderizarlas en tiempo real, editarlas visualmente y exportar resultados a PDF, JSON o código Python. Este proyecto me dio experiencia práctica con Django, Python backend y arquitecturas de renderizado de documentos."
-          >
-            Built a dynamic invoice template editor that allowed users to define templates using JSON or Python, render them in real time, visually edit the output and export results to PDF, JSON or Python code. This project provided hands-on experience with Django, Python backend systems and document rendering architectures.
-          </p>
-        </div>
-      </div>
-
-      <div class="relative">
-        <div class="absolute -left-[42px] top-2 w-4 h-4 rounded-full bg-(--accent) shadow-lg"></div>
-        <div>
-          <div class="flex flex-wrap items-center gap-3 mb-4">
-            <span
-              class="px-4 py-2 rounded-full border border-(--border) text-sm text-(--text-secondary)"
-              data-en="Internship · Huelva City Council · 4 months · 2022"
-              data-es="Prácticas · Ayuntamiento de Huelva · 4 meses · 2022"
-            >
-            Internship · Huelva City Council · 4 months · 2022
-          </span>
-            <span
-              class="px-4 py-2 rounded-full border border-(--accent)/40 text-sm text-(--accent-text)"
-              data-en="Completed"
-              data-es="Finalizado"
-            >
-            Completed
-          </span>
-          </div>
-          <h3
-            class="text-3xl font-bold mb-2"
-            data-en="IT Support & Systems Intern"
-            data-es="Prácticas en Soporte Informático y Sistemas"
-          >
-            IT Support & Systems Intern
-          </h3>
-          <p class="text-(--accent-text) mb-6">
-            Ayuntamiento de Huelva
-          </p>
-          <p
-            class="text-(--text-secondary) leading-relaxed max-w-3xl"
-            data-en="During my internship at the Huelva City Council, I was responsible for supporting the installation, configuration, and maintenance of Linux servers, assisting in the monitoring and management of network infrastructure to ensure system stability and performance, and collaborating on internal administrative tasks, including data management and reporting using Microsoft Excel."
-            data-es="Durante mis prácticas en el Ayuntamiento de Huelva me encargué de dar soporte en la instalación, configuración y mantenimiento de servidores Linux, colaboré en la monitorización y gestión de la infraestructura de red para garantizar la estabilidad y el rendimiento de los sistemas, y participé en tareas administrativas internas, incluyendo la gestión de datos y la elaboración de informes mediante Microsoft Excel."
-          >
-            During my internship at the Huelva City Council, I was responsible for supporting the installation, configuration, and maintenance of Linux servers, assisting in the monitoring and management of network infrastructure to ensure system stability and performance, and collaborating on internal administrative tasks, including data management and reporting using Microsoft Excel.
-          </p>
-        </div>
-      </div>
-
-    </div>
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
+
+<style>
+  /* Año con contorno; al pasar el ratón se rellena con el degradado de la marca */
+  .experience-year {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--text-primary) 35%, transparent);
+    background-image: linear-gradient(90deg, #22d3ee, #a855f7);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1), -webkit-text-stroke-color 0.8s ease;
+  }
+
+  li:hover .experience-year,
+  li:first-child .experience-year {
+    background-size: 100% 100%;
+    -webkit-text-stroke-color: transparent;
+  }
+</style>

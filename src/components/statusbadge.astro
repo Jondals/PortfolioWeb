@@ -1,0 +1,38 @@
+---
+import type { Translation } from "../data/projects.ts";
+
+interface Props {
+  status: Translation;
+  /** "overlay" cuando va encima de una imagen, "inline" dentro del texto */
+  variant?: "overlay" | "inline";
+  class?: string;
+}
+
+const { status, variant = "inline", class: className = "" } = Astro.props;
+
+// Color según el estado de desarrollo
+const tones: Record<string, { dot: string; inline: string }> = {
+  COMPLETED: {
+    dot: "bg-emerald-400 shadow-[0_0_8px] shadow-emerald-400/70",
+    inline: "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
+  },
+  "IN DEVELOPMENT": {
+    dot: "bg-amber-400 shadow-[0_0_8px] shadow-amber-400/70",
+    inline: "bg-amber-500/12 text-amber-700 dark:text-amber-300",
+  },
+  PROTOTYPE: {
+    dot: "bg-violet-400 shadow-[0_0_8px] shadow-violet-400/70",
+    inline: "bg-violet-500/12 text-violet-700 dark:text-violet-300",
+  },
+};
+
+const tone = tones[status.en.toUpperCase()] ?? tones.COMPLETED;
+const look = variant === "overlay" ? "bg-black/65 backdrop-blur-md text-white" : tone.inline;
+---
+
+<span class={`inline-flex items-center gap-2 text-xs font-medium px-2.5 py-1 rounded-md ${look} ${className}`}>
+  <span class={`w-1.5 h-1.5 rounded-full ${tone.dot}`}></span>
+  <span data-en={status.en.charAt(0) + status.en.slice(1).toLowerCase()} data-es={status.es.charAt(0) + status.es.slice(1).toLowerCase()}>
+    {status.en.charAt(0) + status.en.slice(1).toLowerCase()}
+  </span>
+</span>

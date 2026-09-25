@@ -1,74 +1,26 @@
 ---
+import Sectionheading from "./sectionheading.astro";
 import Projectcard from "./projectcard.astro";
-import parkourBeans from "../assets/images/parkourbeans.webp";
-import nextbotScapeBeans from "../assets/images/nextbotscapebeans.webp";
-
-const games = [
-  {
-    title: "Parkour Beans",
-    status: {
-      en: "Prototype",
-      es: "Prototipo",
-    },
-    description: {
-      en: "First-person parkour prototype focused on fast movement and fluid traversal in platforming environments.",
-      es: "Prototipo de parkour en primera persona centrado en movimiento rápido y desplazamiento fluido en entornos de plataformas.",
-    },
-    contribution: {
-      en: "Designed and implemented a modular player controller featuring wall-running, sliding, jumping, air control, swinging hook mechanic, and moving/jump platforms.",
-      es: "Diseñé e implementé un controlador de jugador modular con wall-running, deslizamiento, salto, control aéreo, gancho y plataformas móviles/de salto.",
-    },
-    tech: ["Unity", "C#"],
-    image: parkourBeans,
-    github: "https://github.com/Jondals/Parkour-Bean",
-  },
-
-  {
-    title: "NextbotScape Beans",
-    status: {
-      en: "Prototype",
-      es: "Prototipo",
-    },
-    description: {
-      en: "Multiplayer Backrooms-style horror experience built around cooperative exploration and real-time interaction.",
-      es: "Experiencia de terror multijugador estilo Backrooms basada en exploración cooperativa e interacción en tiempo real.",
-    },
-    contribution: {
-      en: "Developed multiplayer architecture using Netcode for GameObjects, including lobby system with join codes, player synchronization, animated character syncing, flashlight mechanics, and interactive doors. Also explored basic AI behavior using navigation and pathfinding systems.",
-      es: "Desarrollé la arquitectura multijugador usando Netcode for GameObjects, incluyendo sistema de lobby con códigos de acceso, sincronización de jugadores, animaciones, mecánica de linterna y puertas interactivas. También exploré IA básica con navegación y pathfinding.",
-    },
-    tech: ["Unity", "C#", "Netcode for GameObjects"],
-    image: nextbotScapeBeans,
-    github: "https://github.com/Jondals/NextBotEscapeBeans",
-  },
-];
+import { games } from "../data/games.ts";
 ---
 
-<section id="game-development" class="px-6 py-24 scroll-mt-20">
+<section id="game-development" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
+
   <div class="max-w-7xl mx-auto">
 
-    <div class="text-center mb-14">
-      <h2
-        class="text-4xl md:text-5xl font-bold"
-        data-en="Game Development"
-        data-es="Desarrollo de videojuegos"
-      >
-        Game Development
-      </h2>
+    <Sectionheading
+      title={{ en: "Game Development", es: "Desarrollo de videojuegos" }}
+      subtitle={{
+        en: "Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity.",
+        es: "Prototipos de videojuegos enfocados en programación de gameplay, sistemas multijugador y mecánicas interactivas con Unity.",
+      }}
+    />
 
-      <p
-        class="text-(--text-secondary) mt-4 max-w-2xl mx-auto"
-        data-en="Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity."
-        data-es="Prototipos de videojuegos enfocados en programación de gameplay, sistemas multijugador y mecánicas interactivas con Unity."
-      >
-        Game prototypes focused on gameplay programming, multiplayer systems, and interactive mechanics built with Unity.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {games.map((game) => (
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8">
+      {games.map((game, index) => (
         <Projectcard
           {...game}
+          reveal={index}
           contributionLabel={{ en: "Focus:", es: "Enfoque:" }}
           imageClass="h-64"
         />

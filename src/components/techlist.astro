@@ -1,5 +1,6 @@
 ---
 import Icon from "./icon.astro";
+import { techLinks } from "../data/tech.ts";
 
 interface Props {
   tech: string[];
@@ -8,11 +9,18 @@ interface Props {
 const { tech } = Astro.props;
 ---
 
-<ul class="flex flex-wrap gap-2">
+<ul class="flex flex-wrap gap-1.5">
   {tech.map((t) => (
-    <li class="flex items-center gap-2 text-[11px] px-3 py-1 rounded-full bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-secondary) hover:bg-(--text-primary)/10 hover:scale-105 transition duration-300">
-      <Icon name={t} class="w-3.5 h-3.5" />
-      {t}
+    <li>
+      <a
+        href={techLinks[t]}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 text-xs font-medium pl-1.5 pr-2.5 py-1 rounded-md bg-(--text-primary)/6 text-(--text-secondary) hover:bg-(--accent)/15 hover:text-(--text-primary)"
+      >
+        <Icon name={t} class="w-3.5 h-3.5" />
+        {t}
+      </a>
     </li>
   ))}
 </ul>

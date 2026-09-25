@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Icon from "./icon.astro";
 import Techlist from "./techlist.astro";
+import Statusbadge from "./statusbadge.astro";
 import type { Translation } from "../data/projects.ts";
 
 interface Props {
@@ -16,6 +17,10 @@ interface Props {
   github: string;
   demo?: string | null;
   imageClass?: string;
+  /** Versión reducida: sin la línea de rol/enfoque */
+  compact?: boolean;
+  /** Posición para escalonar la animación de entrada */
+  reveal?: number;
 }
 
 const {
@@ -29,10 +34,12 @@ const {
   github,
   demo,
   imageClass = "h-48",
+  compact = false,
+  reveal,
 } = Astro.props;
 ---
 
-<article class="group relative flex flex-col rounded-2xl overflow-hidden bg-(--text-primary)/3 border border-(--text-primary)/10 shadow-lg hover:shadow-2xl hover:-translate-y-1.5 hover:border-(--accent)/40 transition duration-500 ease-out">
+<article data-reveal={reveal !== undefined ? "" : undefined} style={reveal !== undefined ? `--i:${reveal}` : undefined} class="group flex flex-col rounded-[12px] overflow-hidden bg-(--bg-secondary) border border-(--text-primary)/10 shadow-lg hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1.5 hover:border-(--accent)/40 transition duration-500 ease-out">
 
   <div class={`${imageClass} overflow-hidden relative`}>
     <Image
@@ -46,16 +53,10 @@ const {
 
     <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
 
-    <span
-      class="absolute top-3 right-3 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-black/70 border border-white/20 text-white backdrop-blur"
-      data-en={status.en}
-      data-es={status.es}
-    >
-      {status.en}
-    </span>
+    <Statusbadge status={status} variant="overlay" class="absolute top-3 right-3" />
   </div>
 
-  <div class="p-5 flex flex-col gap-3 flex-1">
+  <div class="p-4 md:p-5 flex flex-col gap-3 flex-1">
 
     <h3 class="text-lg font-bold text-(--text-primary) group-hover:text-(--accent-text) transition duration-300">
       {title}
@@ -69,45 +70,47 @@ const {
       {description.en}
     </p>
 
-    <p class="text-xs text-(--text-secondary)">
-      <span class="text-(--text-primary) font-semibold" data-en={contributionLabel.en} data-es={contributionLabel.es}>
-        {contributionLabel.en}
-      </span>{" "}
-      <span
-        data-en={contribution.en}
-        data-es={contribution.es}
-      >
-        {contribution.en}
-      </span>
-    </p>
+    {!compact && (
+      <p class="text-xs text-(--text-secondary)">
+        <span class="text-(--text-primary) font-semibold" data-en={contributionLabel.en} data-es={contributionLabel.es}>
+          {contributionLabel.en}
+        </span>{" "}
+        <span
+          data-en={contribution.en}
+          data-es={contribution.es}
+        >
+          {contribution.en}
+        </span>
+      </p>
+    )}
 
-    <div class="mt-2">
+    <div class="mt-auto pt-2 flex flex-col gap-4">
       <Techlist tech={tech} />
-    </div>
 
-    <div class="flex items-center gap-3 mt-auto pt-4">
-      <a
-        href={github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-(--accent)/10 border border-(--accent)/20 text-(--accent-text) text-sm hover:bg-(--accent)/20"
-        aria-label={`${title} GitHub`}
-      >
-        <Icon name="GitHub" class="w-4 h-4" />
-        GitHub
-      </a>
-
-      {demo && (
+      <div class="flex items-center gap-3">
         <a
-          href={demo}
+          href={github}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-(--text-primary)/10 bg-(--text-primary)/5 text-(--text-primary) text-sm hover:bg-(--text-primary)/10"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+          aria-label={`${title} GitHub`}
         >
-          <Icon name="external" class="w-4 h-4" />
-          Demo
+          <Icon name="GitHub" class="w-4 h-4" />
+          GitHub
         </a>
-      )}
+
+        {demo && (
+          <a
+            href={demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+          >
+            <Icon name="external" class="w-4 h-4" />
+            Demo
+          </a>
+        )}
+      </div>
     </div>
   </div>
 </article>

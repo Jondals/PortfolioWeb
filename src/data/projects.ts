@@ -65,24 +65,6 @@ export const projects: Project[] = [
   },
 
   {
-    title: "Damas Donde Sea",
-    featured: true,
-    status: { en: "COMPLETED", es: "ACABADO" },
-    description: {
-      en: "Classic checkers game developed in Java with a focus on game logic, turn system, and board interaction.",
-      es: "Juego de damas clásico desarrollado en Java, centrado en la lógica del juego, sistema de turnos e interacción con el tablero.",
-    },
-    contribution: {
-      en: "Implemented game rules, movement system, and win condition logic.",
-      es: "Implementé las reglas del juego, sistema de movimientos y condiciones de victoria.",
-    },
-    tech: ["Java"],
-    image: damasDondeSea,
-    github: "https://github.com/Jondals/DamasDondeSea",
-    demo: null,
-  },
-
-  {
     title: "QuizMania",
     featured: true,
     status: { en: "COMPLETED", es: "ACABADO" },
@@ -98,6 +80,24 @@ export const projects: Project[] = [
     image: quizMania,
     github: "https://github.com/Jondals/QuizMania",
     demo: "https://quiz-mania-plum.vercel.app/",
+  },
+
+  {
+    title: "Damas Donde Sea",
+    featured: true,
+    status: { en: "COMPLETED", es: "ACABADO" },
+    description: {
+      en: "Classic checkers game developed in Java with a focus on game logic, turn system, and board interaction.",
+      es: "Juego de damas clásico desarrollado en Java, centrado en la lógica del juego, sistema de turnos e interacción con el tablero.",
+    },
+    contribution: {
+      en: "Implemented game rules, movement system, and win condition logic.",
+      es: "Implementé las reglas del juego, sistema de movimientos y condiciones de victoria.",
+    },
+    tech: ["Java"],
+    image: damasDondeSea,
+    github: "https://github.com/Jondals/DamasDondeSea",
+    demo: null,
   },
 
   {

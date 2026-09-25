@@ -3,154 +3,88 @@ import Icon from "./icon.astro";
 
 const year = new Date().getFullYear();
 
-const links = [
-  { href: "#about", en: "About", es: "Sobre mí" },
-  { href: "#projects", en: "Projects", es: "Proyectos" },
-  { href: "#game-development", en: "Games", es: "Juegos" },
-  { href: "#experience", en: "Experience", es: "Experiencia" },
-  { href: "#skills", en: "Skills", es: "Habilidades" },
+const contacts = [
+  {
+    href: "mailto:jondals@proton.me",
+    icon: "Email",
+    label: { en: "Email", es: "Email" },
+    value: { en: "jondals@proton.me", es: "jondals@proton.me" },
+    external: false,
+  },
+  {
+    href: "/cv.pdf",
+    icon: "download",
+    label: { en: "Résumé", es: "Currículum" },
+    value: { en: "Download CV", es: "Descargar CV" },
+    external: true,
+  },
 ];
 
-const socials = [
-  { href: "https://github.com/Jondals", icon: "GitHub", label: "GitHub" },
-  { href: "https://www.linkedin.com/in/jonathandoradoquintero/", icon: "LinkedIn", label: "LinkedIn" },
-  { href: "mailto:jondals@proton.me", icon: "Email", label: "Email" },
-];
+const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary)";
 ---
 
-<footer id="contact" class="relative mt-12 px-6 pt-24 pb-10 overflow-hidden scroll-mt-20">
+<footer id="contact" class="relative px-5 sm:px-6 pt-8 md:pt-12 pb-8">
+  <div class="max-w-7xl mx-auto">
 
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute inset-x-0 bottom-0 h-96 bg-linear-to-t from-indigo-500/8 to-transparent"></div>
-  </div>
+    <div class="grid lg:grid-cols-[1.6fr_1fr] gap-3 md:gap-4" data-reveal>
+      <div class={`${card} p-6 md:p-10 flex flex-col justify-center gap-5`}>
 
-  <div class="relative z-10 max-w-7xl mx-auto">
-
-    <div class="relative overflow-hidden rounded-3xl border border-(--text-primary)/10 bg-(--text-primary)/3 px-8 py-14 md:px-16 text-center">
-      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-150 h-60 bg-linear-to-r from-cyan-500/15 via-purple-500/15 to-blue-500/15 blur-3xl rounded-full pointer-events-none"></div>
-
-      <p
-        class="relative text-sm uppercase tracking-[0.3em] text-(--accent-text) font-medium"
-        data-en="Contact"
-        data-es="Contacto"
-      >
-        Contact
-      </p>
-
-      <h2
-        class="relative mt-4 text-4xl md:text-5xl font-bold"
-        data-en="Let's build something together"
-        data-es="¿Construimos algo juntos?"
-      >
-        Let's build something together
-      </h2>
-
-      <p
-        class="relative mt-5 max-w-xl mx-auto text-(--text-secondary) leading-relaxed"
-        data-en="I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon."
-        data-es="Estoy abierto a ofertas a jornada completa, prácticas y proyectos freelance. Escríbeme y te responderé lo antes posible."
-      >
-        I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon.
-      </p>
-
-      <div class="relative mt-10 flex flex-wrap items-center justify-center gap-4">
-        <a
-          href="mailto:jondals@proton.me"
-          class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--accent) text-black font-semibold hover:scale-[1.04] hover:shadow-xl shadow-lg shadow-(--accent)/20"
-        >
-          <Icon name="send" class="w-4 h-4" />
-          <span data-en="Send an email" data-es="Enviar un email">Send an email</span>
-        </a>
-
-        <a
-          href="/cv.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-0.5"
-        >
-          <Icon name="download" class="w-4 h-4" />
-          <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
-
-      <div class="space-y-3">
-        <p class="text-lg font-semibold text-(--text-primary)">
-          Jonathan Dorado
-        </p>
-        <p
-          class="text-sm text-(--text-secondary) leading-relaxed max-w-xs mx-auto md:mx-0"
-          data-en="Full Stack Developer focused on building scalable systems, and interactive experiences."
-          data-es="Desarrollador Full Stack enfocado en construir sistemas escalables y experiencias interactivas."
-        >
-          Full Stack Developer focused on building scalable systems, and interactive experiences.
-        </p>
-      </div>
-
-      <nav aria-label="Footer">
-        <p class="text-sm font-semibold text-(--text-primary) mb-4" data-en="Navigation" data-es="Navegación">
-          Navigation
-        </p>
-        <ul class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm max-w-xs mx-auto md:mx-0">
-          {links.map((link) => (
-            <li>
-              <a
-                href={link.href}
-                class="inline-block text-(--text-secondary) hover:text-(--accent-text) hover:translate-x-0.5"
-                data-en={link.en}
-                data-es={link.es}
-              >
-                {link.en}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div>
-        <p class="text-sm font-semibold text-(--text-primary) mb-4" data-en="Find me on" data-es="Encuéntrame en">
-          Find me on
-        </p>
-        <div class="flex justify-center md:justify-start gap-3">
-          {socials.map((social) => (
-            <a
-              href={social.href}
-              target={social.href.startsWith("http") ? "_blank" : undefined}
-              rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              class="p-3 rounded-xl bg-(--text-primary)/5 border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--text-primary)/10 hover:-translate-y-1"
-              aria-label={social.label}
-            >
-              <Icon name={social.icon} class="w-5 h-5" />
-            </a>
-          ))}
+        <div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+            <span data-en="Let's build something together" data-es="¿Construimos algo juntos?">Let's build something together</span>
+          </h2>
+          <p
+            class="mt-4 max-w-xl text-base md:text-lg text-(--text-secondary) leading-relaxed"
+            data-en="I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon."
+            data-es="Estoy abierto a ofertas a jornada completa, prácticas y proyectos freelance. Escríbeme y te responderé lo antes posible."
+          >
+            I'm open to full-time roles, internships and freelance projects. Send me a message and I'll get back to you soon.
+          </p>
         </div>
       </div>
+
+      <ul class="grid gap-3 md:gap-4">
+        {contacts.map((contact) => (
+          <li>
+            <a
+              href={contact.href}
+              target={contact.external ? "_blank" : undefined}
+              rel={contact.external ? "noopener noreferrer" : undefined}
+              class={`group h-full flex items-center gap-4 p-5 md:p-6 ${card} hover:border-(--accent)/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10`}
+            >
+              <span class="w-11 h-11 shrink-0 flex items-center justify-center rounded-[10px] bg-(--accent)/10 text-(--accent-text)">
+                <Icon name={contact.icon} class="w-[18px] h-[18px]" />
+              </span>
+              <span class="flex-1 min-w-0 flex flex-col gap-0.5">
+                <span class="text-xs text-(--text-secondary)" data-en={contact.label.en} data-es={contact.label.es}>
+                  {contact.label.en}
+                </span>
+                <span class="text-base md:text-lg font-semibold text-(--text-primary) truncate" data-en={contact.value.en} data-es={contact.value.es}>
+                  {contact.value.en}
+                </span>
+              </span>
+              <Icon name="arrow-right" class="w-5 h-5 shrink-0 text-(--text-secondary) -rotate-45 group-hover:rotate-0 group-hover:text-(--accent-text) transition duration-500 ease-out" />
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
 
-    <div class="mt-14 border-t border-(--text-primary)/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs md:text-sm text-(--text-secondary)">
+      <span>
+        © {year} Jondals. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
+      </span>
 
-      <p class="text-xs text-(--text-secondary)">
-        © {year} Jonathan Dorado ·{" "}
-        <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
-      </p>
-
-      <p class="text-xs text-(--text-secondary) flex items-center gap-2">
+      <span class="flex items-center gap-2">
         <span data-en="Built with" data-es="Hecho con">Built with</span>
-        <Icon name="Astro" class="w-3.5 h-3.5" /> Astro &
-        <Icon name="Tailwind CSS" class="w-3.5 h-3.5" /> Tailwind CSS
-      </p>
-
-      <a
-        href="#about"
-        class="inline-flex items-center gap-2 text-xs text-(--text-secondary) hover:text-(--accent-text) group"
-      >
-        <span data-en="Back to top" data-es="Volver arriba">Back to top</span>
-        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-(--text-primary)/10 group-hover:-translate-y-1 group-hover:border-(--accent)/40 transition duration-300">
-          <Icon name="arrow-up" class="w-4 h-4" />
+        <span class="inline-flex items-center gap-1.5 text-(--text-primary)">
+          <Icon name="Astro" class="w-4 h-4" /> Astro
         </span>
-      </a>
+        <span data-en="and" data-es="y">and</span>
+        <span class="inline-flex items-center gap-1.5 text-(--text-primary)">
+          <Icon name="Tailwind CSS" class="w-4 h-4" /> Tailwind CSS
+        </span>
+      </span>
     </div>
   </div>
 </footer>

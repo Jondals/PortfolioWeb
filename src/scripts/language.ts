@@ -23,7 +23,8 @@ function applyLanguage(lang: string): void {
         ? el.getAttribute("data-es")
         : el.getAttribute("data-en");
 
-    if (text !== null) {
+    // Solo se reescribe si cambia: evita recalcular la página entera al cargar
+    if (text !== null && el.textContent?.trim() !== text) {
       el.textContent = text;
     }
   });

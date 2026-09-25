@@ -7,7 +7,14 @@ import Experience from '../components/experience.astro';
 import Skills from '../components/skills.astro';
 import Footer from '../components/footer.astro';
 import Iconsprite from '../components/iconsprite.astro';
+import Background from '../components/background.astro';
+import { getImage } from "astro:assets";
+import profile from "../assets/images/profile.webp";
+import { profileImage } from "../components/hero.astro";
 import "../styles/global.css";
+
+// La foto del inicio es el elemento más grande del primer pantallazo: se anuncia en el <head>
+const profilePreload = await getImage({ src: profile, ...profileImage });
 
 const title = "Jonathan Dorado | Full Stack & Game Developer";
 const description = "Portfolio of Jonathan Dorado, Full Stack Developer and Game Developer. Web, mobile and multiplayer projects built with Astro, Angular, React, Flutter, Django and Unity.";
@@ -25,6 +32,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 		<meta name="theme-color" content="#0f172a" />
 		<link rel="canonical" href={canonical} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preload" as="image" imagesrcset={profilePreload.srcSet.attribute} imagesizes={profileImage.sizes} fetchpriority="high" />
 		<link rel="preload" href="/fonts/Lexend-Medium.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="preload" href="/fonts/Lexend-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
@@ -39,6 +47,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 		</script>
 		
 		<script is:inline>
+			document.documentElement.classList.add("js");
 			const savedTheme = localStorage.getItem("theme");
 			const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 			const theme = savedTheme ?? (systemDark ? "dark" : "light");
@@ -49,11 +58,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 			const lang = savedLang ?? (browserLang.startsWith("es") ? "es" : "en");
 			document.documentElement.setAttribute("data-lang", lang);
 			document.documentElement.lang = lang;
+
+			// En español se oculta el contenido hasta traducirlo (final del body) para que no salte el texto
+			if (lang === "es") {
+				document.documentElement.classList.add("i18n-pending");
+				setTimeout(function () { document.documentElement.classList.remove("i18n-pending"); }, 2000);
+			}
 		</script>
 	</head>
 
 	<body>
-		<Iconsprite />
 		<Header></Header>
 		<main>
 			<Hero></Hero>
@@ -63,5 +77,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 			<Skills></Skills>
 		</main>
 		<Footer></Footer>
+		<Background />
+		<Iconsprite />
+
+		<!-- Aplica el idioma antes del primer pintado para que el texto no salte (CLS) -->
+		<script is:inline>
+			if (document.documentElement.getAttribute("data-lang") === "es") {
+				document.querySelectorAll("[data-es]").forEach(function (el) {
+					el.textContent = el.getAttribute("data-es");
+				});
+			}
+			document.documentElement.classList.remove("i18n-pending");
+		</script>
 	</body>
 </html>
