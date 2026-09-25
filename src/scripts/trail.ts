@@ -27,6 +27,9 @@ if (finePointer && !reducedMotion) {
   document.body.append(canvas, orb);
 
   const ctx = canvas.getContext("2d");
+  // Capa auxiliar: la estela se dibuja aquí opaca y luego se pasa a la pantalla de una vez con el brillo
+  const layer = document.createElement("canvas");
+  const lctx = layer.getContext("2d");
   const points: Point[] = [];
   let head: RGB = [34, 211, 238];
   let tail: RGB = [168, 85, 247];
@@ -34,18 +37,20 @@ if (finePointer && !reducedMotion) {
   let ready = false;
   let width = 0;
   let height = 0;
+  let dpr = 1;
 
 
   // El lienzo mide exactamente la zona visible (sin la barra de scroll) para que coincida con el ratón
   function resize(): void {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = root.clientWidth;
     height = root.clientHeight;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
+    canvas.width = layer.width = Math.round(width * dpr);
+    canvas.height = layer.height = Math.round(height * dpr);
     ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
+    lctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
   function parseColor(value: string, fallback: RGB): RGB {
@@ -112,43 +117,84 @@ if (finePointer && !reducedMotion) {
     ctx.clearRect(0, 0, width, height);
     while (points.length && now - points[0].time > TRAIL_MS) points.shift();
 
-    if (points.length > 2) {
+    if (points.length > 2 && lctx) {
       // La punta de la estela queda clavada en el centro del orbe
       const path = smooth(points);
       path[path.length - 1] = points[points.length - 1];
-      const left: [number, number][] = [];
-      const right: [number, number][] = [];
+      const n = path.length - 1;
 
-      // Bordes de la cinta: grosor que crece de la cola a la cabeza, perpendicular a la dirección
-      for (let i = 0; i < path.length; i++) {
-        const p = path[i];
-        const prev = path[Math.max(0, i - 1)];
-        const next = path[Math.min(path.length - 1, i + 1)];
-        const angle = Math.atan2(next.y - prev.y, next.x - prev.x);
-        const life = Math.max(0, 1 - (now - p.time) / TRAIL_MS);
+      // Solo se trabaja en el rectángulo que ocupa la estela (con margen para el brillo): mucho más ligero
+      let minX = Infinity;
+      let minY = Infinity;
+      let maxX = -Infinity;
+      let maxY = -Infinity;
+      for (const p of path) {
+        if (p.x < minX) minX = p.x;
+        if (p.y < minY) minY = p.y;
+        if (p.x > maxX) maxX = p.x;
+        if (p.y > maxY) maxY = p.y;
+      }
+      const pad = MAX_WIDTH + 24;
+      const bx = Math.max(0, Math.floor(minX - pad));
+      const by = Math.max(0, Math.floor(minY - pad));
+      const bw = Math.min(width, Math.ceil(maxX + pad)) - bx;
+      const bh = Math.min(height, Math.ceil(maxY + pad)) - by;
+
+      // Mismo aspecto que la estela original: color y transparencia que se desvanecen hacia la cola.
+      // Se pinta como cadena de tramos (así no se rompe al cruzarse consigo misma) que encajan
+      // uno tras otro sin solaparse, para que la transparencia no se acumule en las uniones
+      lctx.clearRect(bx, by, bw, bh);
+      lctx.lineCap = "butt";
+      lctx.lineJoin = "round";
+
+      // Color y opacidad a lo largo de la estela (0 = cola, 1 = orbe), igual que el degradado de antes
+      const style = (t: number): string => {
+        if (t < 0.55) {
+          const k = t / 0.55;
+          return `rgba(${mix(tail, mix(tail, head, 0.5), k).join(", ")}, ${(0.7 * k).toFixed(3)})`;
+        }
+        const k = (t - 0.55) / 0.45;
+        return `rgba(${mix(mix(tail, head, 0.5), head, k).join(", ")}, ${(0.7 + 0.3 * k).toFixed(3)})`;
+      };
+
+      const GROUP = 4;
+      for (let i = 1; i < n; i += GROUP) {
+        const end = Math.min(n - 1, i + GROUP - 1);
+        const mid = path[Math.min(n - 1, i + Math.floor(GROUP / 2))];
+        const t = (i + end) / 2 / n;
+        const life = Math.max(0, 1 - (now - mid.time) / TRAIL_MS);
+
         // Forma de gota: ancho completo junto al orbe y se afina hasta un pico
-        const w = (MAX_WIDTH / 2) * Math.pow(i / (path.length - 1), 0.75) * life;
-        left.push([p.x + Math.sin(angle) * w, p.y - Math.cos(angle) * w]);
-        right.push([p.x - Math.sin(angle) * w, p.y + Math.cos(angle) * w]);
+        lctx.lineWidth = Math.max(0.4, MAX_WIDTH * Math.pow(t, 0.75) * life);
+        lctx.strokeStyle = style(t);
+        lctx.beginPath();
+        lctx.moveTo((path[i - 1].x + path[i].x) / 2, (path[i - 1].y + path[i].y) / 2);
+        for (let j = i; j <= end; j++) {
+          const p = path[j];
+          const next = path[j + 1];
+          lctx.quadraticCurveTo(p.x, p.y, (p.x + next.x) / 2, (p.y + next.y) / 2);
+        }
+        lctx.stroke();
       }
 
-      const first = path[0];
-      const last = path[path.length - 1];
-      const gradient = ctx.createLinearGradient(first.x, first.y, last.x, last.y);
-      gradient.addColorStop(0, `rgba(${tail.join(", ")}, 0)`);
-      gradient.addColorStop(0.55, `rgba(${mix(tail, head, 0.5).join(", ")}, 0.7)`);
-      gradient.addColorStop(1, `rgba(${head.join(", ")}, 1)`);
+      // Último tramo hasta el centro del orbe
+      const beforeLast = path[n - 1];
+      const last = path[n];
+      lctx.lineCap = "round";
+      lctx.lineWidth = MAX_WIDTH;
+      lctx.strokeStyle = `rgb(${head.join(", ")})`;
+      lctx.beginPath();
+      lctx.moveTo((beforeLast.x + last.x) / 2, (beforeLast.y + last.y) / 2);
+      lctx.lineTo(last.x, last.y);
+      lctx.stroke();
 
-      ctx.beginPath();
-      ctx.moveTo(left[0][0], left[0][1]);
-      for (const [x, y] of left) ctx.lineTo(x, y);
-      for (let i = right.length - 1; i >= 0; i--) ctx.lineTo(right[i][0], right[i][1]);
-      ctx.closePath();
-      ctx.fillStyle = gradient;
-      ctx.shadowColor = `rgba(${head.join(", ")}, 0.55)`;
-      ctx.shadowBlur = 12;
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      if (bw > 0 && bh > 0) {
+        ctx.save();
+        ctx.shadowColor = `rgba(${head.join(", ")}, 0.55)`;
+        ctx.shadowBlur = 12;
+        ctx.drawImage(layer, bx * dpr, by * dpr, bw * dpr, bh * dpr, bx, by, bw, bh);
+        ctx.restore();
+      }
     }
 
     if (points.length) {
