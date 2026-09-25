@@ -79,7 +79,7 @@ export const projects: Project[] = [
     tech: ["HTML", "CSS", "JavaScript", "AJAX", "Bootstrap"],
     image: quizMania,
     github: "https://github.com/Jondals/QuizMania",
-    demo: "https://quiz-mania-plum.vercel.app/",
+    demo: "https://quiz-mania-blond.vercel.app/",
   },
 
   {
