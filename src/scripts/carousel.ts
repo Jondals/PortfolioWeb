@@ -1,3 +1,9 @@
+/**
+ * carousel.ts
+ * Featured projects carousel: previous / next buttons, tabs, keyboard arrows, touch swipe and an autoplay
+ * that advances when the progress bar of the active tab finishes its CSS animation.
+ */
+
 const carousels = document.querySelectorAll<HTMLElement>(".carousel");
 
 carousels.forEach((carousel) => {
@@ -13,13 +19,14 @@ carousels.forEach((carousel) => {
   let autoScrolling = false;
   let autoScrollTimer = 0;
 
+  /** Scrolls to the given slide (wrapping around at both ends) and marks its tab as active. */
   function goTo(index: number): void {
     if (!track) return;
 
     const total = slides.length;
     current = (index + total) % total;
 
-    // Mientras dura el desplazamiento programado se ignora el observer (con un tope por si no llega "scrollend")
+    // While a programmatic scroll is running the observer is ignored (with a timeout in case "scrollend" never fires)
     autoScrolling = true;
     clearTimeout(autoScrollTimer);
     autoScrollTimer = window.setTimeout(() => (autoScrolling = false), 900);
@@ -27,6 +34,7 @@ carousels.forEach((carousel) => {
     updateDots(current);
   }
 
+  /** Marks the tab of the given slide as the current one. */
   function updateDots(index: number): void {
     dots.forEach((dot, i) => {
       dot.setAttribute("aria-current", i === index ? "true" : "false");
@@ -40,7 +48,7 @@ carousels.forEach((carousel) => {
     dot.addEventListener("click", () => goTo(Number(dot.dataset.index)));
   });
 
-  // Autoplay: cuando la barra de progreso de la pestaña activa se llena, pasa al siguiente
+  // Autoplay: when the progress bar of the active tab fills up, move to the next slide
   carousel.addEventListener("animationend", (e: AnimationEvent) => {
     if ((e.target as Element).classList.contains("carousel-progress")) goTo(current + 1);
   });
@@ -62,7 +70,7 @@ carousels.forEach((carousel) => {
     autoScrolling = false;
   });
 
-  // Sincroniza las pestañas cuando se desliza con el dedo o el trackpad
+  // Keep the tabs in sync when the user swipes with a finger or a trackpad
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

@@ -1,8 +1,15 @@
+/**
+ * themeToggle.ts
+ * Light / dark theme switcher. The theme is stored in localStorage and defaults to the system preference;
+ * the `dark` class on <html> is what the stylesheet reacts to.
+ */
+
 const toggleButton = document.getElementById("theme-toggle") as HTMLButtonElement | null;
 
 type Theme = "dark" | "light";
 
-function applyTheme(theme: Theme) {
+/** Applies the theme to the page and remembers it. */
+function applyTheme(theme: Theme): void {
   const root = document.documentElement;
   const isDark = theme === "dark";
 
@@ -11,6 +18,7 @@ function applyTheme(theme: Theme) {
   localStorage.setItem("theme", theme);
 }
 
+/** Returns the saved theme, or the system preference when nothing was saved. */
 function getInitialTheme(): Theme {
   const saved = localStorage.getItem("theme") as Theme | null;
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;

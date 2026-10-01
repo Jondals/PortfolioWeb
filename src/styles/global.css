@@ -21,23 +21,28 @@
 :root {
   --font-sans: "Lexend", sans-serif;
 
-  --bg-primary: #fff9f2;
-  --bg-secondary: #fff0e0;
-  --bg-card: #ffe6cc;
-  --bg-hover: #ffdcb8;
+  /* Light theme surfaces: a near-white warm gray instead of a saturated peach. The old cream/peach
+     stack (surfaces getting more and more orange the "higher" they sat) made every card and tag read
+     as the same flat orange block, with almost no separation between them and no room for the pink
+     accent to stand out. These are desaturated so cards read as neutral, elevated surfaces and the
+     accent is the only strong color on the page. */
+  --bg-primary: #faf9f7;
+  --bg-secondary: #f2efea;
+  --bg-card: #eae3d8;
+  --bg-hover: #e0d6c6;
 
-  --text-primary: #2b1a08;
-  --text-secondary: #543d2b;
-  --text-muted: #8c6d53;
+  --text-primary: #241c14;
+  --text-secondary: #5b5248;
+  --text-muted: #8c8378;
 
   --accent: #ff8fab;
   --accent-hover: #fb6f92;
   --accent-soft: #ffccd5;
-  /* Acento usado como texto: el rosa claro no llega al contraste mínimo sobre fondo crema */
-  --accent-text: #b5174a;
+  /* Accent used as text: the light pink does not meet minimum contrast on a light background */
+  --accent-text: #a01048;
 
-  --border: #ffe6cc;
-  --border-light: #ffdcb8;
+  --border: #eae3d8;
+  --border-light: #e0d6c6;
 }
 
 html.dark {
@@ -62,7 +67,7 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
-  /* En móvil todo un poco más compacto (Tailwind usa rem, así que escala todo) */
+  /* Slightly more compact on mobile (Tailwind uses rem, so this scales everything) */
   font-size: 15px;
   scroll-padding-top: 5rem;
   font-family: var(--font-sans);
@@ -84,8 +89,47 @@ html.i18n-pending body {
   visibility: hidden;
 }
 
-/* Hovers suaves en todos los elementos interactivos (entrada y salida con fundido).
-   Tailwind v4 usa las propiedades translate/scale/rotate por separado, así que se incluyen aquí */
+/* ---------- Light theme contrast fixes ----------
+   Card borders and fills use `border-(--text-primary)/N` / `bg-(--text-primary)/N` utilities so they
+   automatically adapt to the theme. But the same opacity reads very differently on a dark background
+   than on this theme's light cream one: on dark, 10% white already stands out; on cream, 10% of a near-black
+   text color nearly disappears. These overrides raise that opacity only in light theme, and add a soft
+   shadow under every card so it reads as a separate surface instead of blending into the page. */
+html:not(.dark) [class*="border-(--text-primary)/10"] {
+  border-color: color-mix(in srgb, var(--text-primary) 16%, transparent);
+}
+
+html:not(.dark) [class*="border-(--text-primary)/8"] {
+  border-color: color-mix(in srgb, var(--text-primary) 14%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--text-primary)/3"] {
+  background-color: color-mix(in srgb, var(--text-primary) 5%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--text-primary)/4"] {
+  background-color: color-mix(in srgb, var(--text-primary) 6%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--text-primary)/5"] {
+  background-color: color-mix(in srgb, var(--text-primary) 7%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--text-primary)/6"] {
+  background-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--text-primary)/8"] {
+  background-color: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+
+html:not(.dark) [class*="bg-(--bg-secondary)"],
+html:not(.dark) [class*="bg-(--bg-card)"] {
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--text-primary) 6%, transparent);
+}
+
+/* Smooth hovers on every interactive element (fade in and out).
+   Tailwind v4 uses the translate/scale/rotate properties separately, so they are listed here too */
 a,
 button {
   transition-property: color, background-color, border-color, box-shadow, opacity, transform, translate, scale, rotate;
@@ -99,8 +143,8 @@ button {
   border-radius: 0.5rem;
 }
 
-/* ---------- Fondo continuo: partículas + ondas que cambian según la sección ---------- */
-/* Colores de escena animables (se interpolan al cambiar de sección) */
+/* ---------- Continuous background: particles + waves that change with the section ---------- */
+/* Animatable scene colors (interpolated when the section changes) */
 @property --scene-a {
   syntax: "<color>";
   inherits: true;
@@ -113,7 +157,7 @@ button {
   initial-value: #a855f7;
 }
 
-/* Solo la capa del fondo lleva los colores: así la transición no recalcula el estilo de toda la página */
+/* Only the background layer carries the colors: this way the transition never recomputes the style of the whole page */
 .page-bg {
   --scene-a: #22d3ee;
   --scene-b: #a855f7;
@@ -134,7 +178,7 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
   pointer-events: none;
 }
 
-/* Halo de color de la escena, arriba a la derecha */
+/* Scene color halo, top right */
 .page-aurora {
   position: absolute;
   inset: -20% -10% auto auto;
@@ -146,7 +190,7 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
   will-change: transform;
 }
 
-/* Capas de estrellas: una cuadrícula de puntos que se repite en vertical */
+/* Star layers: a grid of dots that repeats vertically */
 .page-stars {
   position: absolute;
   inset: 0 0 auto 0;
@@ -156,7 +200,7 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
 
 .page-stars {
   --star-color: #ffffff;
-  /* Degradado en vez de color sólido: los analizadores de contraste no lo toman como fondo del texto */
+  /* Gradient instead of a solid color: contrast checkers do not read it as a text background */
   background-image: linear-gradient(var(--star-color), var(--star-color));
   mask-size: var(--tile) var(--tile);
   mask-repeat: repeat;
@@ -203,7 +247,7 @@ html:not(.dark) .page-stars {
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-/* ---------- Cursor propio: orbe de luz + estela ---------- */
+/* ---------- Custom cursor: glowing orb + trail ---------- */
 html.custom-cursor,
 html.custom-cursor * {
   cursor: none !important;
@@ -228,7 +272,7 @@ html.custom-cursor * {
   transition: opacity 0.3s ease;
 }
 
-/* El círculo va en un pseudo-elemento para poder animar su tamaño sin mover el centro */
+/* The circle lives in a pseudo-element so its size can be animated without moving its center */
 .cursor-orb::before {
   content: "";
   position: absolute;
@@ -249,7 +293,7 @@ html.cursor-visible .cursor-orb {
   opacity: 1;
 }
 
-/* Encima de enlaces y botones se abre en un anillo */
+/* Opens into a ring over links and buttons */
 html.cursor-hover .cursor-orb::before {
   width: 34px;
   height: 34px;
@@ -267,8 +311,8 @@ html.cursor-hover.cursor-down .cursor-orb::before {
   height: 26px;
 }
 
-/* ---------- Header: siempre visible, camuflado con el fondo arriba y con desenfoque al bajar ---------- */
-/* Usa el color de fondo de la propia web (oscuro o crema según el tema) */
+/* ---------- Header: always visible, blends into the background at the top, blurred once scrolled ---------- */
+/* Uses the site's own background color (dark or cream depending on the theme) */
 .site-header {
   background-color: color-mix(in srgb, var(--bg-primary) 0%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 0%, transparent);
@@ -281,8 +325,8 @@ html.cursor-hover.cursor-down .cursor-orb::before {
   backdrop-filter: blur(24px) saturate(1.4);
 }
 
-/* ---------- Entrada al hacer scroll ---------- */
-/* Solo se ocultan si hay JavaScript (clase .js en <html>); con "reducir movimiento" se ven siempre */
+/* ---------- Scroll entrance animation ---------- */
+/* Elements are only hidden when JavaScript is available (the .js class on <html>); with "reduce motion" they are always visible */
 html.js [data-reveal]:not(.is-revealed) {
   opacity: 0;
 }
@@ -307,6 +351,12 @@ html.js [data-reveal]:not(.is-revealed) {
   [data-reveal].is-revealed {
     animation: none;
   }
+}
+
+/* Language button: only the flag of the current language is shown */
+html[data-lang="es"] .lang-flag-en,
+html:not([data-lang="es"]) .lang-flag-es {
+  display: none;
 }
 
 .no-scrollbar {

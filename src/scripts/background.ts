@@ -1,7 +1,16 @@
+/**
+ * background.ts
+ * Drives the page background (src/components/background.astro):
+ *  - tracks which section is on screen and writes it to html[data-scene] so global.css can
+ *    recolor the background through CSS custom properties,
+ *  - moves the star layers and waves on scroll (parallax: higher scroll speed moves them further),
+ *  - adds a subtle depth effect that follows the mouse (each layer shifts by a different amount).
+ */
+
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Escena: cada sección tiene sus colores (ver html[data-scene] en global.css)
+// Scene: every section has its own colors (see html[data-scene] in global.css)
 const scenes = document.querySelectorAll<HTMLElement>("main section[id], footer[id]");
 
 const sceneObserver = new IntersectionObserver(
@@ -15,21 +24,22 @@ const sceneObserver = new IntersectionObserver(
 
 scenes.forEach((section) => sceneObserver.observe(section));
 
-// Movimiento del fondo: con el scroll (paralaje de estrellas y ondas que suben, bajan y cambian de altura)
-// y con el ratón (profundidad sutil: cada capa se desplaza más cuanto más cerca está)
+// Background movement: scroll (parallax on the stars, waves that rise, fall and change height)
+// and the mouse (subtle depth: each layer shifts further the closer it is supposed to be)
 const stars = document.querySelectorAll<HTMLElement>(".page-stars");
 const waves = document.querySelectorAll<HTMLElement>(".page-wave-row");
 const aurora = document.querySelector<HTMLElement>(".page-aurora");
 const TILE = 600;
 const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-// Posición del ratón normalizada (-1..1) y la suavizada que se usa para pintar
+// Normalized mouse position (-1..1) and the smoothed value actually used for drawing
 let targetX = 0;
 let targetY = 0;
 let mouseX = 0;
 let mouseY = 0;
 let ticking = false;
 
+/** Recomputes the transform of every background layer from the scroll position and the mouse. */
 function update(): void {
   ticking = false;
 
@@ -37,7 +47,7 @@ function update(): void {
   const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   const progress = y / max;
 
-  // El ratón se sigue con suavidad para que el fondo "flote" en vez de saltar
+  // The mouse position is smoothed so the background "floats" instead of jumping
   mouseX += (targetX - mouseX) * 0.06;
   mouseY += (targetY - mouseY) * 0.06;
 
@@ -62,10 +72,11 @@ function update(): void {
     aurora.style.transform = `translate3d(${ax.toFixed(2)}vw, ${ay.toFixed(2)}vh, 0) scale(${(1 + progress * 0.3).toFixed(3)})`;
   }
 
-  // Mientras el fondo no ha alcanzado al ratón, sigue animando
+  // Keep animating while the background has not caught up with the mouse yet
   if (Math.abs(targetX - mouseX) > 0.001 || Math.abs(targetY - mouseY) > 0.001) request();
 }
 
+/** Schedules `update` on the next animation frame, coalescing calls that happen in between. */
 function request(): void {
   if (ticking) return;
   ticking = true;
@@ -83,6 +94,6 @@ if (!reducedMotion) {
     });
   }
 
-  // Si la página se abre ya desplazada (recarga o ancla), se coloca el fondo sin esperar al scroll
+  // If the page loads already scrolled (reload or anchor link), position the background right away
   if (window.scrollY > 0) request();
 }

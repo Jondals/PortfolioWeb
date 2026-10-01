@@ -1,0 +1,44 @@
+---
+/**
+ * statlist.astro
+ * Grid of key facts. Every card is a link that scrolls to the section that backs the number up.
+ */
+import Icon from "./icon.astro";
+import type { Translation } from "../data/projects.ts";
+
+export interface Stat {
+  value: string;
+  label: Translation;
+  /** Section the card links to, e.g. "#projects". */
+  href: string;
+}
+
+interface Props {
+  stats: Stat[];
+  class?: string;
+}
+
+const { stats, class: className = "" } = Astro.props;
+---
+
+<ul class={`grid grid-cols-2 gap-3 md:gap-4 ${className}`}>
+  {stats.map((stat) => (
+    <li>
+      <a
+        href={stat.href}
+        class="group relative h-full flex flex-col justify-between gap-3 min-h-28 md:min-h-36 p-4 md:p-6 rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary) hover:border-(--accent)/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10 transition duration-500 ease-out"
+      >
+        <span class="text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">
+          {stat.value}
+        </span>
+        <span class="text-xs md:text-sm text-(--text-secondary) leading-snug pr-6" data-en={stat.label.en} data-es={stat.label.es}>
+          {stat.label.en}
+        </span>
+        <Icon
+          name="arrow-right"
+          class="absolute right-4 bottom-4 w-4 h-4 text-(--text-secondary) -rotate-45 opacity-0 group-hover:opacity-100 group-hover:rotate-0 group-hover:text-(--accent-text) transition duration-500 ease-out"
+        />
+      </a>
+    </li>
+  ))}
+</ul>

@@ -1,5 +1,9 @@
-// Lo visible al cargar se ejecuta ya; el resto se carga cuando el navegador está libre,
-// cada módulo en su propia tarea corta para no bloquear el hilo principal
+/**
+ * main.ts
+ * Entry point loaded by the layout. What is visible immediately (language, theme, entrance
+ * animations) runs right away; everything else loads one module at a time while the browser is
+ * idle, so no single long task blocks the main thread during page load.
+ */
 import "./language";
 import "./themeToggle";
 import "./reveal";
@@ -17,6 +21,7 @@ const deferred = [
 const idle = (callback: () => void) =>
   "requestIdleCallback" in window ? window.requestIdleCallback(callback, { timeout: 1500 }) : setTimeout(callback, 1);
 
+/** Loads the next deferred module, then waits for another idle slot before loading the following one. */
 function loadNext(): void {
   const next = deferred.shift();
   if (!next) {

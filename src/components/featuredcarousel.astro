@@ -1,4 +1,9 @@
 ---
+/**
+ * featuredcarousel.astro
+ * Carousel with the featured projects: numbered tabs with an autoplay progress bar, a browser-window
+ * frame around the screenshot and the project details. Behaviour lives in src/scripts/carousel.ts.
+ */
 import { Image } from "astro:assets";
 import Icon from "./icon.astro";
 import Techlist from "./techlist.astro";
@@ -113,17 +118,16 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
             {project.description.en}
           </p>
 
-          <p class="text-sm text-(--text-secondary) pl-4 border-l-2 border-(--accent)/50">
-            <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">
-              Role:
-            </span>{" "}
-            <span
-              data-en={project.contribution.en}
-              data-es={project.contribution.es}
-            >
-              {project.contribution.en}
-            </span>
-          </p>
+          <div class="space-y-2 text-sm text-(--text-secondary) pl-4 border-l-2 border-(--accent)/50">
+            <p>
+              <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">Role:</span>{" "}
+              <span data-en={project.contribution.en} data-es={project.contribution.es}>{project.contribution.en}</span>
+            </p>
+            <p>
+              <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">Learned:</span>{" "}
+              <span data-en={project.learned.en} data-es={project.learned.es}>{project.learned.en}</span>
+            </p>
+          </div>
 
           <Techlist tech={project.tech} />
 
@@ -175,7 +179,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 </div>
 
 <style>
-  /* Barra de progreso del autoplay: se llena en la pestaña activa y al acabar pasa al siguiente */
+  /* Autoplay progress bar: fills the active tab and, when it ends, the carousel moves to the next slide */
   .carousel-progress {
     transform: scaleX(0);
   }

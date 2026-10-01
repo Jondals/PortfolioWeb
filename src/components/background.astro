@@ -1,6 +1,6 @@
 ---
-// Ondas del fondo: cada una es un seno periódico dibujado sobre el doble del ancho,
-// así al desplazarla un 50% el bucle no tiene cortes.
+// Background waves: each one is a periodic sine drawn over double the width, so shifting it
+// by 50% loops seamlessly with no visible seam.
 const WIDTH = 2880;
 const HEIGHT = 200;
 
@@ -23,7 +23,7 @@ const waves = [
   { top: "80%", height: 340, amplitude: 44, periods: 1, phase: 0.6, speed: "70s", reverse: true, opacity: 0.1, width: 0, filled: true },
 ];
 
-// Estrellas: cada capa es un mosaico periódico de puntos, así se puede desplazar sin fin
+// Stars: each layer is a periodic tile of dots, so it can be shifted endlessly without a seam
 const TILE = 600;
 
 function starTile(count: number, minSize: number, maxSize: number, seed: number): string {
@@ -41,7 +41,7 @@ function starTile(count: number, minSize: number, maxSize: number, seed: number)
     return `<circle cx='${x}' cy='${y}' r='${r}' fill-opacity='${alpha}'/>`;
   }).join("");
 
-  // Mosaico SVG que se usa como máscara: el color lo pone el fondo (cambia con la escena y el tema)
+  // SVG tile used as a mask: the color comes from the background itself (it changes with the scene and the theme)
   return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${TILE}' height='${TILE}'>${circles}</svg>`)}")`;
 }
 

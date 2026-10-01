@@ -10,7 +10,7 @@ interface Props {
 
 const { status, variant = "inline", class: className = "" } = Astro.props;
 
-// Color según el estado de desarrollo
+// Color based on the development status
 const tones: Record<string, { dot: string; inline: string }> = {
   COMPLETED: {
     dot: "bg-emerald-400 shadow-[0_0_8px] shadow-emerald-400/70",

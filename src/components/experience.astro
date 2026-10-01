@@ -48,7 +48,7 @@ const jobs = [
     <ol class="relative">
       {jobs.map((job, index) => (
         <li data-reveal style={`--i:${index}`} class="group relative grid md:grid-cols-[180px_1fr] gap-x-12 gap-y-3 pl-6 md:pl-0 pb-12 last:pb-0">
-          <!-- Línea de tiempo: une los años -->
+          <!-- Timeline: connects the years -->
           <span class="absolute left-0 md:left-[204px] top-2 bottom-0 w-px bg-linear-to-b from-(--text-primary)/20 to-transparent group-last:hidden" aria-hidden="true"></span>
           <span
             class={`absolute left-0 md:left-[204px] top-2 -translate-x-1/2 w-2.5 h-2.5 rounded-full ring-4 ring-(--bg-primary) ${
@@ -105,10 +105,12 @@ const jobs = [
 </section>
 
 <style>
-  /* Año con contorno; al pasar el ratón se rellena con el degradado de la marca */
+  /* Outlined year; fills with the brand gradient on hover */
   .experience-year {
     color: transparent;
-    -webkit-text-stroke: 1px color-mix(in srgb, var(--text-primary) 35%, transparent);
+    /* Light theme needs a much stronger stroke than dark: the same percentage of a dark color
+       on a light background reads as nearly invisible */
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--text-primary) 55%, transparent);
     background-image: linear-gradient(90deg, #22d3ee, #a855f7);
     background-clip: text;
     -webkit-background-clip: text;
@@ -121,5 +123,9 @@ const jobs = [
   li:first-child .experience-year {
     background-size: 100% 100%;
     -webkit-text-stroke-color: transparent;
+  }
+
+  html.dark .experience-year {
+    -webkit-text-stroke-color: color-mix(in srgb, var(--text-primary) 35%, transparent);
   }
 </style>

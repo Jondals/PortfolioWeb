@@ -1,4 +1,9 @@
 ---
+/**
+ * header.astro
+ * Site header: logo, section navigation, theme and language toggles and the mobile menu.
+ * It is transparent at the top of the page and gets a blurred background when scrolling (see global.css).
+ */
 import Icon from "./icon.astro";
 
 const navItems = [
@@ -10,7 +15,7 @@ const navItems = [
   { href: "#contact", en: "Contact", es: "Contacto" },
 ];
 
-// Botones del header: siguen el tema, con fundido suave al pasar el ratón y un pequeño hundimiento al pulsar
+// Header buttons: follow the theme, fade smoothly on hover and sink slightly when pressed
 const control =
   "group/ctl relative h-9 inline-flex items-center justify-center rounded-[8px] border border-(--text-primary)/10 bg-(--text-primary)/4 text-(--text-secondary) " +
   "hover:text-(--text-primary) hover:border-(--accent)/45 hover:bg-(--accent)/10 hover:shadow-[0_0_18px_-4px] hover:shadow-(--accent)/40 active:scale-95 " +
@@ -53,12 +58,14 @@ const control =
 
       <button
         type="button"
-        class={`lang-toggle hidden sm:inline-flex px-3 text-xs font-semibold ${control}`}
-        data-en="🇬🇧 EN"
-        data-es="🇪🇸 ES"
+        class={`lang-toggle hidden sm:inline-flex gap-2 px-3 text-xs font-semibold ${control}`}
         aria-label="Cambiar a español"
       >
-        🇬🇧 EN
+        <span class="lang-flags flex items-center">
+          <Icon name="flag-en" class="lang-flag-en w-5 h-[14px] rounded-[2px]" />
+          <Icon name="flag-es" class="lang-flag-es w-5 h-[14px] rounded-[2px]" />
+        </span>
+        <span data-en="EN" data-es="ES">EN</span>
       </button>
 
       <button
@@ -131,12 +138,14 @@ const control =
 
       <button
         type="button"
-        class="lang-toggle w-full rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) hover:bg-(--bg-hover) px-3 py-2.5 text-sm"
-        data-en="🇬🇧 EN"
-        data-es="🇪🇸 ES"
+        class="lang-toggle w-full inline-flex items-center justify-center gap-2 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) hover:bg-(--bg-hover) px-3 py-2.5 text-sm"
         aria-label="Cambiar a español"
       >
-        🇬🇧 EN
+        <span class="lang-flags flex items-center">
+          <Icon name="flag-en" class="lang-flag-en w-5 h-[14px] rounded-[2px]" />
+          <Icon name="flag-es" class="lang-flag-es w-5 h-[14px] rounded-[2px]" />
+        </span>
+        <span data-en="EN" data-es="ES">EN</span>
       </button>
     </div>
   </div>

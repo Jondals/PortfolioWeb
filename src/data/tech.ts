@@ -1,4 +1,4 @@
-// Web oficial de cada tecnología. Las etiquetas de proyectos y skills enlazan aquí.
+// Official website of every technology. Project tags and skill chips link here.
 export const techLinks: Record<string, string> = {
   Angular: "https://angular.dev",
   Astro: "https://astro.build",
@@ -22,6 +22,9 @@ export const techLinks: Record<string, string> = {
   PHP: "https://www.php.net",
   Java: "https://www.java.com",
   Supabase: "https://supabase.com",
+  Express: "https://expressjs.com",
+  Fastify: "https://fastify.dev",
+  Cloudflare: "https://workers.cloudflare.com",
   Odoo: "https://www.odoo.com",
   PostgreSQL: "https://www.postgresql.org",
   MySQL: "https://www.mysql.com",

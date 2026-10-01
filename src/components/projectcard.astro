@@ -1,4 +1,9 @@
 ---
+/**
+ * projectcard.astro
+ * Card used for the "More projects" grid and the game section: screenshot, status badge,
+ * description, learning notes, technology tags and links. `compact` hides the role line.
+ */
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Icon from "./icon.astro";
@@ -11,15 +16,16 @@ interface Props {
   status: Translation;
   description: Translation;
   contribution: Translation;
+  learned: Translation;
   contributionLabel?: Translation;
   tech: string[];
   image: ImageMetadata;
   github: string;
   demo?: string | null;
   imageClass?: string;
-  /** Versión reducida: sin la línea de rol/enfoque */
+  /** Reduced version without the role / focus line */
   compact?: boolean;
-  /** Posición para escalonar la animación de entrada */
+  /** Position used to stagger the entrance animation */
   reveal?: number;
 }
 
@@ -28,6 +34,7 @@ const {
   status,
   description,
   contribution,
+  learned,
   contributionLabel = { en: "Role:", es: "Rol:" },
   tech,
   image,
@@ -83,6 +90,11 @@ const {
         </span>
       </p>
     )}
+
+    <p class="text-xs text-(--text-secondary)">
+      <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">Learned:</span>{" "}
+      <span data-en={learned.en} data-es={learned.es}>{learned.en}</span>
+    </p>
 
     <div class="mt-auto pt-2 flex flex-col gap-4">
       <Techlist tech={tech} />

@@ -1,4 +1,8 @@
-// Animación de entrada: los elementos con data-reveal aparecen al entrar en pantalla
+/**
+ * reveal.ts
+ * Scroll-triggered entrance animation: any element marked with `data-reveal` gets the
+ * `is-revealed` class (and its CSS animation, see global.css) the first time it enters the viewport.
+ */
 const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
 
 const observer = new IntersectionObserver(

@@ -1,16 +1,21 @@
-// Sonido de pulsación tipo tecla "thock" (grave y redondo) al apretar y un "tic" suave al soltar,
-// sintetizado con Web Audio (sin archivos). Suena con ratón y en táctil; en iOS se desbloquea con el primer toque.
+/**
+ * sound.ts
+ * A "thock" keyboard sound on press and a soft tick on release, synthesized with the Web Audio API
+ * (no audio files). Works with mouse and touch; on iOS the audio context is unlocked on the first tap.
+ */
+
 let audio: AudioContext | null = null;
 let noise: AudioBuffer | null = null;
 let output: GainNode | null = null;
 
+/** Lazily creates the shared AudioContext (with a gentle compressor) and resumes it if suspended. */
 function context(): AudioContext | null {
   if (!audio) {
     const AudioCtor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AudioCtor) return null;
     audio = new AudioCtor();
 
-    // Salida común con un compresor suave: el sonido queda redondo y sin picos
+    // Shared output through a soft compressor: keeps the sound round, with no harsh peaks
     const compressor = audio.createDynamicsCompressor();
     compressor.threshold.value = -18;
     compressor.ratio.value = 4;
@@ -23,6 +28,7 @@ function context(): AudioContext | null {
   return audio;
 }
 
+/** Builds (once) and reuses a short white-noise buffer used for the "tap" of the key press. */
 function noiseBuffer(ctx: AudioContext): AudioBuffer {
   if (noise) return noise;
 
@@ -32,6 +38,7 @@ function noiseBuffer(ctx: AudioContext): AudioBuffer {
   return noise;
 }
 
+/** A gain node with a quick attack and decay, used to shape every oscillator and noise burst. */
 function envelope(ctx: AudioContext, peak: number, attack: number, decay: number): GainNode {
   const gain = ctx.createGain();
   const now = ctx.currentTime;
@@ -41,7 +48,7 @@ function envelope(ctx: AudioContext, peak: number, attack: number, decay: number
   return gain;
 }
 
-// Apretar: cuerpo grave y redondeado + un roce suave de la tecla
+/** Press sound: a round, low-pitched body plus a short noise tap for the key texture. */
 function press(pitch = 1): void {
   const ctx = context();
   if (!ctx || !output) return;
@@ -69,7 +76,7 @@ function press(pitch = 1): void {
   tap.stop(now + 0.05);
 }
 
-// Soltar: un tic corto, más agudo y flojo, como el retorno del muelle
+/** Release sound: a short, higher and quieter tick, like a spring returning. */
 function release(pitch = 1): void {
   const ctx = context();
   if (!ctx || !output) return;
@@ -84,7 +91,7 @@ function release(pitch = 1): void {
   tick.stop(now + 0.06);
 }
 
-// Desbloqueo del audio en móvil: iOS solo permite arrancarlo dentro de un gesto
+/** Unlocks audio playback on mobile: iOS only allows starting the context inside a user gesture. */
 function unlock(): void {
   const ctx = context();
   if (!ctx) return;
@@ -109,7 +116,7 @@ document.addEventListener(
     const target = (e.target as Element | null)?.closest<HTMLElement>("a, button");
     if (!target) return;
 
-    // Los interruptores (tema e idioma) suenan algo más agudos
+    // Theme and language toggles sound a bit higher-pitched
     const pitch = target.matches("#theme-toggle, .lang-toggle") ? 1.2 : 1;
     pressed = { pitch };
     press(pitch);

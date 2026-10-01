@@ -1,4 +1,9 @@
-// Despliega y contrae con suavidad los bloques .more-projects
+/**
+ * collapse.ts
+ * Smooth expand / collapse for the "More projects" block. The panel animates its grid row height
+ * (0fr to 1fr); this script only toggles the classes, the `inert` attribute and the button label.
+ */
+
 document.querySelectorAll<HTMLElement>(".more-projects").forEach((block) => {
   const toggle = block.querySelector<HTMLButtonElement>(".collapse-toggle");
   const panel = block.querySelector<HTMLElement>(".collapse-panel");
@@ -24,10 +29,9 @@ document.querySelectorAll<HTMLElement>(".more-projects").forEach((block) => {
     panel.classList.toggle("opacity-0", !open);
     icon?.classList.toggle("rotate-180", open);
 
-    // El idioma se aplica con data-en/data-es, así que se actualizan también
+    // The language switcher reads data-en / data-es, so both are updated together with the visible text
     label.dataset.en = text.en;
     label.dataset.es = text.es;
     label.textContent = text[lang];
-
   });
 });

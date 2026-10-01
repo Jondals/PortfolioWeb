@@ -13,7 +13,7 @@ import profile from "../assets/images/profile.webp";
 import { profileImage } from "../components/hero.astro";
 import "../styles/global.css";
 
-// La foto del inicio es el elemento más grande del primer pantallazo: se anuncia en el <head>
+// The hero photo is the largest element on the first screen: it is announced in <head>
 const profilePreload = await getImage({ src: profile, ...profileImage });
 
 const title = "Jonathan Dorado | Full Stack & Game Developer";
@@ -59,7 +59,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 			document.documentElement.setAttribute("data-lang", lang);
 			document.documentElement.lang = lang;
 
-			// En español se oculta el contenido hasta traducirlo (final del body) para que no salte el texto
+			// In Spanish, content is hidden until translated (see the script at the end of <body>) so the text never jumps
 			if (lang === "es") {
 				document.documentElement.classList.add("i18n-pending");
 				setTimeout(function () { document.documentElement.classList.remove("i18n-pending"); }, 2000);

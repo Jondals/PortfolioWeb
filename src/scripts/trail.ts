@@ -1,5 +1,10 @@
-// Cursor propio: un orbe de luz exactamente en la posición del ratón, con una estela pegada a él
-// (una sola forma rellena, suavizada y afinada). Solo con ratón y sin "reducir movimiento".
+/**
+ * trail.ts
+ * Custom cursor: a small glowing orb placed exactly at the mouse position, with a comet-like trail
+ * attached to it (one continuous tapered shape, smoothed so it never looks jagged). Mouse only, and
+ * disabled when the system asks to reduce motion.
+ */
+
 const finePointer = window.matchMedia("(pointer: fine)").matches;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -12,7 +17,7 @@ interface Point {
 type RGB = [number, number, number];
 
 const TRAIL_MS = 380;
-// Igual que el diámetro del orbe: la estela sale de él con su mismo grosor y termina en pico
+// Same as the orb's diameter: the trail leaves it at full width and tapers down to a point
 const MAX_WIDTH = 10;
 const SPACING = 3;
 
@@ -27,7 +32,8 @@ if (finePointer && !reducedMotion) {
   document.body.append(canvas, orb);
 
   const ctx = canvas.getContext("2d");
-  // Capa auxiliar: la estela se dibuja aquí opaca y luego se pasa a la pantalla de una vez con el brillo
+  // Off-screen layer: the trail is drawn here fully opaque, then the whole thing is composited
+  // onto the visible canvas in one pass together with the glow
   const layer = document.createElement("canvas");
   const lctx = layer.getContext("2d");
   const points: Point[] = [];
@@ -39,8 +45,7 @@ if (finePointer && !reducedMotion) {
   let height = 0;
   let dpr = 1;
 
-
-  // El lienzo mide exactamente la zona visible (sin la barra de scroll) para que coincida con el ratón
+  /** Sizes the canvases to the visible viewport (no scrollbar) so drawing matches the real mouse position. */
   function resize(): void {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = root.clientWidth;
@@ -53,6 +58,7 @@ if (finePointer && !reducedMotion) {
     lctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
+  /** Parses an `rgb()` string or a `#rrggbb` hex color into an [r, g, b] tuple. */
   function parseColor(value: string, fallback: RGB): RGB {
     const rgb = value.match(/\d+(\.\d+)?/g);
     if (value.startsWith("rgb") && rgb && rgb.length >= 3) return [Number(rgb[0]), Number(rgb[1]), Number(rgb[2])];
@@ -62,6 +68,7 @@ if (finePointer && !reducedMotion) {
     return fallback;
   }
 
+  /** Reads the current scene colors (--scene-a / --scene-b, see global.css) and updates the orb color. */
   function readColors(): void {
     const style = getComputedStyle(document.querySelector(".page-bg") ?? root);
     head = parseColor(style.getPropertyValue("--scene-a").trim(), head);
@@ -71,6 +78,7 @@ if (finePointer && !reducedMotion) {
 
   const mix = (a: RGB, b: RGB, t: number) => a.map((v, i) => Math.round(v + (b[i] - v) * t)) as RGB;
 
+  /** First-use setup: sizes the canvases, reads the colors and switches on the custom cursor. */
   function prepare(): void {
     if (ready) return;
     ready = true;
@@ -79,7 +87,7 @@ if (finePointer && !reducedMotion) {
     root.classList.add("custom-cursor");
   }
 
-  // Añade puntos intermedios para que la estela no tenga esquinas aunque el ratón vaya rápido
+  /** Adds a point to the trail, inserting intermediate points so fast mouse moves stay smooth. */
   function addPoint(x: number, y: number, time: number): void {
     const last = points[points.length - 1];
     if (last) {
@@ -94,7 +102,7 @@ if (finePointer && !reducedMotion) {
     if (points.length > 240) points.splice(0, points.length - 240);
   }
 
-  // Suavizado: media móvil de cada punto con sus vecinos
+  /** Smooths the trail with a moving average of each point and its neighbors. */
   function smooth(list: Point[]): Point[] {
     return list.map((p, i) => {
       const a = list[Math.max(0, i - 2)];
@@ -111,6 +119,7 @@ if (finePointer && !reducedMotion) {
     requestAnimationFrame(draw);
   }
 
+  /** Draws one frame of the trail: builds the tapered path, paints it on the off-screen layer, composites it. */
   function draw(now: number): void {
     if (!ctx) return;
 
@@ -118,12 +127,12 @@ if (finePointer && !reducedMotion) {
     while (points.length && now - points[0].time > TRAIL_MS) points.shift();
 
     if (points.length > 2 && lctx) {
-      // La punta de la estela queda clavada en el centro del orbe
+      // The tip of the trail is pinned to the orb's current center
       const path = smooth(points);
       path[path.length - 1] = points[points.length - 1];
       const n = path.length - 1;
 
-      // Solo se trabaja en el rectángulo que ocupa la estela (con margen para el brillo): mucho más ligero
+      // Only the rectangle the trail actually occupies is touched (plus margin for the glow): much cheaper
       let minX = Infinity;
       let minY = Infinity;
       let maxX = -Infinity;
@@ -140,14 +149,14 @@ if (finePointer && !reducedMotion) {
       const bw = Math.min(width, Math.ceil(maxX + pad)) - bx;
       const bh = Math.min(height, Math.ceil(maxY + pad)) - by;
 
-      // Mismo aspecto que la estela original: color y transparencia que se desvanecen hacia la cola.
-      // Se pinta como cadena de tramos (así no se rompe al cruzarse consigo misma) que encajan
-      // uno tras otro sin solaparse, para que la transparencia no se acumule en las uniones
+      // Same look as the original trail: color and opacity fade out towards the tail.
+      // It is painted as a chain of segments (so it never breaks when the path crosses itself) that
+      // butt up against each other with no overlap, so transparency never stacks at the joints
       lctx.clearRect(bx, by, bw, bh);
       lctx.lineCap = "butt";
       lctx.lineJoin = "round";
 
-      // Color y opacidad a lo largo de la estela (0 = cola, 1 = orbe), igual que el degradado de antes
+      // Color and opacity along the trail (0 = tail, 1 = orb), matching the original gradient
       const style = (t: number): string => {
         if (t < 0.55) {
           const k = t / 0.55;
@@ -164,7 +173,7 @@ if (finePointer && !reducedMotion) {
         const t = (i + end) / 2 / n;
         const life = Math.max(0, 1 - (now - mid.time) / TRAIL_MS);
 
-        // Forma de gota: ancho completo junto al orbe y se afina hasta un pico
+        // Teardrop shape: full width next to the orb, tapering down to a point
         lctx.lineWidth = Math.max(0.4, MAX_WIDTH * Math.pow(t, 0.75) * life);
         lctx.strokeStyle = style(t);
         lctx.beginPath();
@@ -177,7 +186,7 @@ if (finePointer && !reducedMotion) {
         lctx.stroke();
       }
 
-      // Último tramo hasta el centro del orbe
+      // Last segment, connecting to the orb's center
       const beforeLast = path[n - 1];
       const last = path[n];
       lctx.lineCap = "round";
@@ -207,7 +216,7 @@ if (finePointer && !reducedMotion) {
 
   window.addEventListener("resize", () => ready && resize());
 
-  // Los colores de escena se animan durante 1,6 s: se leen al cambiar y al terminar la transición
+  // Scene colors animate over 1.6s: read them on change and again once the transition finishes
   new MutationObserver(() => {
     if (!ready) return;
     readColors();
@@ -223,7 +232,7 @@ if (finePointer && !reducedMotion) {
     const hovering = Boolean((e.target as Element | null)?.closest(interactive));
     root.classList.toggle("cursor-hover", hovering);
 
-    // Con el anillo abierto (encima de un botón o enlace) no hay estela: queda solo el círculo
+    // With the ring open (over a button or link) there is no trail: only the circle remains
     if (hovering) {
       points.length = 0;
       return;

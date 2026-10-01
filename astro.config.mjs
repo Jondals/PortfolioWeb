@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://jonathan-dorado-portfolio.vercel.app',
   build: {
-    // CSS inline: evita una petición bloqueante y mejora el LCP en móvil
+    // Inline CSS: avoids a render-blocking request and improves LCP on mobile
     inlineStylesheets: 'always'
   },
   vite: {
