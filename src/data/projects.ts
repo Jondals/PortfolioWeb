@@ -112,52 +112,8 @@ export const projects: Project[] = [
   },
 
   {
-    title: "Chatterly",
-    featured: true,
-    status: COMPLETED,
-    description: {
-      en: "A web social platform inspired by Discord: add friends, customize your profile and talk through real-time chat and voice calls, sharing files and GIFs right in the conversation.",
-      es: "Una red social web inspirada en Discord: añade amigos, personaliza tu perfil y habla por chat y llamadas de voz en tiempo real, compartiendo archivos y GIFs en la conversación.",
-    },
-    contribution: {
-      en: "Developed the real-time messaging, the authentication flow and the voice calls on WebRTC, with a PHP and MySQL backend.",
-      es: "Desarrollé la mensajería en tiempo real, la autenticación y las llamadas de voz con WebRTC, con un backend en PHP y MySQL.",
-    },
-    learned: {
-      en: "How WebRTC connections are negotiated, relational database design and how a back end and a front end talk to each other.",
-      es: "Cómo se negocian las conexiones WebRTC, diseño de bases de datos relacionales y cómo se comunican un back end y un front end.",
-    },
-    tech: ["JavaScript", "PHP", "MySQL", "jQuery", "WebRTC", "HTML", "CSS"],
-    image: chatterly,
-    github: "https://github.com/Jondals/Chatterly",
-    demo: null,
-  },
-
-  {
-    title: "Kairos",
-    featured: false,
-    status: IN_DEVELOPMENT,
-    description: {
-      en: "A personal operating system in one local-first app: tasks, finances, training, calendar and notes, with end-to-end encryption and optional bank and calendar sync.",
-      es: "Un sistema operativo personal en una sola app local-first: tareas, finanzas, entrenamiento, calendario y notas, con cifrado de extremo a extremo y sincronización opcional con banco y calendarios.",
-    },
-    contribution: {
-      en: "Building a configurable dashboard, a PWA that works offline, AES-256-GCM encryption and a Cloudflare Worker for bank (PSD2) and CalDAV integrations.",
-      es: "Desarrollo un dashboard configurable, una PWA que funciona offline, cifrado AES-256-GCM y un Cloudflare Worker para las integraciones con banco (PSD2) y CalDAV.",
-    },
-    learned: {
-      en: "Local-first architecture with IndexedDB, browser cryptography and testing complex parsers.",
-      es: "Arquitectura local-first con IndexedDB, criptografía en el navegador y testeo de parsers complejos.",
-    },
-    tech: ["React", "Vite", "Tailwind CSS", "JavaScript", "Cloudflare"],
-    image: kairos,
-    github: "https://github.com/Jondals/Kairos",
-    demo: null,
-  },
-
-  {
     title: "Chatterly Renewed",
-    featured: false,
+    featured: true,
     status: IN_DEVELOPMENT,
     description: {
       en: "A modern rewrite of Chatterly with an Angular front end and a real-time Fastify and WebSocket back end.",
@@ -200,6 +156,28 @@ export const projects: Project[] = [
   },
 
   {
+    title: "Kairos",
+    featured: false,
+    status: IN_DEVELOPMENT,
+    description: {
+      en: "A personal operating system in one local-first app: tasks, finances, training, calendar and notes, with end-to-end encryption and optional bank and calendar sync.",
+      es: "Un sistema operativo personal en una sola app local-first: tareas, finanzas, entrenamiento, calendario y notas, con cifrado de extremo a extremo y sincronización opcional con banco y calendarios.",
+    },
+    contribution: {
+      en: "Building a configurable dashboard, a PWA that works offline, AES-256-GCM encryption and a Cloudflare Worker for bank (PSD2) and CalDAV integrations.",
+      es: "Desarrollo un dashboard configurable, una PWA que funciona offline, cifrado AES-256-GCM y un Cloudflare Worker para las integraciones con banco (PSD2) y CalDAV.",
+    },
+    learned: {
+      en: "Local-first architecture with IndexedDB, browser cryptography and testing complex parsers.",
+      es: "Arquitectura local-first con IndexedDB, criptografía en el navegador y testeo de parsers complejos.",
+    },
+    tech: ["React", "Vite", "Tailwind CSS", "JavaScript", "Cloudflare"],
+    image: kairos,
+    github: "https://github.com/Jondals/Kairos",
+    demo: null,
+  },
+
+  {
     title: "MyMusic",
     featured: false,
     status: IN_DEVELOPMENT,
@@ -218,6 +196,28 @@ export const projects: Project[] = [
     tech: ["Flutter", "Dart"],
     image: myMusic,
     github: "https://github.com/Jondals/MyMusic",
+    demo: null,
+  },
+
+  {
+    title: "Chatterly",
+    featured: false,
+    status: COMPLETED,
+    description: {
+      en: "A web social platform inspired by Discord: add friends, customize your profile and talk through real-time chat and voice calls, sharing files and GIFs right in the conversation.",
+      es: "Una red social web inspirada en Discord: añade amigos, personaliza tu perfil y habla por chat y llamadas de voz en tiempo real, compartiendo archivos y GIFs en la conversación.",
+    },
+    contribution: {
+      en: "Developed the real-time messaging, the authentication flow and the voice calls on WebRTC, with a PHP and MySQL backend.",
+      es: "Desarrollé la mensajería en tiempo real, la autenticación y las llamadas de voz con WebRTC, con un backend en PHP y MySQL.",
+    },
+    learned: {
+      en: "How WebRTC connections are negotiated, relational database design and how a back end and a front end talk to each other.",
+      es: "Cómo se negocian las conexiones WebRTC, diseño de bases de datos relacionales y cómo se comunican un back end y un front end.",
+    },
+    tech: ["JavaScript", "PHP", "MySQL", "jQuery", "WebRTC", "HTML", "CSS"],
+    image: chatterly,
+    github: "https://github.com/Jondals/Chatterly",
     demo: null,
   },
 
