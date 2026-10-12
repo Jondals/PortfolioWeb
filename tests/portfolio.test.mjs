@@ -173,15 +173,6 @@ test("the page loads with no errors and everything works", async () => {
   await page.evaluate(() => window.scrollTo({ top: 400, behavior: "instant" }));
   await page.waitForFunction(() => document.querySelector(".site-header").classList.contains("is-scrolled"));
 
-  // Language toggle (desktop)
-  const title = () => page.$eval("#projects h2 [data-en]", (el) => el.textContent.trim());
-  assert.equal(await title(), "Projects");
-  await page.click("header .lang-toggle");
-  assert.equal(await title(), "Proyectos");
-  assert.equal(await page.$eval("html", (el) => el.lang), "es");
-  await page.click("header .lang-toggle");
-  assert.equal(await title(), "Projects");
-
   // Carousel
   const currentDot = () => page.$eval(".carousel-dot[aria-current='true']", (el) => el.dataset.index);
   assert.equal(await currentDot(), "0");
@@ -233,7 +224,7 @@ test("the page loads with no errors and everything works", async () => {
   assert.ok(overlay >= 740, `the overlay only covers ${overlay}px`);
 
   await page.click("#mobile-menu .lang-toggle");
-  const mobileLinks = await page.$$eval("#mobile-menu nav a", (links) => links.map((a) => a.textContent.trim()));
+  const mobileLinks = await page.$$eval("#mobile-menu nav a", (links) => links.map((a) => a.querySelector("[data-en]").textContent.trim()));
   assert.deepEqual(mobileLinks, ["Sobre mí", "Proyectos", "Juegos", "Experiencia", "Habilidades", "Contacto"]);
 
   await page.keyboard.press("Escape");

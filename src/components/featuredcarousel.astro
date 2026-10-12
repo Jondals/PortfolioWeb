@@ -76,25 +76,53 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
         aria-label={`${index + 1} / ${projects.length}`}
       >
         <div class="relative h-full flex items-center p-4 sm:p-8 lg:p-10 bg-[radial-gradient(ellipse_at_30%_20%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_65%)]">
-          <div class="w-full rounded-[10px] overflow-hidden border border-(--text-primary)/10 bg-(--bg-card) shadow-2xl shadow-black/30 group-hover:-translate-y-1 transition duration-700 ease-out">
-            <div class="flex items-center gap-2 px-4 py-2.5 border-b border-(--text-primary)/10">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
-              <span class="ml-3 flex-1 truncate text-[11px] text-(--text-secondary) px-3 py-1 rounded-md bg-(--text-primary)/5">
-                {host(project.demo ?? project.github)}
-              </span>
+          <div class="w-full">
+            <div class="rounded-[10px] overflow-hidden border border-(--text-primary)/10 bg-(--bg-card) shadow-2xl shadow-black/30 group-hover:-translate-y-1 transition duration-700 ease-out">
+              <div class="flex items-center gap-2 px-4 py-2.5 border-b border-(--text-primary)/10">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
+                <span class="ml-3 flex-1 truncate text-[11px] text-(--text-secondary) px-3 py-1 rounded-md bg-(--text-primary)/5">
+                  {host(project.demo ?? project.github)}
+                </span>
+              </div>
+              <div class="relative aspect-16/10 overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  widths={[480, 720, 1000]}
+                  sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  data-shot
+                  data-active
+                  class="shot absolute inset-0 w-full h-full object-cover object-top"
+                />
+                {project.gallery?.map((shot) => (
+                  <Image
+                    src={shot.image}
+                    alt={shot.alt.en}
+                    widths={[480, 720, 1000]}
+                    sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
+                    loading="lazy"
+                    data-shot
+                    class="shot absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                ))}
+              </div>
             </div>
-            <div class="relative aspect-16/10 overflow-hidden">
-              <Image
-                src={project.image}
-                alt={`${project.title} screenshot`}
-                widths={[480, 720, 1000]}
-                sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
-                loading={index === 0 ? "eager" : "lazy"}
-                class="absolute inset-0 w-full h-full object-cover object-top"
-              />
-            </div>
+            {project.gallery && (
+              <div class="gallery-dots mt-2 flex justify-center gap-2">
+                {[project.image, ...project.gallery.map((shot) => shot.image)].map((_, shotIndex) => (
+                  <button
+                    type="button"
+                    class="gallery-dot"
+                    aria-label={`Screenshot ${shotIndex + 1} / ${project.gallery!.length + 1}`}
+                    aria-current={shotIndex === 0 ? "true" : "false"}
+                    data-shot-index={shotIndex}
+                  ></button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -127,6 +155,18 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
               <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">Learned:</span>{" "}
               <span data-en={project.learned.en} data-es={project.learned.es}>{project.learned.en}</span>
             </p>
+            {project.motivation && (
+              <p>
+                <span class="text-(--text-primary) font-semibold" data-en="Why:" data-es="Motivo:">Why:</span>{" "}
+                <span data-en={project.motivation.en} data-es={project.motivation.es}>{project.motivation.en}</span>
+              </p>
+            )}
+            {project.purpose && (
+              <p>
+                <span class="text-(--text-primary) font-semibold" data-en="Goal:" data-es="Finalidad:">Goal:</span>{" "}
+                <span data-en={project.purpose.en} data-es={project.purpose.es}>{project.purpose.en}</span>
+              </p>
+            )}
           </div>
 
           <Techlist tech={project.tech} />
@@ -188,8 +228,15 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
     animation: carousel-progress 7s linear forwards;
   }
 
-  .carousel:hover .carousel-progress,
-  .carousel:focus-within .carousel-progress {
+  /* Pause only while a mouse is over it or a keyboard user is focused inside: a click leaves the focus
+     on the button, and :focus-within would keep the carousel paused forever */
+  @media (hover: hover) {
+    .carousel:hover .carousel-progress {
+      animation-play-state: paused;
+    }
+  }
+
+  .carousel:has(:focus-visible) .carousel-progress {
     animation-play-state: paused;
   }
 

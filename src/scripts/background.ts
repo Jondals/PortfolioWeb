@@ -38,14 +38,20 @@ let targetY = 0;
 let mouseX = 0;
 let mouseY = 0;
 let ticking = false;
+// How far the page can scroll: measured when the size of the page changes, never while scrolling (reading it forces a layout)
+let scrollRange = 1;
+
+/** Measures the scroll range of the page. */
+function measure(): void {
+  scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+}
 
 /** Recomputes the transform of every background layer from the scroll position and the mouse. */
 function update(): void {
   ticking = false;
 
   const y = window.scrollY;
-  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  const progress = y / max;
+  const progress = Math.min(1, y / scrollRange);
 
   // The mouse position is smoothed so the background "floats" instead of jumping
   mouseX += (targetX - mouseX) * 0.06;
@@ -84,14 +90,21 @@ function request(): void {
 }
 
 if (!reducedMotion) {
+  measure();
+  new ResizeObserver(measure).observe(document.body);
+  window.addEventListener("resize", measure, { passive: true });
   window.addEventListener("scroll", request, { passive: true });
 
   if (finePointer) {
-    document.addEventListener("pointermove", (e: PointerEvent) => {
-      targetX = (e.clientX / window.innerWidth) * 2 - 1;
-      targetY = (e.clientY / window.innerHeight) * 2 - 1;
-      request();
-    });
+    document.addEventListener(
+      "pointermove",
+      (e: PointerEvent) => {
+        targetX = (e.clientX / window.innerWidth) * 2 - 1;
+        targetY = (e.clientY / window.innerHeight) * 2 - 1;
+        request();
+      },
+      { passive: true }
+    );
   }
 
   // If the page loads already scrolled (reload or anchor link), position the background right away

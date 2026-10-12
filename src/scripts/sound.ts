@@ -117,7 +117,7 @@ document.addEventListener(
     if (!target) return;
 
     // Theme and language toggles sound a bit higher-pitched
-    const pitch = target.matches("#theme-toggle, .lang-toggle") ? 1.2 : 1;
+    const pitch = target.matches(".lang-toggle") ? 1.2 : 1;
     pressed = { pitch };
     press(pitch);
   },

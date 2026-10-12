@@ -15,6 +15,10 @@ import devStarter from "../assets/images/devstarter.webp";
 import myMusic from "../assets/images/mymusic.webp";
 import myConversor from "../assets/images/myconversor.webp";
 import chatterlyRenewed from "../assets/images/chatterlyrenewed.webp";
+import chatterlyRenewedLogin from "../assets/images/chatterlyrenewed-login.webp";
+import chatterlyRenewedCall from "../assets/images/chatterlyrenewed-call.webp";
+import chatterlyRenewedTournament from "../assets/images/chatterlyrenewed-tournament.webp";
+import chatterlyRenewedWheel from "../assets/images/chatterlyrenewed-wheel.webp";
 import kairos from "../assets/images/kairos.webp";
 
 /** A text available in both languages. */
@@ -33,22 +37,34 @@ export interface Project {
   contribution: Translation;
   /** What I learned building it. */
   learned: Translation;
+  /** Why I made it (optional). */
+  motivation?: Translation;
+  /** What it is for: the goal of the project (optional). */
+  purpose?: Translation;
   /** Technology names; each one must exist in icons.ts and tech.ts. */
   tech: string[];
   image: ImageMetadata;
+  /** More screenshots (optional): the carousel shows them in the same frame, one at a time. */
+  gallery?: { image: ImageMetadata; alt: Translation }[];
   github: string;
   /** Live website, if the project is published. */
   demo: string | null;
+  /** Other places where the project lives (an extension store, for example). */
+  links?: { label: string; url: string; icon: string }[];
 }
 
-const COMPLETED: Translation = { en: "COMPLETED", es: "ACABADO" };
+const COMPLETED: Translation = { en: "COMPLETED", es: "FINALIZADO" };
 const IN_DEVELOPMENT: Translation = { en: "IN DEVELOPMENT", es: "EN DESARROLLO" };
+/** Live on the web. */
+const DEPLOYED: Translation = { en: "DEPLOYED", es: "DESPLEGADO" };
+/** Released on a store or marketplace. */
+const PUBLISHED: Translation = { en: "PUBLISHED", es: "PUBLICADO" };
 
 export const projects: Project[] = [
   {
     title: "Spinly",
     featured: true,
-    status: COMPLETED,
+    status: DEPLOYED,
     description: {
       en: "A prize wheel for giveaways, raffles and everyday decisions: custom themes and presets, your own music, knockout tournaments and accounts that sync across devices.",
       es: "Una ruleta para sorteos y decisiones del día a día: temas y presets propios, tu música, torneos por eliminatorias y cuentas que se sincronizan entre dispositivos.",
@@ -70,7 +86,7 @@ export const projects: Project[] = [
   {
     title: "QuizMania",
     featured: true,
-    status: COMPLETED,
+    status: DEPLOYED,
     description: {
       en: "A trivia game played on a slot machine: spin for a topic, pick one of five modes, challenge friends in Versus duels and climb the leagues and rankings.",
       es: "Un juego de trivia con tragaperras: gira para elegir tema, escoge entre cinco modos, reta a tus amigos en duelos Versus y sube en las ligas y rankings.",
@@ -92,7 +108,7 @@ export const projects: Project[] = [
   {
     title: "MyConversor",
     featured: true,
-    status: COMPLETED,
+    status: DEPLOYED,
     description: {
       en: "A single-page tool to download, trim and convert video and audio from YouTube, TikTok, Twitch and more, with a library, accounts and a built-in music player.",
       es: "Una herramienta de una sola página para descargar, recortar y convertir vídeo y audio de YouTube, TikTok, Twitch y más, con biblioteca, cuentas y reproductor de música.",
@@ -116,27 +132,53 @@ export const projects: Project[] = [
     featured: true,
     status: IN_DEVELOPMENT,
     description: {
-      en: "A modern rewrite of Chatterly with an Angular front end and a real-time Fastify and WebSocket back end.",
-      es: "Reescritura moderna de Chatterly con un front en Angular y un back end en tiempo real con Fastify y WebSocket.",
+      en: "An end-to-end encrypted chat that I host myself: messages, groups, voice and video calls, wheels and a Windows app. The server only stores ciphertext and cannot read or listen to anything.",
+      es: "Un chat cifrado de extremo a extremo que alojo yo mismo: mensajes, grupos, llamadas de voz y vídeo, ruletas y app para Windows. El servidor solo guarda texto cifrado y no puede leer ni escuchar nada.",
+    },
+    motivation: {
+      en: "Understand how private messengers work and have a chat that nobody can read.",
+      es: "Entender cómo funcionan los mensajeros privados y tener un chat que nadie pueda leer.",
+    },
+    purpose: {
+      en: "A free, self-hosted, Discord-style app where privacy is part of the design.",
+      es: "Una app gratuita, autoalojada y al estilo Discord donde la privacidad es parte del diseño.",
     },
     contribution: {
-      en: "Redesigning the architecture: Angular with Tailwind, a Fastify API with JWT authentication and an SQLite database.",
-      es: "Rediseño la arquitectura: Angular con Tailwind, una API con Fastify y autenticación JWT, y una base de datos SQLite.",
+      en: "Built it all: Angular and Tailwind front end, Fastify and SQLite back end, WebCrypto encryption, WebRTC calls with a TURN relay, an Electron app and Docker deployment with automated tests.",
+      es: "Lo desarrollé todo: front en Angular y Tailwind, back en Fastify y SQLite, cifrado con WebCrypto, llamadas WebRTC con relay TURN, app Electron y despliegue con Docker con tests automáticos.",
     },
     learned: {
-      en: "Token-based authentication and keeping a real-time connection in sync with the UI.",
-      es: "Autenticación con tokens y cómo mantener una conexión en tiempo real sincronizada con la interfaz.",
+      en: "Encryption in practice (keys, signatures, group-key rotation), security testing like a hostile account, WebRTC, performance on weak phones and shipping with Docker and Electron.",
+      es: "Cifrado en la práctica (claves, firmas, rotación de claves de grupo), probar la seguridad como una cuenta hostil, WebRTC, rendimiento en móviles flojos y publicar con Docker y Electron.",
     },
-    tech: ["Angular", "TypeScript", "Tailwind CSS", "Node.js", "Fastify", "SQLite"],
+    tech: ["Angular", "TypeScript", "Tailwind CSS", "Node.js", "Fastify", "SQLite", "WebRTC", "Electron", "Docker", "GitHub Actions"],
     image: chatterlyRenewed,
+    gallery: [
+      {
+        image: chatterlyRenewedLogin,
+        alt: { en: "The sign-in screen of Chatterly Renewed", es: "La pantalla de entrada de Chatterly Renewed" },
+      },
+      {
+        image: chatterlyRenewedCall,
+        alt: { en: "An end-to-end encrypted voice call", es: "Una llamada de voz cifrada de extremo a extremo" },
+      },
+      {
+        image: chatterlyRenewedWheel,
+        alt: { en: "A prize wheel and a tournament champion in a chat", es: "Una ruleta y el campeón de un torneo en un chat" },
+      },
+      {
+        image: chatterlyRenewedTournament,
+        alt: { en: "A knockout tournament played with wheels", es: "Un torneo por eliminatorias jugado con ruletas" },
+      },
+    ],
     github: "https://github.com/Jondals/ChatterlyRenewed",
-    demo: null,
+    demo: "https://chatterlyrenewed.duckdns.org",
   },
 
   {
     title: "DevStarter",
     featured: false,
-    status: IN_DEVELOPMENT,
+    status: PUBLISHED,
     description: {
       en: "A VS Code extension that sets up popular frameworks and project templates in a few clicks.",
       es: "Una extensión de VS Code que configura frameworks y plantillas de proyecto populares en unos pocos clics.",
@@ -153,6 +195,10 @@ export const projects: Project[] = [
     image: devStarter,
     github: "https://github.com/Jondals/DevStarter",
     demo: null,
+    links: [
+      { label: "Marketplace", url: "https://marketplace.visualstudio.com/items?itemName=Jondals.devstarter", icon: "VS Code" },
+      { label: "Open VSX", url: "https://open-vsx.org/extension/Jondals/devstarter", icon: "external" },
+    ],
   },
 
   {

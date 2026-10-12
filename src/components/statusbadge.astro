@@ -20,6 +20,14 @@ const tones: Record<string, { dot: string; inline: string }> = {
     dot: "bg-amber-400 shadow-[0_0_8px] shadow-amber-400/70",
     inline: "bg-amber-500/12 text-amber-700 dark:text-amber-300",
   },
+  DEPLOYED: {
+    dot: "bg-sky-400 shadow-[0_0_8px] shadow-sky-400/70",
+    inline: "bg-sky-500/12 text-sky-700 dark:text-sky-300",
+  },
+  PUBLISHED: {
+    dot: "bg-sky-400 shadow-[0_0_8px] shadow-sky-400/70",
+    inline: "bg-sky-500/12 text-sky-700 dark:text-sky-300",
+  },
   PROTOTYPE: {
     dot: "bg-violet-400 shadow-[0_0_8px] shadow-violet-400/70",
     inline: "bg-violet-500/12 text-violet-700 dark:text-violet-300",
@@ -27,7 +35,7 @@ const tones: Record<string, { dot: string; inline: string }> = {
 };
 
 const tone = tones[status.en.toUpperCase()] ?? tones.COMPLETED;
-const look = variant === "overlay" ? "bg-black/65 backdrop-blur-md text-white" : tone.inline;
+const look = variant === "overlay" ? "bg-black/75 text-white" : tone.inline;
 ---
 
 <span class={`inline-flex items-center gap-2 text-xs font-medium px-2.5 py-1 rounded-md ${look} ${className}`}>

@@ -108,9 +108,7 @@ const jobs = [
   /* Outlined year; fills with the brand gradient on hover */
   .experience-year {
     color: transparent;
-    /* Light theme needs a much stronger stroke than dark: the same percentage of a dark color
-       on a light background reads as nearly invisible */
-    -webkit-text-stroke: 1px color-mix(in srgb, var(--text-primary) 55%, transparent);
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--text-primary) 35%, transparent);
     background-image: linear-gradient(90deg, #22d3ee, #a855f7);
     background-clip: text;
     -webkit-background-clip: text;
@@ -123,9 +121,5 @@ const jobs = [
   li:first-child .experience-year {
     background-size: 100% 100%;
     -webkit-text-stroke-color: transparent;
-  }
-
-  html.dark .experience-year {
-    -webkit-text-stroke-color: color-mix(in srgb, var(--text-primary) 35%, transparent);
   }
 </style>

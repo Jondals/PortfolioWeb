@@ -34,6 +34,7 @@ export const techLinks: Record<string, string> = {
   Git: "https://git-scm.com",
   GitHub: "https://github.com",
   "GitHub Actions": "https://github.com/features/actions",
+  Electron: "https://www.electronjs.org",
   Docker: "https://www.docker.com",
   Linux: "https://www.kernel.org",
   Vercel: "https://vercel.com",

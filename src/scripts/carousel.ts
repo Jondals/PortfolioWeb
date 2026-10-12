@@ -87,4 +87,17 @@ carousels.forEach((carousel) => {
   );
 
   slides.forEach((slide) => observer.observe(slide));
+
+  // The screenshots of a project: the dots under the frame show one of them at a time
+  slides.forEach((slide) => {
+    const shots = slide.querySelectorAll<HTMLElement>("[data-shot]");
+    const shotDots = slide.querySelectorAll<HTMLButtonElement>(".gallery-dot");
+    shotDots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const wanted = Number(dot.dataset.shotIndex);
+        shots.forEach((shot, i) => shot.toggleAttribute("data-active", i === wanted));
+        shotDots.forEach((other) => other.setAttribute("aria-current", other === dot ? "true" : "false"));
+      });
+    });
+  });
 });

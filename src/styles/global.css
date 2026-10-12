@@ -20,33 +20,6 @@
 
 :root {
   --font-sans: "Lexend", sans-serif;
-
-  /* Light theme surfaces: a near-white warm gray instead of a saturated peach. The old cream/peach
-     stack (surfaces getting more and more orange the "higher" they sat) made every card and tag read
-     as the same flat orange block, with almost no separation between them and no room for the pink
-     accent to stand out. These are desaturated so cards read as neutral, elevated surfaces and the
-     accent is the only strong color on the page. */
-  --bg-primary: #faf9f7;
-  --bg-secondary: #f2efea;
-  --bg-card: #eae3d8;
-  --bg-hover: #e0d6c6;
-
-  --text-primary: #241c14;
-  --text-secondary: #5b5248;
-  --text-muted: #8c8378;
-
-  --accent: #ff8fab;
-  --accent-hover: #fb6f92;
-  --accent-soft: #ffccd5;
-  /* Accent used as text: the light pink does not meet minimum contrast on a light background */
-  --accent-text: #a01048;
-
-  --border: #eae3d8;
-  --border-light: #e0d6c6;
-}
-
-html.dark {
-  --font-sans: "Lexend", sans-serif;
   --bg-primary: #0d0d0d;
   --bg-secondary: #161616;
   --bg-card: #1f1f1f;
@@ -66,6 +39,9 @@ html.dark {
 }
 
 html {
+  color-scheme: dark;
+  /* Reserve the scrollbar space so the page does not shift when the scroll is locked (menu) or the content grows */
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
   /* Slightly more compact on mobile (Tailwind uses rem, so this scales everything) */
   font-size: 15px;
@@ -87,45 +63,6 @@ body {
 
 html.i18n-pending body {
   visibility: hidden;
-}
-
-/* ---------- Light theme contrast fixes ----------
-   Card borders and fills use `border-(--text-primary)/N` / `bg-(--text-primary)/N` utilities so they
-   automatically adapt to the theme. But the same opacity reads very differently on a dark background
-   than on this theme's light cream one: on dark, 10% white already stands out; on cream, 10% of a near-black
-   text color nearly disappears. These overrides raise that opacity only in light theme, and add a soft
-   shadow under every card so it reads as a separate surface instead of blending into the page. */
-html:not(.dark) [class*="border-(--text-primary)/10"] {
-  border-color: color-mix(in srgb, var(--text-primary) 16%, transparent);
-}
-
-html:not(.dark) [class*="border-(--text-primary)/8"] {
-  border-color: color-mix(in srgb, var(--text-primary) 14%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--text-primary)/3"] {
-  background-color: color-mix(in srgb, var(--text-primary) 5%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--text-primary)/4"] {
-  background-color: color-mix(in srgb, var(--text-primary) 6%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--text-primary)/5"] {
-  background-color: color-mix(in srgb, var(--text-primary) 7%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--text-primary)/6"] {
-  background-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--text-primary)/8"] {
-  background-color: color-mix(in srgb, var(--text-primary) 10%, transparent);
-}
-
-html:not(.dark) [class*="bg-(--bg-secondary)"],
-html:not(.dark) [class*="bg-(--bg-card)"] {
-  box-shadow: 0 1px 3px color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 
 /* Smooth hovers on every interactive element (fade in and out).
@@ -204,10 +141,6 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
   background-image: linear-gradient(var(--star-color), var(--star-color));
   mask-size: var(--tile) var(--tile);
   mask-repeat: repeat;
-}
-
-html:not(.dark) .page-stars {
-  --star-color: var(--scene-b);
 }
 
 .page-stars.twinkle {
@@ -322,7 +255,7 @@ html.cursor-hover.cursor-down .cursor-orb::before {
 .site-header.is-scrolled {
   background-color: color-mix(in srgb, var(--bg-primary) 86%, transparent);
   border-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
-  backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(12px);
 }
 
 /* ---------- Scroll entrance animation ---------- */
@@ -379,4 +312,48 @@ html:not([data-lang="es"]) .lang-flag-es {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* The screenshots of a project share one frame: the active one is shown (a fade), the dots under the frame choose it */
+.shot {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.shot[data-active] {
+  opacity: 1;
+}
+
+.gallery-dot {
+  width: 2rem;
+  height: 1.5rem;
+  padding: 0.6rem 0;
+  background-clip: content-box;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--text-primary) 25%, transparent);
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+.gallery-dot[aria-current="true"] {
+  width: 2.75rem;
+  background-color: var(--accent);
+}
+
+.gallery-dot:hover {
+  background-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Mobile menu: the links glide in one after another once the panel opens */
+#mobile-menu nav li,
+#mobile-menu .menu-footer {
+  opacity: 0;
+  translate: 16px 0;
+  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+#mobile-menu:not(.translate-x-full) nav li,
+#mobile-menu:not(.translate-x-full) .menu-footer {
+  opacity: 1;
+  translate: 0 0;
+  transition-delay: calc(120ms + var(--i, 0) * 45ms);
 }

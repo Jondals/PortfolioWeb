@@ -9,21 +9,20 @@ const contacts = [
     icon: "Email",
     label: { en: "Email", es: "Email" },
     value: { en: "jondals@proton.me", es: "jondals@proton.me" },
-    external: false,
   },
   {
-    href: "/cv.pdf",
+    href: "/cv-en.pdf",
     icon: "download",
     label: { en: "Résumé", es: "Currículum" },
     value: { en: "Download CV", es: "Descargar CV" },
-    external: true,
+    download: true,
   },
 ];
 
 const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary)";
 ---
 
-<footer id="contact" class="relative px-5 sm:px-6 pt-8 md:pt-12 pb-8">
+<footer id="contact" class="relative px-5 sm:px-6 pt-8 md:pt-12 pb-16 md:pb-20">
   <div class="max-w-7xl mx-auto">
 
     <div class="grid lg:grid-cols-[1.6fr_1fr] gap-3 md:gap-4" data-reveal>
@@ -48,8 +47,8 @@ const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondar
           <li>
             <a
               href={contact.href}
-              target={contact.external ? "_blank" : undefined}
-              rel={contact.external ? "noopener noreferrer" : undefined}
+              data-cv={contact.download ? "" : undefined}
+              download={contact.download ? "Jonathan-Dorado-CV-EN.pdf" : undefined}
               class={`group h-full flex items-center gap-4 p-5 md:p-6 ${card} hover:border-(--accent)/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/10`}
             >
               <span class="w-11 h-11 shrink-0 flex items-center justify-center rounded-[10px] bg-(--accent)/10 text-(--accent-text)">

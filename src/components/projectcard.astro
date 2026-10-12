@@ -22,6 +22,8 @@ interface Props {
   image: ImageMetadata;
   github: string;
   demo?: string | null;
+  /** Other places where the project lives (an extension store, for example) */
+  links?: { label: string; url: string; icon: string }[];
   imageClass?: string;
   /** Reduced version without the role / focus line */
   compact?: boolean;
@@ -40,6 +42,7 @@ const {
   image,
   github,
   demo,
+  links,
   imageClass = "h-48",
   compact = false,
   reveal,
@@ -99,24 +102,36 @@ const {
     <div class="mt-auto pt-2 flex flex-col gap-4">
       <Techlist tech={tech} />
 
-      <div class="flex items-center gap-3">
+      <div class="flex flex-wrap items-center gap-3">
         <a
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+          class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
           aria-label={`${title} GitHub`}
         >
           <Icon name="GitHub" class="w-4 h-4" />
           GitHub
         </a>
 
+        {links?.map((link) => (
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+          >
+            <Icon name={link.icon} class="w-4 h-4" />
+            {link.label}
+          </a>
+        ))}
+
         {demo && (
           <a
             href={demo}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+            class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
           >
             <Icon name="external" class="w-4 h-4" />
             <span data-en="Visit site" data-es="Ver web">Visit site</span>

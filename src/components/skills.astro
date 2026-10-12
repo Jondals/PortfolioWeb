@@ -6,11 +6,11 @@ import { techLinks } from "../data/tech.ts";
 const skillGroups = [
   {
     title: { en: "Frontend & Mobile", es: "Frontend y Móvil" },
-    skills: ["Angular", "Astro", "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite", "Flutter", "Dart", "Kotlin", "Android Studio"],
+    skills: ["Angular", "Astro", "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite", "Electron", "Flutter", "Dart", "Kotlin", "Android Studio"],
   },
   {
     title: { en: "Backend", es: "Backend" },
-    skills: ["Django", "Python", "Node.js", "PHP", "Java", "Supabase", "Odoo", "WebRTC"],
+    skills: ["Django", "Python", "Node.js", "Fastify", "PHP", "Java", "Supabase", "Odoo", "WebRTC"],
   },
   {
     title: { en: "Databases", es: "Bases de datos" },
@@ -42,7 +42,11 @@ const languages = [
   { en: "English · A2", es: "Inglés · A2" },
 ];
 
-const row = "grid md:grid-cols-[200px_1fr] gap-x-8 gap-y-3 py-3.5 md:py-4 first:pt-0 last:pb-0";
+// A soft line (it fades out at both ends and takes the color of the accent) separates every row from the one above
+const row =
+  "relative grid md:grid-cols-[200px_1fr] gap-x-8 gap-y-3 py-4 md:py-5 first:pt-0 last:pb-0 " +
+  "not-first:before:absolute not-first:before:inset-x-0 not-first:before:top-0 not-first:before:h-px " +
+  "not-first:before:bg-linear-to-r not-first:before:from-transparent not-first:before:via-(--accent)/35 not-first:before:to-transparent";
 const label = "text-sm font-semibold text-(--text-primary) md:pt-1.5";
 const chip = "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-(--bg-card) border border-(--text-primary)/8 text-xs md:text-[13px] font-medium text-(--text-primary)";
 ---

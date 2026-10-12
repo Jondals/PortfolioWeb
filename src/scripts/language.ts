@@ -35,6 +35,12 @@ function applyLanguage(lang: string): void {
     }
   });
 
+  // The CV links download the résumé in the language of the page
+  document.querySelectorAll<HTMLAnchorElement>("a[data-cv]").forEach((link) => {
+    link.href = lang === "es" ? "/cv.pdf" : "/cv-en.pdf";
+    link.download = lang === "es" ? "Jonathan-Dorado-CV-ES.pdf" : "Jonathan-Dorado-CV-EN.pdf";
+  });
+
   toggles.forEach((toggle) => {
     toggle.setAttribute("aria-label", lang === "es" ? "Switch to English" : "Cambiar a español");
   });

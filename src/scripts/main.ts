@@ -1,11 +1,10 @@
 /**
  * main.ts
- * Entry point loaded by the layout. What is visible immediately (language, theme, entrance
+ * Entry point loaded by the layout. What is visible immediately (language, entrance
  * animations) runs right away; everything else loads one module at a time while the browser is
  * idle, so no single long task blocks the main thread during page load.
  */
 import "./language";
-import "./themeToggle";
 import "./reveal";
 
 const deferred = [

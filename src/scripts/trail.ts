@@ -36,6 +36,10 @@ if (finePointer && !reducedMotion) {
   // onto the visible canvas in one pass together with the glow
   const layer = document.createElement("canvas");
   const lctx = layer.getContext("2d");
+  // The glow: the trail shrunk to a sixth and stretched back is a soft blur, which costs far less than a shadow blur on every frame
+  const GLOW_SCALE = 6;
+  const glow = document.createElement("canvas");
+  const gctx = glow.getContext("2d");
   const points: Point[] = [];
   let head: RGB = [34, 211, 238];
   let tail: RGB = [168, 85, 247];
@@ -47,13 +51,17 @@ if (finePointer && !reducedMotion) {
 
   /** Sizes the canvases to the visible viewport (no scrollbar) so drawing matches the real mouse position. */
   function resize(): void {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     width = root.clientWidth;
     height = root.clientHeight;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
     canvas.width = layer.width = Math.round(width * dpr);
     canvas.height = layer.height = Math.round(height * dpr);
+    glow.width = Math.ceil(width / GLOW_SCALE) + 2;
+    glow.height = Math.ceil(height / GLOW_SCALE) + 2;
+    if (gctx) gctx.imageSmoothingQuality = "high";
+    if (ctx) ctx.imageSmoothingQuality = "high";
     ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
     lctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
@@ -198,11 +206,18 @@ if (finePointer && !reducedMotion) {
       lctx.stroke();
 
       if (bw > 0 && bh > 0) {
-        ctx.save();
-        ctx.shadowColor = `rgba(${head.join(", ")}, 0.55)`;
-        ctx.shadowBlur = 12;
+        if (gctx) {
+          const gx = Math.floor(bx / GLOW_SCALE);
+          const gy = Math.floor(by / GLOW_SCALE);
+          const gw = Math.ceil(bw / GLOW_SCALE) + 1;
+          const gh = Math.ceil(bh / GLOW_SCALE) + 1;
+          gctx.clearRect(gx, gy, gw, gh);
+          gctx.drawImage(layer, bx * dpr, by * dpr, bw * dpr, bh * dpr, bx / GLOW_SCALE, by / GLOW_SCALE, bw / GLOW_SCALE, bh / GLOW_SCALE);
+          ctx.globalAlpha = 0.7;
+          ctx.drawImage(glow, bx / GLOW_SCALE, by / GLOW_SCALE, bw / GLOW_SCALE, bh / GLOW_SCALE, bx, by, bw, bh);
+          ctx.globalAlpha = 1;
+        }
         ctx.drawImage(layer, bx * dpr, by * dpr, bw * dpr, bh * dpr, bx, by, bw, bh);
-        ctx.restore();
       }
     }
 
@@ -217,8 +232,12 @@ if (finePointer && !reducedMotion) {
   window.addEventListener("resize", () => ready && resize());
 
   // Scene colors animate over 1.6s: read them on change and again once the transition finishes
+  // (the classes of the cursor itself change all the time and say nothing about the colors: only the scene and the theme count)
+  let lastLook = "";
+  const look = () => `${root.dataset.scene}|${root.classList.contains("dark")}`;
   new MutationObserver(() => {
-    if (!ready) return;
+    if (!ready || look() === lastLook) return;
+    lastLook = look();
     readColors();
     setTimeout(readColors, 1700);
   }).observe(root, { attributes: true, attributeFilter: ["data-scene", "class"] });

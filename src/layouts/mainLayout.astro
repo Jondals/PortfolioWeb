@@ -48,10 +48,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 		
 		<script is:inline>
 			document.documentElement.classList.add("js");
-			const savedTheme = localStorage.getItem("theme");
-			const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-			const theme = savedTheme ?? (systemDark ? "dark" : "light");
-			document.documentElement.classList.toggle("dark", theme === "dark");
+			// The site only has the dark theme
+			document.documentElement.classList.add("dark");
 
 			const savedLang = localStorage.getItem("language");
 			const browserLang = navigator.language.toLowerCase();

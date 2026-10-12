@@ -23,12 +23,12 @@ const socials = [
   { href: "mailto:jondals@proton.me", icon: "Email", label: "Email" },
 ];
 
-// Only finished projects are counted, so the number always matches what is really published
-const finishedProjects = projects.filter((project) => project.status.en === "COMPLETED").length;
+// Only released projects are counted (finished, deployed or published), so the number always matches what is really out
+const releasedProjects = projects.filter((project) => ["COMPLETED", "DEPLOYED", "PUBLISHED"].includes(project.status.en)).length;
 
 const stats: Stat[] = [
   { value: "3+", label: { en: "Years coding", es: "Años programando" }, href: "#skills" },
-  { value: `${finishedProjects}`, label: { en: "Finished projects", es: "Proyectos terminados" }, href: "#projects" },
+  { value: `${releasedProjects}`, label: { en: "Released projects", es: "Proyectos publicados" }, href: "#projects" },
   { value: "2", label: { en: "Company internships", es: "Prácticas en empresa" }, href: "#experience" },
   {
     value: "DAM",
@@ -79,9 +79,9 @@ const stats: Stat[] = [
           <Icon name="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition duration-300" />
         </a>
 
-        <a href="/cv.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
+        <a href="/cv-en.pdf"
+          data-cv
+          download="Jonathan-Dorado-CV-EN.pdf"
           class="group inline-flex items-center gap-2 px-5 py-3 md:px-7 md:py-3.5 rounded-[10px] bg-(--bg-secondary) border border-(--text-primary)/10 text-(--text-primary) text-sm md:text-base hover:bg-(--bg-card) hover:border-(--accent)/40 hover:-translate-y-0.5">
           <Icon name="download" class="w-4 h-4 group-hover:translate-y-0.5 transition duration-300" />
           <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
