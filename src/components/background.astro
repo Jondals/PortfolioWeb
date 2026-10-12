@@ -41,8 +41,8 @@ function starTile(count: number, minSize: number, maxSize: number, seed: number)
     return `<circle cx='${x}' cy='${y}' r='${r}' fill-opacity='${alpha}'/>`;
   }).join("");
 
-  // SVG tile used as a mask: the color comes from the background itself (it changes with the scene and the theme)
-  return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${TILE}' height='${TILE}'>${circles}</svg>`)}")`;
+  // SVG tile used directly as the background image (white dots): a mask would force the browser to redraw an extra surface on every scroll frame
+  return `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${TILE}' height='${TILE}' fill='white'>${circles}</svg>`)}")`;
 }
 
 const starLayers = [
@@ -59,7 +59,7 @@ const starLayers = [
     <div
       class={`page-stars${layer.twinkle ? " twinkle" : ""}`}
       data-speed={layer.speed}
-      style={`--tile:${TILE}px;mask-image:${layer.stars};-webkit-mask-image:${layer.stars}`}
+      style={`--tile:${TILE}px;background-image:${layer.stars}`}
     ></div>
   ))}
 

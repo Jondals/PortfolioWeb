@@ -136,11 +136,8 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
 }
 
 .page-stars {
-  --star-color: #ffffff;
-  /* Gradient instead of a solid color: contrast checkers do not read it as a text background */
-  background-image: linear-gradient(var(--star-color), var(--star-color));
-  mask-size: var(--tile) var(--tile);
-  mask-repeat: repeat;
+  background-size: var(--tile) var(--tile);
+  background-repeat: repeat;
 }
 
 .page-stars.twinkle {
@@ -249,13 +246,13 @@ html.cursor-hover.cursor-down .cursor-orb::before {
 .site-header {
   background-color: color-mix(in srgb, var(--bg-primary) 0%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 0%, transparent);
-  transition: background-color 0.6s ease, border-color 0.6s ease, backdrop-filter 0.6s ease;
+  transition: background-color 0.6s ease, border-color 0.6s ease;
 }
 
 .site-header.is-scrolled {
-  background-color: color-mix(in srgb, var(--bg-primary) 86%, transparent);
+  /* No backdrop blur: blurring the animated background behind the header on every scroll frame is costly, so it is a nearly opaque color instead */
+  background-color: color-mix(in srgb, var(--bg-primary) 94%, transparent);
   border-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
-  backdrop-filter: blur(12px);
 }
 
 /* ---------- Scroll entrance animation ---------- */

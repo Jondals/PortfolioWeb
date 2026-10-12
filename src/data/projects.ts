@@ -62,47 +62,43 @@ const PUBLISHED: Translation = { en: "PUBLISHED", es: "PUBLICADO" };
 
 export const projects: Project[] = [
   {
-    title: "Spinly",
+    title: "Chatterly Renewed",
     featured: true,
     status: DEPLOYED,
     description: {
-      en: "A prize wheel for giveaways, raffles and everyday decisions: custom themes and presets, your own music, knockout tournaments and accounts that sync across devices.",
-      es: "Una ruleta para sorteos y decisiones del día a día: temas y presets propios, tu música, torneos por eliminatorias y cuentas que se sincronizan entre dispositivos.",
+      en: "A self-hosted, end-to-end encrypted chat: messages, groups, voice and video calls and a Windows app. The server only stores ciphertext.",
+      es: "Un chat autoalojado y cifrado de extremo a extremo: mensajes, grupos, llamadas de voz y vídeo y app para Windows. El servidor solo guarda texto cifrado.",
     },
     contribution: {
-      en: "Designed and built the whole app: a pure-CSS wheel, Web Audio sound effects, beat-synced lights and a Supabase backend with anonymous accounts and Row Level Security.",
-      es: "Diseñé y desarrollé toda la app: ruleta solo con CSS, efectos de sonido con Web Audio, luces sincronizadas con el ritmo y backend en Supabase con cuentas anónimas y Row Level Security.",
+      en: "Built it all: Angular front end, Fastify and SQLite back end, WebCrypto encryption, WebRTC calls, an Electron app and Docker deployment.",
+      es: "Lo desarrollé todo: front en Angular, back en Fastify y SQLite, cifrado con WebCrypto, llamadas WebRTC, app Electron y despliegue con Docker.",
     },
     learned: {
-      en: "Audio synthesis and analysis in the browser, Web Workers, and syncing local-first data with Supabase.",
-      es: "Síntesis y análisis de audio en el navegador, Web Workers y sincronización de datos local-first con Supabase.",
+      en: "Encryption in practice, security testing, WebRTC and shipping with Docker and Electron.",
+      es: "Cifrado en la práctica, pruebas de seguridad, WebRTC y publicar con Docker y Electron.",
     },
-    tech: ["React", "TypeScript", "Supabase", "PostgreSQL", "Vercel"],
-    image: spinly,
-    github: "https://github.com/Jondals/Spinly",
-    demo: "https://spinly-psi.vercel.app/",
-  },
-
-  {
-    title: "QuizMania",
-    featured: true,
-    status: DEPLOYED,
-    description: {
-      en: "A trivia game played on a slot machine: spin for a topic, pick one of five modes, challenge friends in Versus duels and climb the leagues and rankings.",
-      es: "Un juego de trivia con tragaperras: gira para elegir tema, escoge entre cinco modos, reta a tus amigos en duelos Versus y sube en las ligas y rankings.",
-    },
-    contribution: {
-      en: "Built the game in TypeScript with a custom build script, synthesized sounds, 30 topics and a Supabase backend: accounts, friends, rankings and server-side score validation.",
-      es: "Desarrollé el juego en TypeScript con un script de build propio, sonidos sintetizados, 30 temas y un backend en Supabase: cuentas, amigos, rankings y validación de puntuaciones en el servidor.",
-    },
-    learned: {
-      en: "PostgreSQL functions and Row Level Security, designing a fair scoring system and shipping a typed codebase without a framework.",
-      es: "Funciones de PostgreSQL y Row Level Security, diseñar un sistema de puntos justo y mantener una base de código tipada sin framework.",
-    },
-    tech: ["TypeScript", "Supabase", "PostgreSQL", "HTML", "CSS", "Vercel"],
-    image: quizMania,
-    github: "https://github.com/Jondals/QuizMania",
-    demo: "https://quiz-mania-blond.vercel.app/",
+    tech: ["Angular", "TypeScript", "Node.js", "Fastify", "SQLite", "WebRTC", "Electron", "Docker"],
+    image: chatterlyRenewed,
+    gallery: [
+      {
+        image: chatterlyRenewedLogin,
+        alt: { en: "The sign-in screen of Chatterly Renewed", es: "La pantalla de entrada de Chatterly Renewed" },
+      },
+      {
+        image: chatterlyRenewedCall,
+        alt: { en: "An end-to-end encrypted voice call", es: "Una llamada de voz cifrada de extremo a extremo" },
+      },
+      {
+        image: chatterlyRenewedWheel,
+        alt: { en: "A prize wheel and a tournament champion in a chat", es: "Una ruleta y el campeón de un torneo en un chat" },
+      },
+      {
+        image: chatterlyRenewedTournament,
+        alt: { en: "A knockout tournament played with wheels", es: "Un torneo por eliminatorias jugado con ruletas" },
+      },
+    ],
+    github: "https://github.com/Jondals/ChatterlyRenewed",
+    demo: "https://chatterlyrenewed.duckdns.org",
   },
 
   {
@@ -128,51 +124,47 @@ export const projects: Project[] = [
   },
 
   {
-    title: "Chatterly Renewed",
+    title: "QuizMania",
     featured: true,
-    status: IN_DEVELOPMENT,
+    status: DEPLOYED,
     description: {
-      en: "An end-to-end encrypted chat that I host myself: messages, groups, voice and video calls, wheels and a Windows app. The server only stores ciphertext and cannot read or listen to anything.",
-      es: "Un chat cifrado de extremo a extremo que alojo yo mismo: mensajes, grupos, llamadas de voz y vídeo, ruletas y app para Windows. El servidor solo guarda texto cifrado y no puede leer ni escuchar nada.",
-    },
-    motivation: {
-      en: "Understand how private messengers work and have a chat that nobody can read.",
-      es: "Entender cómo funcionan los mensajeros privados y tener un chat que nadie pueda leer.",
-    },
-    purpose: {
-      en: "A free, self-hosted, Discord-style app where privacy is part of the design.",
-      es: "Una app gratuita, autoalojada y al estilo Discord donde la privacidad es parte del diseño.",
+      en: "A trivia game played on a slot machine: spin for a topic, pick one of five modes, challenge friends in Versus duels and climb the leagues and rankings.",
+      es: "Un juego de trivia con tragaperras: gira para elegir tema, escoge entre cinco modos, reta a tus amigos en duelos Versus y sube en las ligas y rankings.",
     },
     contribution: {
-      en: "Built it all: Angular and Tailwind front end, Fastify and SQLite back end, WebCrypto encryption, WebRTC calls with a TURN relay, an Electron app and Docker deployment with automated tests.",
-      es: "Lo desarrollé todo: front en Angular y Tailwind, back en Fastify y SQLite, cifrado con WebCrypto, llamadas WebRTC con relay TURN, app Electron y despliegue con Docker con tests automáticos.",
+      en: "Built the game in TypeScript with a custom build script, synthesized sounds, 30 topics and a Supabase backend: accounts, friends, rankings and server-side score validation.",
+      es: "Desarrollé el juego en TypeScript con un script de build propio, sonidos sintetizados, 30 temas y un backend en Supabase: cuentas, amigos, rankings y validación de puntuaciones en el servidor.",
     },
     learned: {
-      en: "Encryption in practice (keys, signatures, group-key rotation), security testing like a hostile account, WebRTC, performance on weak phones and shipping with Docker and Electron.",
-      es: "Cifrado en la práctica (claves, firmas, rotación de claves de grupo), probar la seguridad como una cuenta hostil, WebRTC, rendimiento en móviles flojos y publicar con Docker y Electron.",
+      en: "PostgreSQL functions and Row Level Security, designing a fair scoring system and shipping a typed codebase without a framework.",
+      es: "Funciones de PostgreSQL y Row Level Security, diseñar un sistema de puntos justo y mantener una base de código tipada sin framework.",
     },
-    tech: ["Angular", "TypeScript", "Tailwind CSS", "Node.js", "Fastify", "SQLite", "WebRTC", "Electron", "Docker", "GitHub Actions"],
-    image: chatterlyRenewed,
-    gallery: [
-      {
-        image: chatterlyRenewedLogin,
-        alt: { en: "The sign-in screen of Chatterly Renewed", es: "La pantalla de entrada de Chatterly Renewed" },
-      },
-      {
-        image: chatterlyRenewedCall,
-        alt: { en: "An end-to-end encrypted voice call", es: "Una llamada de voz cifrada de extremo a extremo" },
-      },
-      {
-        image: chatterlyRenewedWheel,
-        alt: { en: "A prize wheel and a tournament champion in a chat", es: "Una ruleta y el campeón de un torneo en un chat" },
-      },
-      {
-        image: chatterlyRenewedTournament,
-        alt: { en: "A knockout tournament played with wheels", es: "Un torneo por eliminatorias jugado con ruletas" },
-      },
-    ],
-    github: "https://github.com/Jondals/ChatterlyRenewed",
-    demo: "https://chatterlyrenewed.duckdns.org",
+    tech: ["TypeScript", "Supabase", "PostgreSQL", "HTML", "CSS", "Vercel"],
+    image: quizMania,
+    github: "https://github.com/Jondals/QuizMania",
+    demo: "https://quiz-mania-blond.vercel.app/",
+  },
+
+  {
+    title: "Spinly",
+    featured: true,
+    status: DEPLOYED,
+    description: {
+      en: "A prize wheel for giveaways, raffles and everyday decisions: custom themes and presets, your own music, knockout tournaments and accounts that sync across devices.",
+      es: "Una ruleta para sorteos y decisiones del día a día: temas y presets propios, tu música, torneos por eliminatorias y cuentas que se sincronizan entre dispositivos.",
+    },
+    contribution: {
+      en: "Designed and built the whole app: a pure-CSS wheel, Web Audio sound effects, beat-synced lights and a Supabase backend with anonymous accounts and Row Level Security.",
+      es: "Diseñé y desarrollé toda la app: ruleta solo con CSS, efectos de sonido con Web Audio, luces sincronizadas con el ritmo y backend en Supabase con cuentas anónimas y Row Level Security.",
+    },
+    learned: {
+      en: "Audio synthesis and analysis in the browser, Web Workers, and syncing local-first data with Supabase.",
+      es: "Síntesis y análisis de audio en el navegador, Web Workers y sincronización de datos local-first con Supabase.",
+    },
+    tech: ["React", "TypeScript", "Supabase", "PostgreSQL", "Vercel"],
+    image: spinly,
+    github: "https://github.com/Jondals/Spinly",
+    demo: "https://spinly-psi.vercel.app/",
   },
 
   {

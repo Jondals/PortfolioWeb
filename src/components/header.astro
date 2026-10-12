@@ -1,7 +1,7 @@
 ---
 /**
  * header.astro
- * Site header: logo, section navigation, and the mobile menu (which also holds the language toggle and the CV download).
+ * Site header: logo, section navigation, the language toggle (desktop) and the mobile menu (which also holds the language toggle and the CV download).
  * It is transparent at the top of the page and gets a blurred background when scrolling (see global.css).
  */
 import Icon from "./icon.astro";
@@ -51,6 +51,18 @@ const control =
     </nav>
 
     <div class="col-start-3 justify-self-end flex items-center gap-2">
+      <button
+        type="button"
+        class={`lang-toggle hidden lg:inline-flex gap-2 px-3 text-xs font-semibold ${control}`}
+        aria-label="Cambiar a español"
+      >
+        <span class="lang-flags flex items-center">
+          <Icon name="flag-en" class="lang-flag-en w-5 h-[14px] rounded-[2px]" />
+          <Icon name="flag-es" class="lang-flag-es w-5 h-[14px] rounded-[2px]" />
+        </span>
+        <span data-en="EN" data-es="ES">EN</span>
+      </button>
+
       <button
         id="menu-btn"
         type="button"
