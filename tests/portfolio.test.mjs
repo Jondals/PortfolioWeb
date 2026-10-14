@@ -54,9 +54,7 @@ function serveDist() {
       const type = mimeTypes[extname(file)] ?? "application/octet-stream";
       const headers = {
         "Content-Type": type,
-        "Cache-Control": file.includes("_astro") || file.includes("fonts")
-          ? "public, max-age=31536000, immutable"
-          : "public, max-age=0, must-revalidate",
+        "Cache-Control": file.includes("_astro") || file.includes("fonts") ? "public, max-age=31536000, immutable" : "public, max-age=0, must-revalidate",
       };
 
       if (/text|javascript|svg/.test(type) && /\bbr\b/.test(req.headers["accept-encoding"] ?? "")) {
@@ -77,9 +75,7 @@ async function runLighthouse(name, config) {
   const result = await lighthouse(url, { port, output: "json", logLevel: "error" }, config);
   const { lhr } = result;
 
-  const scores = Object.fromEntries(
-    categories.map((id) => [id, Math.round((lhr.categories[id].score ?? 0) * 100)])
-  );
+  const scores = Object.fromEntries(categories.map((id) => [id, Math.round((lhr.categories[id].score ?? 0) * 100)]));
   console.log(`\nLighthouse ${name}:`, scores);
 
   const failing = [];
@@ -162,9 +158,7 @@ test("the page loads with no errors and everything works", async () => {
   }
 
   // Every icon used on the page is defined in the sprite
-  const missingIcons = await page.$$eval("svg use", (uses) =>
-    uses.map((u) => u.getAttribute("href")).filter((href) => !document.querySelector(href))
-  );
+  const missingIcons = await page.$$eval("svg use", (uses) => uses.map((u) => u.getAttribute("href")).filter((href) => !document.querySelector(href)));
   assert.deepEqual(missingIcons, [], "icons missing from the sprite");
 
   // The header is transparent at the top of the page and gets a background once scrolled
@@ -201,7 +195,7 @@ test("the page loads with no errors and everything works", async () => {
 
   // Every technology tag has an icon and a link
   const tagsWithoutIcon = await page.$$eval("#projects li a, #skills li a", (links) =>
-    links.filter((a) => a.getAttribute("href")?.startsWith("http") && !a.querySelector("svg use")).map((a) => a.textContent.trim())
+    links.filter((a) => a.getAttribute("href")?.startsWith("http") && !a.querySelector("svg use")).map((a) => a.textContent.trim()),
   );
   assert.deepEqual(tagsWithoutIcon, [], "tags with no icon");
 
@@ -220,7 +214,10 @@ test("the page loads with no errors and everything works", async () => {
     await page.click("#menu-btn");
     const opened = await page
       .waitForFunction(() => !document.getElementById("mobile-menu").inert, { timeout: 2000 })
-      .then(() => true, () => false);
+      .then(
+        () => true,
+        () => false,
+      );
     if (opened) break;
   }
   await page.waitForFunction(() => !document.getElementById("mobile-menu").inert, { timeout: 2000 });

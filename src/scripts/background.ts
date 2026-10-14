@@ -19,7 +19,7 @@ const sceneObserver = new IntersectionObserver(
       if (entry.isIntersecting) root.dataset.scene = entry.target.id;
     });
   },
-  { rootMargin: "-45% 0px -50% 0px" }
+  { rootMargin: "-45% 0px -50% 0px" },
 );
 
 scenes.forEach((section) => sceneObserver.observe(section));
@@ -103,7 +103,7 @@ if (!reducedMotion) {
         targetY = (e.clientY / window.innerHeight) * 2 - 1;
         request();
       },
-      { passive: true }
+      { passive: true },
     );
   }
 

@@ -29,6 +29,8 @@ interface Props {
   compact?: boolean;
   /** Position used to stagger the entrance animation */
   reveal?: number;
+  /** Load the screenshot right away (for cards that sit in a collapsed panel, where lazy loading would wait until it opens) */
+  eager?: boolean;
 }
 
 const {
@@ -46,18 +48,23 @@ const {
   imageClass = "h-48",
   compact = false,
   reveal,
+  eager = false,
 } = Astro.props;
 ---
 
-<article data-reveal={reveal !== undefined ? "" : undefined} style={reveal !== undefined ? `--i:${reveal}` : undefined} class="group flex flex-col rounded-[12px] overflow-hidden bg-(--bg-secondary) border border-(--text-primary)/10 shadow-lg hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1.5 hover:border-(--accent)/40 transition duration-500 ease-out">
-
+<article
+  data-reveal={reveal !== undefined ? "" : undefined}
+  style={reveal !== undefined ? `--i:${reveal}` : undefined}
+  class="group flex flex-col rounded-[12px] overflow-hidden bg-(--bg-secondary) border border-(--text-primary)/10 shadow-lg hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1.5 hover:border-(--accent)/40 transition duration-500 ease-out"
+>
   <div class={`${imageClass} overflow-hidden relative`}>
     <Image
       src={image}
       alt={`${title} screenshot`}
       widths={[400, 800]}
       sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
-      loading="lazy"
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
       class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out"
     />
 
@@ -67,16 +74,9 @@ const {
   </div>
 
   <div class="p-4 md:p-5 flex flex-col gap-3 flex-1">
+    <h3 class="text-lg font-bold text-(--text-primary) group-hover:text-(--accent-text) transition duration-300">{title}</h3>
 
-    <h3 class="text-lg font-bold text-(--text-primary) group-hover:text-(--accent-text) transition duration-300">
-      {title}
-    </h3>
-
-    <p
-      class="text-sm text-(--text-secondary) leading-relaxed"
-      data-en={description.en}
-      data-es={description.es}
-    >
+    <p class="text-sm text-(--text-secondary) leading-relaxed" data-en={description.en} data-es={description.es}>
       {description.en}
     </p>
 
@@ -85,18 +85,19 @@ const {
         <span class="text-(--text-primary) font-semibold" data-en={contributionLabel.en} data-es={contributionLabel.es}>
           {contributionLabel.en}
         </span>{" "}
-        <span
-          data-en={contribution.en}
-          data-es={contribution.es}
-        >
+        <span data-en={contribution.en} data-es={contribution.es}>
           {contribution.en}
         </span>
       </p>
     )}
 
     <p class="text-xs text-(--text-secondary)">
-      <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">Learned:</span>{" "}
-      <span data-en={learned.en} data-es={learned.es}>{learned.en}</span>
+      <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">
+        Learned:
+      </span>{" "}
+      <span data-en={learned.en} data-es={learned.es}>
+        {learned.en}
+      </span>
     </p>
 
     <div class="mt-auto pt-2 flex flex-col gap-4">
@@ -133,8 +134,10 @@ const {
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
           >
-            <Icon name="external" class="w-4 h-4" />
-            <span data-en="Visit site" data-es="Ver web">Visit site</span>
+            <Icon name="external" class="w-4 h-4" />
+            <span data-en="Visit site" data-es="Ver web">
+              Visit site
+            </span>
           </a>
         )}
       </div>

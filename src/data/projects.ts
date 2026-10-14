@@ -20,6 +20,17 @@ import chatterlyRenewedCall from "../assets/images/chatterlyrenewed-call.webp";
 import chatterlyRenewedTournament from "../assets/images/chatterlyrenewed-tournament.webp";
 import chatterlyRenewedWheel from "../assets/images/chatterlyrenewed-wheel.webp";
 import kairos from "../assets/images/kairos.webp";
+import myConversorDownloader from "../assets/images/myconversor-downloader.webp";
+import myConversorConverter from "../assets/images/myconversor-converter.webp";
+import myConversorTrimmer from "../assets/images/myconversor-trimmer.webp";
+import myConversorLibrary from "../assets/images/myconversor-library.webp";
+import myConversorMusic from "../assets/images/myconversor-music.webp";
+import myConversorAccount from "../assets/images/myconversor-account.webp";
+import quizManiaQuestion from "../assets/images/quizmania-question.webp";
+import quizManiaRanking from "../assets/images/quizmania-ranking.webp";
+import spinlyPresets from "../assets/images/spinly-presets.webp";
+import spinlyThemes from "../assets/images/spinly-themes.webp";
+import spinlyTournament from "../assets/images/spinly-tournament.webp";
 
 /** A text available in both languages. */
 export interface Translation {
@@ -44,6 +55,8 @@ export interface Project {
   /** Technology names; each one must exist in icons.ts and tech.ts. */
   tech: string[];
   image: ImageMetadata;
+  /** What the first screenshot shows (optional, "Home" by default). */
+  imageAlt?: Translation;
   /** More screenshots (optional): the carousel shows them in the same frame, one at a time. */
   gallery?: { image: ImageMetadata; alt: Translation }[];
   github: string;
@@ -78,11 +91,12 @@ export const projects: Project[] = [
       es: "Cifrado en la práctica, pruebas de seguridad, WebRTC y publicar con Docker y Electron.",
     },
     tech: ["Angular", "TypeScript", "Node.js", "Fastify", "SQLite", "WebRTC", "Electron", "Docker"],
-    image: chatterlyRenewed,
+    image: chatterlyRenewedLogin,
+    imageAlt: { en: "The sign-in screen of Chatterly Renewed", es: "La pantalla de entrada de Chatterly Renewed" },
     gallery: [
       {
-        image: chatterlyRenewedLogin,
-        alt: { en: "The sign-in screen of Chatterly Renewed", es: "La pantalla de entrada de Chatterly Renewed" },
+        image: chatterlyRenewed,
+        alt: { en: "The home page of Chatterly Renewed", es: "La página de inicio de Chatterly Renewed" },
       },
       {
         image: chatterlyRenewedCall,
@@ -119,6 +133,32 @@ export const projects: Project[] = [
     },
     tech: ["Angular", "TypeScript", "Tailwind CSS", "Node.js", "Express", "FFmpeg", "yt-dlp", "Docker"],
     image: myConversor,
+    gallery: [
+      {
+        image: myConversorDownloader,
+        alt: { en: "Downloading a video from a link", es: "Descargando un vídeo desde un enlace" },
+      },
+      {
+        image: myConversorConverter,
+        alt: { en: "Converting a file between formats", es: "Convirtiendo un archivo entre formatos" },
+      },
+      {
+        image: myConversorTrimmer,
+        alt: { en: "Trimming a clip before saving it", es: "Recortando un clip antes de guardarlo" },
+      },
+      {
+        image: myConversorLibrary,
+        alt: { en: "The personal library of saved media", es: "La biblioteca personal de archivos guardados" },
+      },
+      {
+        image: myConversorMusic,
+        alt: { en: "The built-in music player", es: "El reproductor de música integrado" },
+      },
+      {
+        image: myConversorAccount,
+        alt: { en: "The account page", es: "La página de cuenta" },
+      },
+    ],
     github: "https://github.com/Jondals/MyConversor",
     demo: "https://myconversor.duckdns.org",
   },
@@ -141,6 +181,16 @@ export const projects: Project[] = [
     },
     tech: ["TypeScript", "Supabase", "PostgreSQL", "HTML", "CSS", "Vercel"],
     image: quizMania,
+    gallery: [
+      {
+        image: quizManiaQuestion,
+        alt: { en: "A timed trivia question with four answers", es: "Una pregunta con tiempo y cuatro respuestas" },
+      },
+      {
+        image: quizManiaRanking,
+        alt: { en: "The global ranking with the podium", es: "El ranking global con el podio" },
+      },
+    ],
     github: "https://github.com/Jondals/QuizMania",
     demo: "https://quiz-mania-blond.vercel.app/",
   },
@@ -163,6 +213,20 @@ export const projects: Project[] = [
     },
     tech: ["React", "TypeScript", "Supabase", "PostgreSQL", "Vercel"],
     image: spinly,
+    gallery: [
+      {
+        image: spinlyPresets,
+        alt: { en: "Saved wheel presets", es: "Ruletas guardadas como presets" },
+      },
+      {
+        image: spinlyThemes,
+        alt: { en: "Visual themes for the wheel", es: "Temas visuales para la ruleta" },
+      },
+      {
+        image: spinlyTournament,
+        alt: { en: "Setting up a tournament", es: "Preparando un torneo" },
+      },
+    ],
     github: "https://github.com/Jondals/Spinly",
     demo: "https://spinly-psi.vercel.app/",
   },

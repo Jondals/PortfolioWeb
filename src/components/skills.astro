@@ -6,7 +6,22 @@ import { techLinks } from "../data/tech.ts";
 const skillGroups = [
   {
     title: { en: "Frontend & Mobile", es: "Frontend y Móvil" },
-    skills: ["Angular", "Astro", "React", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS", "Vite", "Electron", "Flutter", "Dart", "Kotlin", "Android Studio"],
+    skills: [
+      "Angular",
+      "Astro",
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "Vite",
+      "Electron",
+      "Flutter",
+      "Dart",
+      "Kotlin",
+      "Android Studio",
+    ],
   },
   {
     title: { en: "Backend", es: "Backend" },
@@ -48,19 +63,21 @@ const row =
   "not-first:before:absolute not-first:before:inset-x-0 not-first:before:top-0 not-first:before:h-px " +
   "not-first:before:bg-linear-to-r not-first:before:from-transparent not-first:before:via-(--accent)/35 not-first:before:to-transparent";
 const label = "text-sm font-semibold text-(--text-primary) md:pt-1.5";
-const chip = "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-(--bg-card) border border-(--text-primary)/8 text-xs md:text-[13px] font-medium text-(--text-primary)";
+const chip =
+  "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-(--bg-card) border border-(--text-primary)/8 text-xs md:text-[13px] font-medium text-(--text-primary)";
 ---
 
 <section id="skills" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
   <div class="max-w-7xl mx-auto w-full">
-
     <Sectionheading title={{ en: "Skills", es: "Habilidades" }} />
 
     <!-- A single card: one row per category -->
     <div data-reveal class="rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondary) p-5 md:p-8">
       {skillGroups.map((group) => (
         <div class={row}>
-          <h3 class={label} data-en={group.title.en} data-es={group.title.es}>{group.title.en}</h3>
+          <h3 class={label} data-en={group.title.en} data-es={group.title.es}>
+            {group.title.en}
+          </h3>
           <ul class="flex flex-wrap gap-1.5">
             {group.skills.map((skill) => (
               <li>
@@ -80,22 +97,30 @@ const chip = "inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-(--bg-c
       ))}
 
       <div class={row}>
-        <h3 class={label} data-en="Soft skills" data-es="Habilidades blandas">Soft skills</h3>
+        <h3 class={label} data-en="Soft skills" data-es="Habilidades blandas">
+          Soft skills
+        </h3>
         <ul class="flex flex-wrap gap-1.5">
           {softSkills.map((skill) => (
             <li class={chip}>
-              <span data-en={skill.en} data-es={skill.es}>{skill.en}</span>
+              <span data-en={skill.en} data-es={skill.es}>
+                {skill.en}
+              </span>
             </li>
           ))}
         </ul>
       </div>
 
       <div class={row}>
-        <h3 class={label} data-en="Languages" data-es="Idiomas">Languages</h3>
+        <h3 class={label} data-en="Languages" data-es="Idiomas">
+          Languages
+        </h3>
         <ul class="flex flex-wrap gap-1.5">
           {languages.map((language) => (
             <li class={chip}>
-              <span data-en={language.en} data-es={language.es}>{language.en}</span>
+              <span data-en={language.en} data-es={language.es}>
+                {language.en}
+              </span>
             </li>
           ))}
         </ul>

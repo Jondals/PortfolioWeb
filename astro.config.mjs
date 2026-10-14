@@ -1,16 +1,16 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://jonathan-dorado-portfolio.vercel.app',
+  site: "https://jonathan-dorado-portfolio.vercel.app",
   build: {
     // Inline CSS: avoids a render-blocking request and improves LCP on mobile
-    inlineStylesheets: 'always'
+    inlineStylesheets: "always",
   },
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

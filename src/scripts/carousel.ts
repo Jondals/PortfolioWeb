@@ -4,6 +4,8 @@
  * that advances when the progress bar of the active tab finishes its CSS animation.
  */
 
+const SHOT_MS = 2800;
+
 const carousels = document.querySelectorAll<HTMLElement>(".carousel");
 
 carousels.forEach((carousel) => {
@@ -18,6 +20,8 @@ carousels.forEach((carousel) => {
   let current = 0;
   let autoScrolling = false;
   let autoScrollTimer = 0;
+  // Per project: shows its next screenshot / goes back to its first one
+  const shows: { next: () => void; reset: () => void }[] = [];
 
   /** Scrolls to the given slide (wrapping around at both ends) and marks its tab as active. */
   function goTo(index: number): void {
@@ -39,6 +43,8 @@ carousels.forEach((carousel) => {
     dots.forEach((dot, i) => {
       dot.setAttribute("aria-current", i === index ? "true" : "false");
     });
+    // A project always starts again from its first screenshot
+    shows[index]?.reset();
   }
 
   prevBtns.forEach((btn) => btn.addEventListener("click", () => goTo(current - 1)));
@@ -83,21 +89,53 @@ carousels.forEach((carousel) => {
         updateDots(current);
       });
     },
-    { root: track, threshold: 0.6 }
+    { root: track, threshold: 0.6 },
   );
 
   slides.forEach((slide) => observer.observe(slide));
 
-  // The screenshots of a project: the dots under the frame show one of them at a time
-  slides.forEach((slide) => {
+  // The screenshots of a project: dots, arrows, swipe and an automatic slideshow while the project is the active one
+  slides.forEach((slide, slideIndex) => {
     const shots = slide.querySelectorAll<HTMLElement>("[data-shot]");
     const shotDots = slide.querySelectorAll<HTMLButtonElement>(".gallery-dot");
-    shotDots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        const wanted = Number(dot.dataset.shotIndex);
-        shots.forEach((shot, i) => shot.toggleAttribute("data-active", i === wanted));
-        shotDots.forEach((other) => other.setAttribute("aria-current", other === dot ? "true" : "false"));
-      });
+    const counter = slide.querySelector<HTMLElement>(".shot-counter");
+    const caption = slide.querySelector<HTMLElement>(".shot-caption");
+    const frame = slide.querySelector<HTMLElement>(".shots");
+    let shown = 0;
+
+    function show(index: number): void {
+      shown = (index + shots.length) % shots.length;
+      shots.forEach((shot, i) => shot.toggleAttribute("data-active", i === shown));
+      shotDots.forEach((dot, i) => dot.setAttribute("aria-current", i === shown ? "true" : "false"));
+      if (counter) counter.textContent = `${shown + 1} / ${shots.length}`;
+      if (caption) {
+        caption.dataset.en = shots[shown].dataset.captionEn ?? "";
+        caption.dataset.es = shots[shown].dataset.captionEs ?? "";
+        caption.textContent = document.documentElement.lang === "es" ? caption.dataset.es : caption.dataset.en;
+      }
+    }
+
+    shows[slideIndex] = { next: () => show(shown + 1), reset: () => show(0) };
+    if (shots.length < 2) return;
+
+    shotDots.forEach((dot) => dot.addEventListener("click", () => show(Number(dot.dataset.shotIndex))));
+    slide.querySelector(".shot-prev")?.addEventListener("click", () => show(shown - 1));
+    slide.querySelector(".shot-next")?.addEventListener("click", () => show(shown + 1));
+
+    // Swipe on the screenshot
+    let startX = 0;
+    frame?.addEventListener("pointerdown", (e: PointerEvent) => (startX = e.clientX));
+    frame?.addEventListener("pointerup", (e: PointerEvent) => {
+      const delta = e.clientX - startX;
+      if (Math.abs(delta) > 40) show(shown + (delta < 0 ? 1 : -1));
     });
   });
+
+  // One timer for the whole carousel: it advances the screenshots of the active project, and only while nobody is interacting
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    window.setInterval(() => {
+      if (document.hidden || carousel.matches(":hover") || carousel.matches(":has(:focus-visible)")) return;
+      shows[current]?.next();
+    }, SHOT_MS);
+  }
 });

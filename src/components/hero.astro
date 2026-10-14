@@ -41,7 +41,6 @@ const stats: Stat[] = [
 <!-- Home and "About me" in one section: text on the left, photo and key facts on the right -->
 <section id="about" class="relative px-5 sm:px-6 pt-24 md:pt-32 pb-16 md:pb-24 lg:min-h-svh lg:flex lg:items-center">
   <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-x-16 gap-y-10 items-center">
-
     <div class="order-2 lg:order-1">
       <h1 class="text-[2rem] leading-[1.1] sm:text-5xl lg:text-[3.25rem] xl:text-6xl font-bold sm:leading-[1.08] tracking-tight text-balance">
         <span
@@ -51,49 +50,61 @@ const stats: Stat[] = [
         >
           Full Stack Developer
         </span>
-        <span
-          class="block text-(--text-primary)"
-          data-en="& Game Developer"
-          data-es="y de Videojuegos"
-        >
+        <span class="block text-(--text-primary)" data-en="& Game Developer" data-es="y de Videojuegos">
           & Game Developer
         </span>
       </h1>
 
-      <p class="mt-5 md:mt-6 text-base md:text-xl text-(--text-secondary) leading-relaxed max-w-2xl"
+      <p
+        class="mt-5 md:mt-6 text-base md:text-xl text-(--text-secondary) leading-relaxed max-w-2xl"
         data-en="I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools."
-        data-es="Diseño y desarrollo aplicaciones web, móviles, centradas en rendimiento, escalabilidad y experiencia de usuario. Desde plataformas full stack y sistemas colaborativos hasta aplicaciones móviles, experiencias multijugador y herramientas para desarrolladores.">
-        I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and collaborative systems to mobile applications, multiplayer experiences, and developer tools.
+        data-es="Diseño y desarrollo aplicaciones web, móviles, centradas en rendimiento, escalabilidad y experiencia de usuario. Desde plataformas full stack y sistemas colaborativos hasta aplicaciones móviles, experiencias multijugador y herramientas para desarrolladores."
+      >
+        I design and build modern web, mobile applications, focused on performance, scalability, and user experience. From full-stack platforms and
+        collaborative systems to mobile applications, multiplayer experiences, and developer tools.
       </p>
 
-      <p class="mt-4 text-sm md:text-base text-(--text-secondary) leading-relaxed max-w-2xl"
+      <p
+        class="mt-4 text-sm md:text-base text-(--text-secondary) leading-relaxed max-w-2xl"
         data-en="I started programming about 3 years ago with Java while studying a Multi-Platform Application Development degree. Since then I have kept learning on my own and today I focus on scalable web platforms, multiplayer systems and developer tools."
-        data-es="Empecé a programar hace unos 3 años con Java mientras estudiaba el Grado Superior de Desarrollo de Aplicaciones Multiplataforma. Desde entonces sigo aprendiendo por mi cuenta y hoy me centro en plataformas web escalables, sistemas multijugador y herramientas para desarrolladores.">
-        I started programming about 3 years ago with Java while studying a Multi-Platform Application Development degree. Since then I have kept learning on my own and today I focus on scalable web platforms, multiplayer systems and developer tools.
+        data-es="Empecé a programar hace unos 3 años con Java mientras estudiaba el Grado Superior de Desarrollo de Aplicaciones Multiplataforma. Desde entonces sigo aprendiendo por mi cuenta y hoy me centro en plataformas web escalables, sistemas multijugador y herramientas para desarrolladores."
+      >
+        I started programming about 3 years ago with Java while studying a Multi-Platform Application Development degree. Since then I have kept learning on my
+        own and today I focus on scalable web platforms, multiplayer systems and developer tools.
       </p>
 
       <div class="mt-8 md:mt-10 flex flex-wrap items-center gap-3 md:gap-4">
-        <a href="#projects"
-          class="group inline-flex items-center gap-2 px-5 py-3 md:px-7 md:py-3.5 rounded-[10px] bg-(--accent) text-black text-sm md:text-base font-semibold hover:-translate-y-0.5 hover:shadow-xl hover:shadow-(--accent)/30 shadow-lg shadow-(--accent)/20">
-          <span data-en="View Work" data-es="Ver Trabajo">View Work</span>
+        <a
+          href="#projects"
+          class="group inline-flex items-center gap-2 px-5 py-3 md:px-7 md:py-3.5 rounded-[10px] bg-(--accent) text-black text-sm md:text-base font-semibold hover:-translate-y-0.5 hover:shadow-xl hover:shadow-(--accent)/30 shadow-lg shadow-(--accent)/20"
+        >
+          <span data-en="View Work" data-es="Ver Trabajo">
+            View Work
+          </span>
           <Icon name="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition duration-300" />
         </a>
 
-        <a href="/cv-en.pdf"
+        <a
+          href="/cv-en.pdf"
           data-cv
           download="Jonathan-Dorado-CV-EN.pdf"
-          class="group inline-flex items-center gap-2 px-5 py-3 md:px-7 md:py-3.5 rounded-[10px] bg-(--bg-secondary) border border-(--text-primary)/10 text-(--text-primary) text-sm md:text-base hover:bg-(--bg-card) hover:border-(--accent)/40 hover:-translate-y-0.5">
+          class="group inline-flex items-center gap-2 px-5 py-3 md:px-7 md:py-3.5 rounded-[10px] bg-(--bg-secondary) border border-(--text-primary)/10 text-(--text-primary) text-sm md:text-base hover:bg-(--bg-card) hover:border-(--accent)/40 hover:-translate-y-0.5"
+        >
           <Icon name="download" class="w-4 h-4 group-hover:translate-y-0.5 transition duration-300" />
-          <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
+          <span data-en="Download CV" data-es="Descargar CV">
+            Download CV
+          </span>
         </a>
 
         <div class="flex items-center gap-2 md:gap-3">
           {socials.map((social) => (
-            <a href={social.href}
+            <a
+              href={social.href}
               target={social.href.startsWith("http") ? "_blank" : undefined}
               rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
               class="p-3 md:p-3.5 rounded-[10px] bg-(--bg-secondary) border border-(--text-primary)/10 text-(--text-primary) hover:bg-(--bg-card) hover:border-(--accent)/40 hover:-translate-y-0.5"
-              aria-label={social.label}>
+              aria-label={social.label}
+            >
               <Icon name={social.icon} class="w-[18px] h-[18px] md:w-5 md:h-5" />
             </a>
           ))}

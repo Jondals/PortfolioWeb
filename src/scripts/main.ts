@@ -17,8 +17,7 @@ const deferred = [
   () => import("./contextmenu"),
 ];
 
-const idle = (callback: () => void) =>
-  "requestIdleCallback" in window ? window.requestIdleCallback(callback, { timeout: 1500 }) : setTimeout(callback, 1);
+const idle = (callback: () => void) => ("requestIdleCallback" in window ? window.requestIdleCallback(callback, { timeout: 1500 }) : setTimeout(callback, 1));
 
 /** Loads the next deferred module, then waits for another idle slot before loading the following one. */
 function loadNext(): void {

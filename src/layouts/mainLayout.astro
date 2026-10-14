@@ -1,13 +1,13 @@
 ---
-import Hero from '../components/hero.astro';
-import Header from '../components/header.astro';
-import Projects from '../components/projects.astro';
-import Gamedevelopment from '../components/gamedevelopment.astro';
-import Experience from '../components/experience.astro';
-import Skills from '../components/skills.astro';
-import Footer from '../components/footer.astro';
-import Iconsprite from '../components/iconsprite.astro';
-import Background from '../components/background.astro';
+import Hero from "../components/hero.astro";
+import Header from "../components/header.astro";
+import Projects from "../components/projects.astro";
+import Gamedevelopment from "../components/gamedevelopment.astro";
+import Experience from "../components/experience.astro";
+import Skills from "../components/skills.astro";
+import Footer from "../components/footer.astro";
+import Iconsprite from "../components/iconsprite.astro";
+import Background from "../components/background.astro";
 import { getImage } from "astro:assets";
 import profile from "../assets/images/profile.webp";
 import { profileImage } from "../components/hero.astro";
@@ -17,75 +17,77 @@ import "../styles/global.css";
 const profilePreload = await getImage({ src: profile, ...profileImage });
 
 const title = "Jonathan Dorado | Full Stack & Game Developer";
-const description = "Portfolio of Jonathan Dorado, Full Stack Developer and Game Developer. Web, mobile and multiplayer projects built with Astro, Angular, React, Flutter, Django and Unity.";
+const description =
+  "Portfolio of Jonathan Dorado, Full Stack Developer and Game Developer. Web, mobile and multiplayer projects built with Astro, Angular, React, Flutter, Django and Unity.";
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		<meta name="author" content="Jonathan Dorado" />
-		<meta name="theme-color" content="#0f172a" />
-		<link rel="canonical" href={canonical} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preload" as="image" imagesrcset={profilePreload.srcSet.attribute} imagesizes={profileImage.sizes} fetchpriority="high" />
-		<link rel="preload" href="/fonts/Lexend-Medium.woff2" as="font" type="font/woff2" crossorigin />
-		<link rel="preload" href="/fonts/Lexend-Bold.woff2" as="font" type="font/woff2" crossorigin />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Jonathan Dorado" />
+    <meta name="theme-color" content="#0f172a" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="image" imagesrcset={profilePreload.srcSet.attribute} imagesizes={profileImage.sizes} fetchpriority="high" />
+    <link rel="preload" href="/fonts/Lexend-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Lexend-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:url" content={canonical} />
-		<meta name="twitter:card" content="summary" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
 
-		<script>
-			import "../scripts/main.ts";
-		</script>
-		
-		<script is:inline>
-			document.documentElement.classList.add("js");
-			// The site only has the dark theme
-			document.documentElement.classList.add("dark");
+    <script>
+      import "../scripts/main.ts";
+    </script>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      // The site only has the dark theme
+      document.documentElement.classList.add("dark");
 
-			const savedLang = localStorage.getItem("language");
-			const browserLang = navigator.language.toLowerCase();
-			const lang = savedLang ?? (browserLang.startsWith("es") ? "es" : "en");
-			document.documentElement.setAttribute("data-lang", lang);
-			document.documentElement.lang = lang;
+      const savedLang = localStorage.getItem("language");
+      const browserLang = navigator.language.toLowerCase();
+      const lang = savedLang ?? (browserLang.startsWith("es") ? "es" : "en");
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.lang = lang;
 
-			// In Spanish, content is hidden until translated (see the script at the end of <body>) so the text never jumps
-			if (lang === "es") {
-				document.documentElement.classList.add("i18n-pending");
-				setTimeout(function () { document.documentElement.classList.remove("i18n-pending"); }, 2000);
-			}
-		</script>
-	</head>
+      // In Spanish, content is hidden until translated (see the script at the end of <body>) so the text never jumps
+      if (lang === "es") {
+        document.documentElement.classList.add("i18n-pending");
+        setTimeout(function () {
+          document.documentElement.classList.remove("i18n-pending");
+        }, 2000);
+      }
+    </script>
+  </head>
 
-	<body>
-		<Header></Header>
-		<main>
-			<Hero></Hero>
-			<Projects></Projects>
-			<Gamedevelopment></Gamedevelopment>
-			<Experience></Experience>
-			<Skills></Skills>
-		</main>
-		<Footer></Footer>
-		<Background />
-		<Iconsprite />
+  <body>
+    <Header />
+    <main>
+      <Hero />
+      <Projects />
+      <Gamedevelopment />
+      <Experience />
+      <Skills />
+    </main>
+    <Footer />
+    <Background />
+    <Iconsprite />
 
-		<!-- Aplica el idioma antes del primer pintado para que el texto no salte (CLS) -->
-		<script is:inline>
-			if (document.documentElement.getAttribute("data-lang") === "es") {
-				document.querySelectorAll("[data-es]").forEach(function (el) {
-					el.textContent = el.getAttribute("data-es");
-				});
-			}
-			document.documentElement.classList.remove("i18n-pending");
-		</script>
-	</body>
+    <!-- Aplica el idioma antes del primer pintado para que el texto no salte (CLS) -->
+    <script is:inline>
+      if (document.documentElement.getAttribute("data-lang") === "es") {
+        document.querySelectorAll("[data-es]").forEach(function (el) {
+          el.textContent = el.getAttribute("data-es");
+        });
+      }
+      document.documentElement.classList.remove("i18n-pending");
+    </script>
+  </body>
 </html>

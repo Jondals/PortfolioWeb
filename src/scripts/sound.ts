@@ -61,7 +61,10 @@ function press(pitch = 1): void {
   const lowpass = ctx.createBiquadFilter();
   lowpass.type = "lowpass";
   lowpass.frequency.value = 1100;
-  body.connect(lowpass).connect(envelope(ctx, 0.32, 0.004, 0.09)).connect(output);
+  body
+    .connect(lowpass)
+    .connect(envelope(ctx, 0.32, 0.004, 0.09))
+    .connect(output);
   body.start(now);
   body.stop(now + 0.12);
 
@@ -71,7 +74,10 @@ function press(pitch = 1): void {
   band.type = "bandpass";
   band.frequency.value = 1400 * pitch;
   band.Q.value = 0.7;
-  tap.connect(band).connect(envelope(ctx, 0.12, 0.002, 0.03)).connect(output);
+  tap
+    .connect(band)
+    .connect(envelope(ctx, 0.12, 0.002, 0.03))
+    .connect(output);
   tap.start(now);
   tap.stop(now + 0.05);
 }
@@ -121,7 +127,7 @@ document.addEventListener(
     pressed = { pitch };
     press(pitch);
   },
-  { passive: true }
+  { passive: true },
 );
 
 document.addEventListener(
@@ -131,5 +137,5 @@ document.addEventListener(
     release(pressed.pitch);
     pressed = null;
   },
-  { passive: true }
+  { passive: true },
 );

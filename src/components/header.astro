@@ -42,7 +42,7 @@ const control =
               hover:after:scale-x-50 hover:after:opacity-60 aria-[current=true]:after:scale-x-100 aria-[current=true]:after:opacity-100"
               data-en={item.en}
               data-es={item.es}
-              >
+            >
               {item.en}
             </a>
           </li>
@@ -51,36 +51,24 @@ const control =
     </nav>
 
     <div class="col-start-3 justify-self-end flex items-center gap-2">
-      <button
-        type="button"
-        class={`lang-toggle hidden lg:inline-flex gap-2 px-3 text-xs font-semibold ${control}`}
-        aria-label="Cambiar a español"
-      >
+      <button type="button" class={`lang-toggle max-lg:hidden gap-2 px-3 text-xs font-semibold ${control}`} aria-label="Cambiar a español">
         <span class="lang-flags flex items-center">
           <Icon name="flag-en" class="lang-flag-en w-5 h-[14px] rounded-[2px]" />
           <Icon name="flag-es" class="lang-flag-es w-5 h-[14px] rounded-[2px]" />
         </span>
-        <span data-en="EN" data-es="ES">EN</span>
+        <span data-en="EN" data-es="ES">
+          EN
+        </span>
       </button>
 
-      <button
-        id="menu-btn"
-        type="button"
-        class={`lg:hidden w-9 ${control}`}
-        aria-label="Open menu"
-        aria-controls="mobile-menu"
-        aria-expanded="false"
-      >
+      <button id="menu-btn" type="button" class={`lg:hidden w-9 ${control}`} aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
         <Icon name="menu" class="w-[18px] h-[18px]" />
       </button>
     </div>
   </div>
 </header>
 
-<div
-  id="overlay"
-  class="fixed inset-0 bg-black/70 z-60 opacity-0 pointer-events-none transition-opacity duration-500 ease-out"
-></div>
+<div id="overlay" class="fixed inset-0 bg-black/70 z-60 opacity-0 pointer-events-none transition-opacity duration-500 ease-out"></div>
 
 <aside
   id="mobile-menu"
@@ -92,11 +80,12 @@ const control =
   <div class="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-linear-to-br from-cyan-500/20 via-purple-500/15 to-transparent blur-3xl"></div>
 
   <div class="relative h-full flex flex-col p-6">
-
     <div class="flex justify-between items-center mb-8">
       <span class="flex items-center gap-3">
         <Icon name="Logo" class="w-8 h-8 text-(--text-primary)" />
-        <span class="text-(--text-primary) font-semibold" data-en="Menu" data-es="Menú">Menu</span>
+        <span class="text-(--text-primary) font-semibold" data-en="Menu" data-es="Menú">
+          Menu
+        </span>
       </span>
       <button
         id="close-menu"
@@ -116,9 +105,19 @@ const control =
               href={item.href}
               class="nav-link group/link flex items-center gap-4 px-1 py-3.5 text-xl text-(--text-secondary) hover:text-(--text-primary) hover:translate-x-1 aria-[current=true]:text-(--text-primary)"
             >
-              <span aria-hidden="true" class="w-6 text-xs tabular-nums text-(--text-muted) group-hover/link:text-(--accent-text) group-aria-[current=true]/link:text-(--accent-text)">0{i + 1}</span>
-              <span class="flex-1" data-en={item.en} data-es={item.es}>{item.en}</span>
-              <Icon name="arrow-right" class="w-4 h-4 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 group-aria-[current=true]/link:opacity-100 group-aria-[current=true]/link:translate-x-0 text-(--accent-text) transition duration-500" />
+              <span
+                aria-hidden="true"
+                class="w-6 text-xs tabular-nums text-(--text-muted) group-hover/link:text-(--accent-text) group-aria-[current=true]/link:text-(--accent-text)"
+              >
+                0{i + 1}
+              </span>
+              <span class="flex-1" data-en={item.en} data-es={item.es}>
+                {item.en}
+              </span>
+              <Icon
+                name="arrow-right"
+                class="w-4 h-4 opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 group-aria-[current=true]/link:opacity-100 group-aria-[current=true]/link:translate-x-0 text-(--accent-text) transition duration-500"
+              />
             </a>
           </li>
         ))}
@@ -134,7 +133,9 @@ const control =
           class="flex-1 min-w-0 inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-[10px] bg-(--accent) text-black text-sm font-semibold whitespace-nowrap hover:opacity-90"
         >
           <Icon name="download" class="w-4 h-4 shrink-0" />
-          <span data-en="Download CV" data-es="Descargar CV">Download CV</span>
+          <span data-en="Download CV" data-es="Descargar CV">
+            Download CV
+          </span>
         </a>
 
         <button
@@ -146,21 +147,36 @@ const control =
             <Icon name="flag-en" class="lang-flag-en w-5 h-[14px] rounded-[2px]" />
             <Icon name="flag-es" class="lang-flag-es w-5 h-[14px] rounded-[2px]" />
           </span>
-          <span data-en="EN" data-es="ES">EN</span>
+          <span data-en="EN" data-es="ES">
+            EN
+          </span>
         </button>
       </div>
 
       <div class="flex items-center justify-center gap-2">
-        <a href="https://github.com/Jondals" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8">
+        <a
+          href="https://github.com/Jondals"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8"
+        >
           <Icon name="GitHub" class="w-5 h-5" />
         </a>
-        <a href="https://www.linkedin.com/in/jonathandoradoquintero/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8">
+        <a
+          href="https://www.linkedin.com/in/jonathandoradoquintero/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8"
+        >
           <Icon name="LinkedIn" class="w-5 h-5" />
         </a>
-        <a href="mailto:jondals@proton.me" aria-label="Email"
-          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8">
+        <a
+          href="mailto:jondals@proton.me"
+          aria-label="Email"
+          class="w-10 h-10 inline-flex items-center justify-center rounded-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--text-primary)/8"
+        >
           <Icon name="Email" class="w-5 h-5" />
         </a>
       </div>

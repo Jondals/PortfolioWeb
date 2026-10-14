@@ -5,9 +5,7 @@ import { games } from "../data/games.ts";
 ---
 
 <section id="game-development" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
-
   <div class="max-w-7xl mx-auto">
-
     <Sectionheading
       title={{ en: "Game Development", es: "Desarrollo de videojuegos" }}
       subtitle={{
@@ -18,12 +16,7 @@ import { games } from "../data/games.ts";
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8">
       {games.map((game, index) => (
-        <Projectcard
-          {...game}
-          reveal={index}
-          contributionLabel={{ en: "Focus:", es: "Enfoque:" }}
-          imageClass="h-64"
-        />
+        <Projectcard {...game} reveal={index} contributionLabel={{ en: "Focus:", es: "Enfoque:" }} imageClass="h-64" />
       ))}
     </div>
   </div>

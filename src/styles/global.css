@@ -52,7 +52,9 @@ html {
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.35s ease, color 0.35s ease;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
 }
 
 @media (min-width: 640px) {
@@ -98,14 +100,31 @@ button {
 .page-bg {
   --scene-a: #22d3ee;
   --scene-b: #a855f7;
-  transition: --scene-a 1.6s ease, --scene-b 1.6s ease;
+  transition:
+    --scene-a 1.6s ease,
+    --scene-b 1.6s ease;
 }
 
-html[data-scene="projects"] .page-bg { --scene-a: #6366f1; --scene-b: #22d3ee; }
-html[data-scene="game-development"] .page-bg { --scene-a: #d946ef; --scene-b: #8b5cf6; }
-html[data-scene="experience"] .page-bg { --scene-a: #2dd4bf; --scene-b: #3b82f6; }
-html[data-scene="skills"] .page-bg { --scene-a: #34d399; --scene-b: #22d3ee; }
-html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
+html[data-scene="projects"] .page-bg {
+  --scene-a: #6366f1;
+  --scene-b: #22d3ee;
+}
+html[data-scene="game-development"] .page-bg {
+  --scene-a: #d946ef;
+  --scene-b: #8b5cf6;
+}
+html[data-scene="experience"] .page-bg {
+  --scene-a: #2dd4bf;
+  --scene-b: #3b82f6;
+}
+html[data-scene="skills"] .page-bg {
+  --scene-a: #34d399;
+  --scene-b: #22d3ee;
+}
+html[data-scene="contact"] .page-bg {
+  --scene-a: #f472b6;
+  --scene-b: #a855f7;
+}
 
 .page-bg {
   position: fixed;
@@ -122,7 +141,12 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
   width: 70vmax;
   height: 70vmax;
   border-radius: 9999px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--scene-a) 16%, transparent), color-mix(in srgb, var(--scene-b) 8%, transparent) 40%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--scene-a) 16%, transparent),
+    color-mix(in srgb, var(--scene-b) 8%, transparent) 40%,
+    transparent 70%
+  );
   opacity: 0.8;
   will-change: transform;
 }
@@ -145,8 +169,12 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
 }
 
 @keyframes stars-twinkle {
-  from { opacity: 0.35; }
-  to { opacity: 1; }
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .page-wave-row {
@@ -169,12 +197,20 @@ html[data-scene="contact"] .page-bg { --scene-a: #f472b6; --scene-b: #a855f7; }
   animation-direction: reverse;
 }
 
-.page-bg .stop-a { stop-color: var(--scene-a); }
-.page-bg .stop-b { stop-color: var(--scene-b); }
+.page-bg .stop-a {
+  stop-color: var(--scene-a);
+}
+.page-bg .stop-b {
+  stop-color: var(--scene-b);
+}
 
 @keyframes wave-flow {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 /* ---------- Custom cursor: glowing orb + trail ---------- */
@@ -215,8 +251,11 @@ html.custom-cursor * {
   border: 1.5px solid var(--orb);
   box-shadow: 0 0 12px 2px color-mix(in srgb, var(--orb) 70%, transparent);
   transform: translate(-50%, -50%);
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1), height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.35s ease, box-shadow 0.35s ease;
+  transition:
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 html.cursor-visible .cursor-orb {
@@ -246,7 +285,9 @@ html.cursor-hover.cursor-down .cursor-orb::before {
 .site-header {
   background-color: color-mix(in srgb, var(--bg-primary) 0%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--text-primary) 0%, transparent);
-  transition: background-color 0.6s ease, border-color 0.6s ease;
+  transition:
+    background-color 0.6s ease,
+    border-color 0.6s ease;
 }
 
 .site-header.is-scrolled {
@@ -321,23 +362,85 @@ html:not([data-lang="es"]) .lang-flag-es {
   opacity: 1;
 }
 
+/* Round dots: the visible circle is 8px, the padding makes the touch target bigger */
 .gallery-dot {
-  width: 2rem;
-  height: 1.5rem;
-  padding: 0.6rem 0;
+  box-sizing: content-box;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0.5rem;
   background-clip: content-box;
-  border-radius: 999px;
-  background-color: color-mix(in srgb, var(--text-primary) 25%, transparent);
-  transition: background-color 0.3s ease, width 0.3s ease;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--text-primary) 28%, transparent);
+  transition:
+    background-color 0.3s ease,
+    scale 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .gallery-dot[aria-current="true"] {
-  width: 2.75rem;
+  scale: 1.35;
   background-color: var(--accent);
 }
 
+/* Arrows and counter over the screenshot: they show up when the frame is hovered or focused */
+.shot-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  translate: 0 -50%;
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease,
+    scale 0.2s ease;
+}
+
+.shot-nav:hover {
+  background: color-mix(in srgb, var(--accent) 70%, black);
+}
+
+.shot-nav:active {
+  scale: 0.92;
+}
+
+.shots:hover .shot-nav,
+.shot-nav:focus-visible {
+  opacity: 1;
+}
+
+/* Touch screens have no hover: the arrows stay visible */
+@media (hover: none) {
+  .shot-nav {
+    opacity: 0.85;
+  }
+}
+
+.shot-counter {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  z-index: 2;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(6px);
+}
+
 .gallery-dot:hover {
-  background-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  background-color: color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
 /* Mobile menu: the links glide in one after another once the panel opens */
@@ -345,7 +448,9 @@ html:not([data-lang="es"]) .lang-flag-es {
 #mobile-menu .menu-footer {
   opacity: 0;
   translate: 16px 0;
-  transition: opacity 0.35s ease, translate 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  transition:
+    opacity 0.35s ease,
+    translate 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 #mobile-menu:not(.translate-x-full) nav li,

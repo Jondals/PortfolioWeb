@@ -248,7 +248,8 @@ if (finePointer && !reducedMotion) {
     prepare();
     orb.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
     root.classList.add("cursor-visible");
-    const hovering = Boolean((e.target as Element | null)?.closest(interactive));
+    // The target can be a non-element (document, text node), which has no closest()
+    const hovering = e.target instanceof Element && Boolean(e.target.closest(interactive));
     root.classList.toggle("cursor-hover", hovering);
 
     // With the ring open (over a button or link) there is no trail: only the circle remains

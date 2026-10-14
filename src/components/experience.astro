@@ -42,14 +42,16 @@ const jobs = [
 
 <section id="experience" class="relative px-5 sm:px-6 pt-12 md:pt-16 pb-16 md:pb-24">
   <div class="max-w-7xl mx-auto">
-
     <Sectionheading title={{ en: "Experience", es: "Experiencia" }} />
 
     <ol class="relative">
       {jobs.map((job, index) => (
         <li data-reveal style={`--i:${index}`} class="group relative grid md:grid-cols-[180px_1fr] gap-x-12 gap-y-3 pl-6 md:pl-0 pb-12 last:pb-0">
           <!-- Timeline: connects the years -->
-          <span class="absolute left-0 md:left-[204px] top-2 bottom-0 w-px bg-linear-to-b from-(--text-primary)/20 to-transparent group-last:hidden" aria-hidden="true"></span>
+          <span
+            class="absolute left-0 md:left-[204px] top-2 bottom-0 w-px bg-linear-to-b from-(--text-primary)/20 to-transparent group-last:hidden"
+            aria-hidden="true"
+          ></span>
           <span
             class={`absolute left-0 md:left-[204px] top-2 -translate-x-1/2 w-2.5 h-2.5 rounded-full ring-4 ring-(--bg-primary) ${
               job.current ? "bg-(--accent)" : "bg-(--text-primary)/30"
@@ -57,11 +59,7 @@ const jobs = [
             aria-hidden="true"
           ></span>
 
-          <p
-            class="experience-year text-4xl md:text-6xl font-bold tracking-tight leading-none md:text-right"
-            data-en={job.year.en}
-            data-es={job.year.es}
-          >
+          <p class="experience-year text-4xl md:text-6xl font-bold tracking-tight leading-none md:text-right" data-en={job.year.en} data-es={job.year.es}>
             {job.year.en}
           </p>
 
@@ -70,11 +68,7 @@ const jobs = [
               {job.meta.en}
             </p>
 
-            <h3
-              class="mt-2 text-xl md:text-2xl font-bold tracking-tight text-(--text-primary)"
-              data-en={job.title.en}
-              data-es={job.title.es}
-            >
+            <h3 class="mt-2 text-xl md:text-2xl font-bold tracking-tight text-(--text-primary)" data-en={job.title.en} data-es={job.title.es}>
               {job.title.en}
             </h3>
 
@@ -90,11 +84,7 @@ const jobs = [
               </a>
             )}
 
-            <p
-              class="mt-4 text-sm md:text-base text-(--text-secondary) leading-relaxed"
-              data-en={job.description.en}
-              data-es={job.description.es}
-            >
+            <p class="mt-4 text-sm md:text-base text-(--text-secondary) leading-relaxed" data-en={job.description.en} data-es={job.description.es}>
               {job.description.en}
             </p>
           </div>
@@ -114,7 +104,9 @@ const jobs = [
     -webkit-background-clip: text;
     background-size: 0% 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1), -webkit-text-stroke-color 0.8s ease;
+    transition:
+      background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      -webkit-text-stroke-color 0.8s ease;
   }
 
   li:hover .experience-year,

@@ -61,7 +61,7 @@ const observer = new IntersectionObserver(
       });
     });
   },
-  { rootMargin: "-45% 0px -50% 0px" }
+  { rootMargin: "-45% 0px -50% 0px" },
 );
 
 sections.forEach((section) => observer.observe(section));

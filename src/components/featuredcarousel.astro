@@ -16,6 +16,9 @@ interface Props {
 
 const { projects } = Astro.props;
 const pad = (n: number) => String(n).padStart(2, "0");
+// Seconds each screenshot stays visible; a project lasts until all of its screenshots have been shown
+const SHOT_SECONDS = 2.8;
+const duration = (project: Project) => Math.max(7, ((project.gallery?.length ?? 0) + 1) * SHOT_SECONDS);
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 ---
 
@@ -35,6 +38,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
           aria-label={`Go to ${project.title}`}
           aria-current={index === 0 ? "true" : "false"}
           data-index={index}
+          style={`--dur:${duration(project)}s`}
         >
           <span class="text-xs font-medium text-(--text-secondary) group-aria-[current=true]/tab:text-(--accent-text) transition-colors duration-500">
             {pad(index + 1)}
@@ -82,19 +86,29 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
                 <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></span>
-                <span class="ml-3 flex-1 truncate text-[11px] text-(--text-secondary) px-3 py-1 rounded-md bg-(--text-primary)/5">
+                <a
+                  href={project.demo ?? project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="ml-3 flex-1 truncate text-[11px] text-(--text-secondary) px-3 py-1 rounded-md bg-(--text-primary)/5 hover:text-(--accent-text) hover:bg-(--accent)/10 transition-colors duration-300"
+                  aria-label={`${project.title}: ${host(project.demo ?? project.github)}`}
+                >
                   {host(project.demo ?? project.github)}
-                </span>
+                </a>
               </div>
-              <div class="relative aspect-16/10 overflow-hidden">
+              <div class="shots relative aspect-16/10 overflow-hidden">
                 <Image
                   src={project.image}
                   alt={`${project.title} screenshot`}
                   widths={[480, 720, 1000]}
                   sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
-                  loading={index === 0 ? "eager" : "lazy"}
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority={index === 0 ? "auto" : "low"}
                   data-shot
                   data-active
+                  data-caption-en={project.imageAlt?.en ?? "Home"}
+                  data-caption-es={project.imageAlt?.es ?? "Inicio"}
                   class="shot absolute inset-0 w-full h-full object-cover object-top"
                 />
                 {project.gallery?.map((shot) => (
@@ -103,25 +117,53 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
                     alt={shot.alt.en}
                     widths={[480, 720, 1000]}
                     sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="low"
                     data-shot
+                    data-caption-en={shot.alt.en}
+                    data-caption-es={shot.alt.es}
                     class="shot absolute inset-0 w-full h-full object-cover object-top"
                   />
                 ))}
+
+                {project.gallery && (
+                  <>
+                    <button type="button" class="shot-nav shot-prev left-2" aria-label="Previous screenshot">
+                      <Icon name="arrow-left" class="w-4 h-4" />
+                    </button>
+                    <button type="button" class="shot-nav shot-next right-2" aria-label="Next screenshot">
+                      <Icon name="arrow-right" class="w-4 h-4" />
+                    </button>
+                    <span class="shot-counter" aria-hidden="true">
+                      1 / {project.gallery.length + 1}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
             {project.gallery && (
-              <div class="gallery-dots mt-2 flex justify-center gap-2">
-                {[project.image, ...project.gallery.map((shot) => shot.image)].map((_, shotIndex) => (
-                  <button
-                    type="button"
-                    class="gallery-dot"
-                    aria-label={`Screenshot ${shotIndex + 1} / ${project.gallery!.length + 1}`}
-                    aria-current={shotIndex === 0 ? "true" : "false"}
-                    data-shot-index={shotIndex}
-                  ></button>
-                ))}
-              </div>
+              <>
+                <p
+                  class="shot-caption mt-3 text-center text-xs text-(--text-secondary) min-h-4"
+                  aria-live="polite"
+                  data-en={project.imageAlt?.en ?? "Home"}
+                  data-es={project.imageAlt?.es ?? "Inicio"}
+                >
+                  {project.imageAlt?.en ?? "Home"}
+                </p>
+                <div class="gallery-dots mt-1 flex justify-center gap-1">
+                  {[project.image, ...project.gallery.map((shot) => shot.image)].map((_, shotIndex) => (
+                    <button
+                      type="button"
+                      class="gallery-dot"
+                      aria-label={`Screenshot ${shotIndex + 1} / ${project.gallery!.length + 1}`}
+                      aria-current={shotIndex === 0 ? "true" : "false"}
+                      data-shot-index={shotIndex}
+                    ></button>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -134,37 +176,47 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
             <Statusbadge status={project.status} />
           </div>
 
-          <h3 class="text-2xl md:text-4xl font-bold tracking-tight text-(--text-primary)">
-            {project.title}
-          </h3>
+          <h3 class="text-2xl md:text-4xl font-bold tracking-tight text-(--text-primary)">{project.title}</h3>
 
-          <p
-            class="text-sm md:text-base text-(--text-secondary) leading-relaxed"
-            data-en={project.description.en}
-            data-es={project.description.es}
-          >
+          <p class="text-sm md:text-base text-(--text-secondary) leading-relaxed" data-en={project.description.en} data-es={project.description.es}>
             {project.description.en}
           </p>
 
           <div class="space-y-2 text-sm text-(--text-secondary) pl-4 border-l-2 border-(--accent)/50">
             <p>
-              <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">Role:</span>{" "}
-              <span data-en={project.contribution.en} data-es={project.contribution.es}>{project.contribution.en}</span>
+              <span class="text-(--text-primary) font-semibold" data-en="Role:" data-es="Rol:">
+                Role:
+              </span>{" "}
+              <span data-en={project.contribution.en} data-es={project.contribution.es}>
+                {project.contribution.en}
+              </span>
             </p>
             <p>
-              <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">Learned:</span>{" "}
-              <span data-en={project.learned.en} data-es={project.learned.es}>{project.learned.en}</span>
+              <span class="text-(--text-primary) font-semibold" data-en="Learned:" data-es="Aprendido:">
+                Learned:
+              </span>{" "}
+              <span data-en={project.learned.en} data-es={project.learned.es}>
+                {project.learned.en}
+              </span>
             </p>
             {project.motivation && (
               <p>
-                <span class="text-(--text-primary) font-semibold" data-en="Why:" data-es="Motivo:">Why:</span>{" "}
-                <span data-en={project.motivation.en} data-es={project.motivation.es}>{project.motivation.en}</span>
+                <span class="text-(--text-primary) font-semibold" data-en="Why:" data-es="Motivo:">
+                  Why:
+                </span>{" "}
+                <span data-en={project.motivation.en} data-es={project.motivation.es}>
+                  {project.motivation.en}
+                </span>
               </p>
             )}
             {project.purpose && (
               <p>
-                <span class="text-(--text-primary) font-semibold" data-en="Goal:" data-es="Finalidad:">Goal:</span>{" "}
-                <span data-en={project.purpose.en} data-es={project.purpose.es}>{project.purpose.en}</span>
+                <span class="text-(--text-primary) font-semibold" data-en="Goal:" data-es="Finalidad:">
+                  Goal:
+                </span>{" "}
+                <span data-en={project.purpose.en} data-es={project.purpose.es}>
+                  {project.purpose.en}
+                </span>
               </p>
             )}
           </div>
@@ -191,7 +243,9 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
                 class="inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] bg-(--accent) text-black font-semibold hover:-translate-y-0.5 hover:shadow-xl hover:shadow-(--accent)/30 shadow-lg shadow-(--accent)/20"
               >
                 <Icon name="external" class="w-4 h-4" />
-                <span data-en="Visit site" data-es="Ver web">Visit site</span>
+                <span data-en="Visit site" data-es="Ver web">
+                  Visit site
+                </span>
               </a>
             )}
           </div>
@@ -225,7 +279,7 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
   }
 
   .carousel-dot[aria-current="true"] .carousel-progress {
-    animation: carousel-progress 7s linear forwards;
+    animation: carousel-progress var(--dur, 7s) linear forwards;
   }
 
   /* Pause only while a mouse is over it or a keyboard user is focused inside: a click leaves the focus

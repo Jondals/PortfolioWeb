@@ -24,13 +24,13 @@ const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondar
 
 <footer id="contact" class="relative px-5 sm:px-6 pt-8 md:pt-12 pb-16 md:pb-20">
   <div class="max-w-7xl mx-auto">
-
     <div class="grid lg:grid-cols-[1.6fr_1fr] gap-3 md:gap-4" data-reveal>
       <div class={`${card} p-6 md:p-10 flex flex-col justify-center gap-5`}>
-
         <div>
           <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-            <span data-en="Let's build something together" data-es="¿Construimos algo juntos?">Let's build something together</span>
+            <span data-en="Let's build something together" data-es="¿Construimos algo juntos?">
+              Let's build something together
+            </span>
           </h2>
           <p
             class="mt-4 max-w-xl text-base md:text-lg text-(--text-secondary) leading-relaxed"
@@ -62,7 +62,10 @@ const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondar
                   {contact.value.en}
                 </span>
               </span>
-              <Icon name="arrow-right" class="w-5 h-5 shrink-0 text-(--text-secondary) -rotate-45 group-hover:rotate-0 group-hover:text-(--accent-text) transition duration-500 ease-out" />
+              <Icon
+                name="arrow-right"
+                class="w-5 h-5 shrink-0 text-(--text-secondary) -rotate-45 group-hover:rotate-0 group-hover:text-(--accent-text) transition duration-500 ease-out"
+              />
             </a>
           </li>
         ))}
@@ -71,15 +74,22 @@ const card = "rounded-[12px] border border-(--text-primary)/10 bg-(--bg-secondar
 
     <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs md:text-sm text-(--text-secondary)">
       <span>
-        © {year} Jondals. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span>
+        © {year} Jondals.{" "}
+        <span data-en="All rights reserved." data-es="Todos los derechos reservados.">
+          All rights reserved.
+        </span>
       </span>
 
       <span class="flex items-center gap-2">
-        <span data-en="Built with" data-es="Hecho con">Built with</span>
+        <span data-en="Built with" data-es="Hecho con">
+          Built with
+        </span>
         <span class="inline-flex items-center gap-1.5 text-(--text-primary)">
           <Icon name="Astro" class="w-4 h-4" /> Astro
         </span>
-        <span data-en="and" data-es="y">and</span>
+        <span data-en="and" data-es="y">
+          and
+        </span>
         <span class="inline-flex items-center gap-1.5 text-(--text-primary)">
           <Icon name="Tailwind CSS" class="w-4 h-4" /> Tailwind CSS
         </span>
