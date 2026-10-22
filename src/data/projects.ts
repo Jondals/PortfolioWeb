@@ -319,7 +319,7 @@ export const projects: Project[] = [
     },
     tech: ["JavaScript", "PHP", "SQLite", "jQuery", "WebRTC", "HTML", "CSS"],
     image: chatterly,
-    github: "https://github.com/Jondals/chatterly-old",
+    github: "https://github.com/Jondals/Chatterly-old",
     demo: "https://chatterly-old.vercel.app",
   },
 
