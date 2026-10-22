@@ -302,25 +302,25 @@ export const projects: Project[] = [
   },
 
   {
-    title: "Chatterly",
+    title: "Chatterly-Old",
     featured: false,
-    status: COMPLETED,
+    status: DEPLOYED,
     description: {
       en: "A web social platform inspired by Discord: add friends, customize your profile and talk through real-time chat and voice calls, sharing files and GIFs right in the conversation.",
       es: "Una red social web inspirada en Discord: añade amigos, personaliza tu perfil y habla por chat y llamadas de voz en tiempo real, compartiendo archivos y GIFs en la conversación.",
     },
     contribution: {
-      en: "Developed the real-time messaging, the authentication flow and the voice calls on WebRTC, with a PHP and MySQL backend.",
-      es: "Desarrollé la mensajería en tiempo real, la autenticación y las llamadas de voz con WebRTC, con un backend en PHP y MySQL.",
+      en: "Developed the real-time messaging, the authentication flow and the voice calls on WebRTC, with a PHP and SQLite backend.",
+      es: "Desarrollé la mensajería en tiempo real, la autenticación y las llamadas de voz con WebRTC, con un backend en PHP y SQLite.",
     },
     learned: {
       en: "How WebRTC connections are negotiated, relational database design and how a back end and a front end talk to each other.",
       es: "Cómo se negocian las conexiones WebRTC, diseño de bases de datos relacionales y cómo se comunican un back end y un front end.",
     },
-    tech: ["JavaScript", "PHP", "MySQL", "jQuery", "WebRTC", "HTML", "CSS"],
+    tech: ["JavaScript", "PHP", "SQLite", "jQuery", "WebRTC", "HTML", "CSS"],
     image: chatterly,
-    github: "https://github.com/Jondals/Chatterly",
-    demo: null,
+    github: "https://github.com/Jondals/chatterly-old",
+    demo: "https://chatterly-old.vercel.app",
   },
 
   {
