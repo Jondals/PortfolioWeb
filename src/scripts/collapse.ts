@@ -35,3 +35,5 @@ document.querySelectorAll<HTMLElement>(".more-projects").forEach((block) => {
     label.textContent = text[lang];
   });
 });
+
+export {};

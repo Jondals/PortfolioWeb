@@ -268,3 +268,5 @@ if (finePointer && !reducedMotion) {
   document.addEventListener("pointerup", () => root.classList.remove("cursor-down"));
   root.addEventListener("pointerleave", () => root.classList.remove("cursor-visible"));
 }
+
+export {};

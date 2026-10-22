@@ -110,3 +110,5 @@ if (!reducedMotion) {
   // If the page loads already scrolled (reload or anchor link), position the background right away
   if (window.scrollY > 0) request();
 }
+
+export {};

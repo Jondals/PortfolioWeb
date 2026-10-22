@@ -139,3 +139,5 @@ carousels.forEach((carousel) => {
     }, SHOT_MS);
   }
 });
+
+export {};

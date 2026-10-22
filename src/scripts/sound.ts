@@ -139,3 +139,5 @@ document.addEventListener(
   },
   { passive: true },
 );
+
+export {};

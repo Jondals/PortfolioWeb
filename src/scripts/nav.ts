@@ -76,3 +76,5 @@ function updateHeader(): void {
 
 window.addEventListener("scroll", updateHeader, { passive: true });
 updateHeader();
+
+export {};

@@ -18,3 +18,5 @@ const observer = new IntersectionObserver(
 );
 
 items.forEach((item) => observer.observe(item));
+
+export {};
