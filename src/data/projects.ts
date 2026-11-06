@@ -110,7 +110,7 @@ export const projects: Project[] = [
         alt: { en: "A knockout tournament played with wheels", es: "Un torneo por eliminatorias jugado con ruletas" },
       },
     ],
-    github: "https://github.com/Jondals/ChatterlyRenewed",
+    github: "https://github.com/Jondals/Chatterly-Renewed",
     demo: "https://chatterly.dpdns.org",
   },
 
