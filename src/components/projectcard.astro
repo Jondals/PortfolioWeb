@@ -50,6 +50,12 @@ const {
   reveal,
   eager = false,
 } = Astro.props;
+
+/** Small link buttons: GitHub stays neutral, the site and store links use the accent like the featured carousel. */
+const buttonBase =
+  "inline-flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap rounded-[8px] text-xs hover:-translate-y-0.5";
+const secondaryButton = `${buttonBase} border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) hover:bg-(--bg-hover) hover:border-(--accent)/40`;
+const primaryButton = `${buttonBase} bg-(--accent) text-black font-semibold shadow-md shadow-(--accent)/20 hover:shadow-lg hover:shadow-(--accent)/30`;
 ---
 
 <article
@@ -103,15 +109,15 @@ const {
     <div class="mt-auto pt-2 flex flex-col gap-4">
       <Techlist tech={tech} />
 
-      <div class="flex flex-wrap items-center gap-3">
+      <div class="flex flex-wrap items-center gap-2">
         <a
           href={github}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+          class={secondaryButton}
           aria-label={`${title} GitHub`}
         >
-          <Icon name="GitHub" class="w-4 h-4" />
+          <Icon name="GitHub" class="w-3.5 h-3.5" />
           GitHub
         </a>
 
@@ -120,9 +126,9 @@ const {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+            class={primaryButton}
           >
-            <Icon name={link.icon} class="w-4 h-4" />
+            <Icon name={link.icon} class="w-3.5 h-3.5" />
             {link.label}
           </a>
         ))}
@@ -132,9 +138,9 @@ const {
             href={demo}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-4 py-2 whitespace-nowrap rounded-[10px] border border-(--text-primary)/10 bg-(--bg-card) text-(--text-primary) text-sm hover:bg-(--bg-hover) hover:border-(--accent)/40 hover:-translate-y-0.5"
+            class={primaryButton}
           >
-            <Icon name="external" class="w-4 h-4" />
+            <Icon name="external" class="w-3.5 h-3.5" />
             <span data-en="Visit site" data-es="Ver web">
               Visit site
             </span>
