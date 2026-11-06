@@ -10,7 +10,6 @@ import chatterly from "../assets/images/chatterly.webp";
 import spinly from "../assets/images/spinly.webp";
 import damasDondeSea from "../assets/images/damasdondesea.webp";
 import quizMania from "../assets/images/quizmania.webp";
-import flavorBalance from "../assets/images/flavorbalance.webp";
 import devStarter from "../assets/images/devstarter.webp";
 import myMusic from "../assets/images/mymusic.webp";
 import myConversor from "../assets/images/myconversor.webp";
@@ -342,28 +341,6 @@ export const projects: Project[] = [
     tech: ["Java"],
     image: damasDondeSea,
     github: "https://github.com/Jondals/DamasDondeSea",
-    demo: null,
-  },
-
-  {
-    title: "FlavorBalance",
-    featured: false,
-    status: COMPLETED,
-    description: {
-      en: "An Android app to manage recipes, with full create, edit and delete and a local database.",
-      es: "Una app Android para gestionar recetas, con crear, editar y borrar, y base de datos local.",
-    },
-    contribution: {
-      en: "Built the recipe management system on top of a Room (SQLite) database.",
-      es: "Desarrollé el sistema de gestión de recetas sobre una base de datos Room (SQLite).",
-    },
-    learned: {
-      en: "Android app architecture and local persistence with Room.",
-      es: "Arquitectura de apps Android y persistencia local con Room.",
-    },
-    tech: ["Kotlin", "Android Studio", "SQLite"],
-    image: flavorBalance,
-    github: "https://github.com/Jondals/FlavorBalance",
     demo: null,
   },
 ];
