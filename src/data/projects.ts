@@ -112,7 +112,7 @@ export const projects: Project[] = [
       },
     ],
     github: "https://github.com/Jondals/ChatterlyRenewed",
-    demo: "https://chatterlyrenewed.duckdns.org",
+    demo: "https://chatterly.dpdns.org",
   },
 
   {
@@ -160,7 +160,7 @@ export const projects: Project[] = [
       },
     ],
     github: "https://github.com/Jondals/MyConversor",
-    demo: "https://myconversor.duckdns.org",
+    demo: "https://myconversor.fin-diphda.ts.net",
   },
 
   {
